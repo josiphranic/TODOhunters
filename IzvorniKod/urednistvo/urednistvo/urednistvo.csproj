@@ -199,12 +199,6 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Textual\Notification.cs" />
-    <Compile Include="Models\Users\Author.cs" />
-    <Compile Include="Models\Users\Corrector.cs" />
-    <Compile Include="Models\Users\Editor.cs" />
-    <Compile Include="Models\Users\EditorialCouncilMember.cs" />
-    <Compile Include="Models\Users\GraphicEditor.cs" />
-    <Compile Include="Models\Users\Lector.cs" />
     <Compile Include="Models\Users\User.cs" />
     <Compile Include="Models\Textual\Rating.cs" />
     <Compile Include="Models\Textual\Section.cs" />
