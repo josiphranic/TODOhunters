@@ -7,7 +7,7 @@ namespace urednistvo.ModelsDB
         public int PersonId { get; set; }
         public int TextId { get; set; }
 
-        public virtual Person Person { get; set; }
+        public virtual User Person { get; set; }
         public virtual Text Text { get; set; }
 
         public string Content { get; set; }

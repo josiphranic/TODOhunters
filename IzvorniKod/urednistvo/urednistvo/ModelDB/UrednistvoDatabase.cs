@@ -13,7 +13,7 @@ namespace urednistvo.ModelsDB
         public DbSet<Section> Sections { get; set; }
         public DbSet<Text> Texts { get; set; }
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<Person> Persons { get; set; }
+        public DbSet<User> Persons { get; set; }
         public DbSet<Edition> Editions { get; set; }
     }
 }

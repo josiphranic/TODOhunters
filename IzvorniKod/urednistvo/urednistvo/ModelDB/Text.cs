@@ -24,7 +24,7 @@ namespace urednistvo.ModelsDB
         public virtual ICollection<Rating> Ratings { get; set; }
 
         public int PersonId { get; set;  }
-        public virtual Person Person { get; set; }
+        public virtual User Person { get; set; }
 
     }
 }

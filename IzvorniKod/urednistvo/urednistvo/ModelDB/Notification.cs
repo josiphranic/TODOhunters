@@ -10,6 +10,6 @@ namespace urednistvo.ModelsDB
         public string Content { get; set; }
         public DateTime Time { get; set; }
 
-        public virtual ICollection<Person> Persons { get; set; }
+        public virtual ICollection<User> Persons { get; set; }
     }
 }

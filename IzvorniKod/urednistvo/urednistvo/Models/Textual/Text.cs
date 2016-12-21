@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace urednistvo.Models
+namespace urednistvo.Models.Textual
 {
     public class Text
     {

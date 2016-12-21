@@ -8,7 +8,7 @@
         public int Rate { get; set; }
         public string SectionTitle { get; set; }
 
-        public virtual Person Person { get; set; }
+        public virtual User Person { get; set; }
         public virtual Text Text { get; set; }
     }
 }

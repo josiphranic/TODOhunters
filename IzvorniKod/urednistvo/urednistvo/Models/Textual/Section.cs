@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace urednistvo.Models
+namespace urednistvo.Models.Textual
 {
     public class Section
     {
