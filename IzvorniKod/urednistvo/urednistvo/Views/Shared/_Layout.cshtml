@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Naš list</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -21,9 +21,8 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li><span class="glyphicon glyphicon-home icon" onclick="goHome()"></span></li>
+                    <li><span class="glyphicon glyphicon-inbox icon"></span></li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -33,7 +32,13 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>
+                &copy; @DateTime.Now.Year - Naš list
+                <span class="glyphicon glyphicon-asterisk"></span>
+                @Html.ActionLink("TODOHunters", "About", "Home")
+                <span class="glyphicon glyphicon-asterisk"></span>
+                @Html.ActionLink("Kontakt", "Contact", "Home")
+            </p>
         </footer>
     </div>
     @Scripts.Render("~/bundles/jquery")
@@ -41,3 +46,20 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+<script type="text/javascript">
+    function goHome() {
+        window.location.href = '@Url.Action("Index", "Home")';
+    }
+</script>
+<style>
+    .icon {
+        top: 18px;
+        color: white;
+        font-size: 20px;
+        padding-left: 22px;
+    }
+    .icon:hover {
+        color: black;
+        cursor: pointer;
+    }
+</style>
