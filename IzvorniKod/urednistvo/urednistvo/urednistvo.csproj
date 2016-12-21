@@ -173,14 +173,38 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612191947211_InitialCreate.cs" />
+    <Compile Include="Migrations\201612191947211_InitialCreate.Designer.cs">
+      <DependentUpon>201612191947211_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612210938564_kokos.cs" />
+    <Compile Include="Migrations\201612210938564_kokos.Designer.cs">
+      <DependentUpon>201612210938564_kokos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612210942265_kokos2.cs" />
+    <Compile Include="Migrations\201612210942265_kokos2.Designer.cs">
+      <DependentUpon>201612210942265_kokos2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="ModelDB\Comment.cs" />
+    <Compile Include="ModelDB\Edition.cs" />
+    <Compile Include="ModelDB\Notification.cs" />
+    <Compile Include="ModelDB\Person.cs" />
+    <Compile Include="ModelDB\Rating.cs" />
+    <Compile Include="ModelDB\Section.cs" />
+    <Compile Include="ModelDB\Text.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\Edition.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Rating.cs" />
     <Compile Include="Models\Section.cs" />
     <Compile Include="Models\Text.cs" />
     <Compile Include="Models\TextStatus.cs" />
+    <Compile Include="ModelDB\UrednistvoDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -251,6 +275,17 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201612191947211_InitialCreate.resx">
+      <DependentUpon>201612191947211_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612210938564_kokos.resx">
+      <DependentUpon>201612210938564_kokos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612210942265_kokos2.resx">
+      <DependentUpon>201612210942265_kokos2.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
