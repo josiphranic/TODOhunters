@@ -1,0 +1,15 @@
+﻿@model List<urednistvo.Models.Notification>
+
+@{
+    ViewBag.Title = "Notifications";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+@foreach (var notification in Model)
+{ 
+    <div>
+    <li>@notification.Title          @notification.Time</li>
+    </div>
+}
+
