@@ -12,7 +12,10 @@ namespace urednistvo.Controllers
         // GET: User
         public ActionResult Index()
         {
-            return View();
+            using(UrednistvoDatabase db = new UrednistvoDatabase())
+            {
+                return View(db.Users.ToList());
+            }
         }
 
         public ActionResult Register()
