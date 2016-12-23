@@ -21,8 +21,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><span class="glyphicon glyphicon-home icon" onclick="goHome()"></span></li>
-                    <li><span class="glyphicon glyphicon-inbox icon" onclick="goNotification()"></span></li>
+                    <li><span class="glyphicon glyphicon-home icon" title="Početna" onclick="goHome()"></span></li>
+                    <li><span class="glyphicon glyphicon-inbox icon" title="Obavijesti" onclick="goNotification()"></span></li>
+                    <li><span class="glyphicon glyphicon-upload icon" title="Upload" onclick="Upload()"></span></li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
