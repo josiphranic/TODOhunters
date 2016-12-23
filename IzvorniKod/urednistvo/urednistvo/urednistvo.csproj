@@ -185,27 +185,39 @@
     <Compile Include="Migrations\201612210942265_kokos2.Designer.cs">
       <DependentUpon>201612210942265_kokos2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612230103498_kokos3.cs" />
+    <Compile Include="Migrations\201612230103498_kokos3.Designer.cs">
+      <DependentUpon>201612230103498_kokos3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612230210597_kokos4.cs" />
+    <Compile Include="Migrations\201612230210597_kokos4.Designer.cs">
+      <DependentUpon>201612230210597_kokos4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612230239447_kokos5.cs" />
+    <Compile Include="Migrations\201612230239447_kokos5.Designer.cs">
+      <DependentUpon>201612230239447_kokos5.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="ModelDB\Comment.cs" />
-    <Compile Include="ModelDB\Edition.cs" />
-    <Compile Include="ModelDB\Notification.cs" />
-    <Compile Include="ModelDB\User.cs" />
-    <Compile Include="ModelDB\Rating.cs" />
-    <Compile Include="ModelDB\Section.cs" />
-    <Compile Include="ModelDB\Text.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Textual\Comment.cs" />
-    <Compile Include="Models\Textual\Edition.cs" />
+    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\Edition.cs" />
+    <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Rating.cs" />
+    <Compile Include="Models\Section.cs" />
+    <Compile Include="Models\Text.cs" />
+    <Compile Include="ModelsView\AccountViewModels.cs" />
+    <Compile Include="ModelsView\Textual\CommentView.cs" />
+    <Compile Include="ModelsView\Textual\EditionView.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Textual\Notification.cs" />
-    <Compile Include="Models\Users\User.cs" />
-    <Compile Include="Models\Textual\Rating.cs" />
-    <Compile Include="Models\Textual\Section.cs" />
-    <Compile Include="Models\Textual\Text.cs" />
-    <Compile Include="Models\Utilities\Role.cs" />
-    <Compile Include="Models\Utilities\TextStatus.cs" />
-    <Compile Include="ModelDB\UrednistvoDatabase.cs" />
+    <Compile Include="ModelsView\ManageViewModels.cs" />
+    <Compile Include="ModelsView\Textual\NotificationView.cs" />
+    <Compile Include="ModelsView\Users\UserView.cs" />
+    <Compile Include="ModelsView\Textual\RatingView.cs" />
+    <Compile Include="ModelsView\Textual\SectionView.cs" />
+    <Compile Include="ModelsView\Textual\TextView.cs" />
+    <Compile Include="ModelsView\Utilities\Role.cs" />
+    <Compile Include="ModelsView\Utilities\TextStatus.cs" />
+    <Compile Include="Models\UrednistvoDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -286,6 +298,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612210942265_kokos2.resx">
       <DependentUpon>201612210942265_kokos2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612230103498_kokos3.resx">
+      <DependentUpon>201612230103498_kokos3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612230210597_kokos4.resx">
+      <DependentUpon>201612230210597_kokos4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612230239447_kokos5.resx">
+      <DependentUpon>201612230239447_kokos5.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

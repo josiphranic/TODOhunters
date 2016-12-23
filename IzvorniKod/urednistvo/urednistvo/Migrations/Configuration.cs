@@ -1,19 +1,21 @@
 namespace urednistvo.Migrations
 {
+    using Models;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<urednistvo.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<urednistvo.Models.UrednistvoDatabase>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "urednistvo.Models.ApplicationDbContext";
+            ContextKey = "urednistvo.Models.UrednistvoDatabase";
         }
 
-        protected override void Seed(urednistvo.Models.ApplicationDbContext context)
+        protected override void Seed(urednistvo.Models.UrednistvoDatabase context)
         {
             //  This method will be called after migrating to the latest version.
 
@@ -27,6 +29,12 @@ namespace urednistvo.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+            var editions = new List<Edition> {
+                new Edition { TimeOfRelease = DateTime.Now },
+                new Edition { TimeOfRelease = DateTime.Now.AddMonths(1) }
+            };
+            editions.ForEach(s => context.Editions.AddOrUpdate(p => p.TimeOfRelease, s));
+            context.SaveChanges();
         }
     }
 }
