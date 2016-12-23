@@ -20,7 +20,8 @@ namespace urednistvo.Controllers
         // GET: Notification/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var notification = db.Notifications.Where(d => d.NotificationId == id).ToList();
+            return View(notification);
         }
 
         // GET: Notification/Create

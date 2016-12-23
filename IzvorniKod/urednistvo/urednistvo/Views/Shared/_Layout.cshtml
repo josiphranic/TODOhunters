@@ -22,7 +22,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><span class="glyphicon glyphicon-home icon" onclick="goHome()"></span></li>
-                    <li><span class="glyphicon glyphicon-inbox icon"></span></li>
+                    <li><span class="glyphicon glyphicon-inbox icon" onclick="goNotification()"></span></li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -49,6 +49,9 @@
 <script type="text/javascript">
     function goHome() {
         window.location.href = '@Url.Action("Index", "Home")';
+    }
+    function goNotification() {
+        window.location.href = '@Url.Action("Index", "Notification")';
     }
 </script>
 <style>

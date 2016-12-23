@@ -7,9 +7,11 @@
 <h2>@ViewBag.Title.</h2>
 
 @foreach (var notification in Model)
-{ 
+{
     <div>
-    <li>@notification.Title          @notification.Time</li>
+    <li>
+        @Html.ActionLink(@notification.Title, "Details/" + @notification.NotificationId, "Notification")
+    </li>
     </div>
 }
 
