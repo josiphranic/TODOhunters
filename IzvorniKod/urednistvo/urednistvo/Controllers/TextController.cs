@@ -63,7 +63,11 @@ namespace urednistvo.Controllers
         // GET: Text/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
+            {
+                var text = db.Texts.Single(d => d.TextId == id);
+                return View(text);
+            }
         }
 
         // POST: Text/Edit/5
