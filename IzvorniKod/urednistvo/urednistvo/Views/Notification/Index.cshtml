@@ -1,25 +1,43 @@
-﻿@model List<urednistvo.Models.Notification>
+﻿@model IEnumerable<urednistvo.Models.Notification>
 
 @{
     ViewBag.Title = "Notifications";
 }
 
-<h2>@ViewBag.Title.</h2>
+<h2>@ViewBag.Title</h2>
 
-@foreach (var notification in Model)
-{
-    <div>
-        <li>
-            @Html.ActionLink(@notification.Title, "Details/" + @notification.NotificationId, "Notification")
-            <div class="control-label col-md-2">
-                @Html.ActionLink("Edit", "Edit/" + @notification.NotificationId, "Notification")
-            </div>
-            <div class="control-label col-md-2">
-                @Html.ActionLink("Delete", "Delete/" + @notification.NotificationId, "Notification")
-            </div>
-        </li>
-    </div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Time)
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
 
-  @Html.ActionLink("New notification", "Create", "Notification")
-}
+    @foreach (var n in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(@n.Title, "Details/" + @n.NotificationId, "Notification")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => n.Time)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit/" + @n.NotificationId, "Notification")
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete/" + @n.NotificationId, "Notification")
+            </td>
+        </tr>
+    }
 
+</table>
+
+<p>
+    <font size="3">@Html.ActionLink("Create New", "Create")</font>
+</p>

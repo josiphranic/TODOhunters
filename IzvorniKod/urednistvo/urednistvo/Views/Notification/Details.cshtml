@@ -1,20 +1,37 @@
-﻿@model List<urednistvo.Models.Notification>
+﻿@model urednistvo.Models.Notification
 @{
     ViewBag.Title = "Details";
 }
 
-@foreach (var n in Model)
-{
-    <h2>Details of "@n.Title"</h2>
-    <li>@n.Content</li>
+<h2>@ViewBag.Title</h2>
 
-    <div>
-        @Html.ActionLink("Edit", "Edit/" + @n.NotificationId, "Notification")
+<div class="form-horizontal">
+    
+    <div class="form-group">
+        <div class="col-md-10">@ViewBag.Message</div>
     </div>
-    <div>
-        @Html.ActionLink("Delete", "Delete/" + @n.NotificationId, "Notification")
+
+    <div class="form-group">
+        <label class="control-label col-md-1">Title</label>
+        <div class="control-label pull-left">
+            @Model.Title
+        </div>
     </div>
-}
+
+    <div class="form-group">
+        <label class="control-label col-md-1">Content</label>
+        <div class="control-label pull-left">
+            @Model.Content
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-1">Time</label>
+        <div class="control-label pull-left">
+            @Model.Time
+        </div>
+    </div>
+</div>
 
 <div>
     @Html.ActionLink("Back to List", "Index")

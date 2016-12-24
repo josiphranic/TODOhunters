@@ -23,7 +23,7 @@ namespace urednistvo.Controllers
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
-                var notification = db.Notifications.Where(d => d.NotificationId == id).ToList();
+                var notification = db.Notifications.Single(d => d.NotificationId == id);
                 return View(notification);
             }
         }
