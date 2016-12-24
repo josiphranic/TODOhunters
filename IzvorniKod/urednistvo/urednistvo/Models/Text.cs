@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace urednistvo.Models
@@ -9,6 +10,7 @@ namespace urednistvo.Models
         public string Title { get; set; }
         public string Subtitle { get; set; }
         public string Content { get; set; }
+        public DateTime Time { get; set; }
         //slike
         public int TextStatus { get; set; } //enum
         public bool WebPublishable { get; set; }

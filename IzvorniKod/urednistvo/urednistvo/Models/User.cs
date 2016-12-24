@@ -17,5 +17,10 @@ namespace urednistvo.Models
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Text> Texts { get; set; }
         public virtual ICollection<Rating> Ratings { get; set; }
+
+        public User()
+        {
+            Notifications = new List<Notification>();
+        }
     }
 }

@@ -56,8 +56,8 @@ namespace urednistvo.Controllers
                 var user = query.FirstOrDefault();
                 if(user != null)
                 {
-                    Session["UserID"] = account.UserId.ToString();
-                    Session["Username"] = account.UserName.ToString();
+                    Session["UserID"] = user.UserId.ToString();
+                    Session["Username"] = user.UserName.ToString();
                     return RedirectToAction("LoggedIn");
                 }
                 else

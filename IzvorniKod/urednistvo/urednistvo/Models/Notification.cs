@@ -11,5 +11,10 @@ namespace urednistvo.Models
         public DateTime Time { get; set; }
 
         public virtual ICollection<User> Users { get; set; }
+
+        public Notification()
+        {
+            Users = new List<User>();
+        }
     }
 }

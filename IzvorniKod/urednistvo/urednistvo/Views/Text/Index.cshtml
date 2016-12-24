@@ -1,0 +1,49 @@
+﻿@model IEnumerable<urednistvo.Models.Text>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Author)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Time)
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    @foreach (var text in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(@text.Title + "(" + @text.Subtitle + ")", "Details/" + @text.TextId, "Text")
+            </td>
+            <td>
+                @Html.ActionLink(@text.UserId + " ", "Details/" + @text.UserId, "User")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => text.Time)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit/" + @text.TextId, "Text")
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete/" + @text.TextId, "Text")
+            </td>
+        </tr>
+    }
+
+</table>
+
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
