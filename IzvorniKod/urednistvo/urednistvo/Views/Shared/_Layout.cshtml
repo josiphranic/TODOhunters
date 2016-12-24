@@ -22,6 +22,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><span class="glyphicon glyphicon-home icon" title="Početna" onclick="goHome()"></span></li>
+                    <li><span class="glyphicon glyphicon-list icon" title="Tekstovi" onclick="goText()"</span></li>
                     <li><span class="glyphicon glyphicon-inbox icon" title="Obavijesti" onclick="goNotification()"></span></li>
                     <li><span class="glyphicon glyphicon-upload icon" title="Upload" onclick="Upload()"></span></li>
                 </ul>
@@ -53,6 +54,9 @@
     }
     function goNotification() {
         window.location.href = '@Url.Action("Index", "Notification")';
+    }
+    function goText() {
+        window.location.href = '@Url.Action("Index", "Text")';
     }
 </script>
 <style>

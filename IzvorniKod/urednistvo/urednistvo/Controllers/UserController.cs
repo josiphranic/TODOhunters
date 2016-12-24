@@ -77,6 +77,15 @@ namespace urednistvo.Controllers
             return RedirectToAction("Login");
         }
 
+        public ActionResult Logoff()
+        {
+            Session["UserID"] = null;
+            Session["Username"] = null;
+
+            ViewBag.Message = "Successfully logged off";
+            return RedirectToAction("Index");
+        }
+
         public ActionResult Details(int id)
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
