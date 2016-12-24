@@ -9,9 +9,17 @@
 @foreach (var notification in Model)
 {
     <div>
-    <li>
-        @Html.ActionLink(@notification.Title, "Details/" + @notification.NotificationId, "Notification")
-    </li>
+        <li>
+            @Html.ActionLink(@notification.Title, "Details/" + @notification.NotificationId, "Notification")
+            <div class="control-label col-md-2">
+                @Html.ActionLink("Edit", "Edit/" + @notification.NotificationId, "Notification")
+            </div>
+            <div class="control-label col-md-2">
+                @Html.ActionLink("Delete", "Delete/" + @notification.NotificationId, "Notification")
+            </div>
+        </li>
     </div>
+
+  @Html.ActionLink("New notification", "Create", "Notification")
 }
 

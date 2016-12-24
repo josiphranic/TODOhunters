@@ -9,41 +9,49 @@ namespace urednistvo.Controllers
 {
     public class NotificationController : Controller
     {
-        private UrednistvoDatabase db = new UrednistvoDatabase();
-
         // GET: Notification
         public ActionResult Index()
         {
-            return View(db.Notifications.ToList());
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
+            {
+                return View(db.Notifications.ToList());
+            }
         }
 
         // GET: Notification/Details/5
         public ActionResult Details(int id)
         {
-            var notification = db.Notifications.Where(d => d.NotificationId == id).ToList();
-            return View(notification);
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
+            {
+                var notification = db.Notifications.Where(d => d.NotificationId == id).ToList();
+                return View(notification);
+            }
         }
 
         // GET: Notification/Create
         public ActionResult Create()
         {
-            return Content("Created");
+            return View();
         }
 
         // POST: Notification/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Notification notification)
         {
-            try
-            {
-                // TODO: Add insert logic here
+            notification.Time = DateTime.Now;
 
+            if (ModelState.IsValid)
+            {
+                using (UrednistvoDatabase db = new UrednistvoDatabase())
+                {
+                    db.Notifications.Add(notification);
+                    db.SaveChanges();
+                }
+                ModelState.Clear();
+                ViewBag.Message = "Notification \"" + notification.Title + " made at " + notification.Time + ".";
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
         // GET: Notification/Edit/5
@@ -54,17 +62,19 @@ namespace urednistvo.Controllers
 
         // POST: Notification/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, Notification notification)
         {
-            try
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
-                // TODO: Add update logic here
+                Notification n = db.Notifications.Find(id);
+                notification.Title = n.Title;
+                notification.Time = DateTime.Now;
+
+                db.Notifications.Remove(n);
+                db.Notifications.Add(notification);
+                db.SaveChanges();
 
                 return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
             }
         }
 

@@ -285,6 +285,8 @@
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\User\LoggedIn.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Notification\Create.cshtml" />
+    <Content Include="Views\Notification\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

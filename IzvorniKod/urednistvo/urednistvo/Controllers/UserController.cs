@@ -49,7 +49,11 @@ namespace urednistvo.Controllers
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
-                var user = db.Users.Single(u => u.UserName == account.UserName && u.Password == account.Password);
+                var query = from u in db.Users
+                            where u.UserName.Equals(account.UserName) &&
+                                u.Password.Equals(account.Password)
+                            select u;
+                var user = query.FirstOrDefault();
                 if(user != null)
                 {
                     Session["UserID"] = account.UserId.ToString();
