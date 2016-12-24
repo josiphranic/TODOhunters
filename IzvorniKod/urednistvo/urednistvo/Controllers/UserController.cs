@@ -76,5 +76,14 @@ namespace urednistvo.Controllers
             }
             return RedirectToAction("Login");
         }
+
+        public ActionResult Details(int id)
+        {
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
+            {
+                var user = db.Users.Single(d => d.UserId == id);
+                return View(user);
+            }
+        }
     }
 }

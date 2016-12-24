@@ -1,0 +1,108 @@
+﻿@model urednistvo.Models.Text
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Text details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Title
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            Subtitle
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subtitle)
+        </dd>
+
+        <dt>
+            Content
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Content)
+        </dd>
+
+        <dt>
+            Time
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Time)
+        </dd>
+
+    </dl>
+</div>
+
+@if ((String)Session["UserID"] == Model.UserId.ToString())
+{
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+
+            <dt>
+                Text status
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TextStatus)
+            </dd>
+
+            <dt>
+                Published on web
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.WebPublishable)
+            </dd>
+
+            <dt>
+                Published in edition
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EditionPublishable)
+            </dd>
+
+            <dt>
+                Wanted section
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.WantedSectionByAuthorId)
+            </dd>
+
+            <dt>
+                Suggestions
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Suggestions)
+            </dd>
+
+            <dt>
+                Final section
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FinalSectionId)
+            </dd>
+
+        </dl>
+    </div>
+}
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TextId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
