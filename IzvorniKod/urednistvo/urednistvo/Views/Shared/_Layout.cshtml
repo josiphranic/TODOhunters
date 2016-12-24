@@ -41,9 +41,9 @@
             <p>
                 &copy; @DateTime.Now.Year - Naš list
                 <span class="glyphicon glyphicon-asterisk"></span>
-                @Html.ActionLink("TODOHunters", "About", "Home")
+                <a href='@Url.Action("About","Home")'>TODOHunters</a>
                 <span class="glyphicon glyphicon-asterisk"></span>
-                @Html.ActionLink("Kontakt", "Contact", "Home")
+                <a href='@Url.Action("Contact","Home")'>Kontakt</a>
             </p>
         </footer>
     </div>

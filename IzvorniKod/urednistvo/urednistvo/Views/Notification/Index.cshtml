@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<urednistvo.Models.Notification>
 
 @{
-    ViewBag.Title = "Notifications";
+    ViewBag.Title = "Obavijesti";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -28,10 +28,10 @@
                 @Html.DisplayFor(modelItem => n.Time)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit/" + @n.NotificationId, "Notification")
+                <a class="glyphicon glyphicon-pencil" href='@Url.Action("Edit/" + @n.NotificationId, "Notification")'></a>
             </td>
             <td>
-                @Html.ActionLink("Delete", "Delete/" + @n.NotificationId, "Notification")
+                <a class="glyphicon glyphicon-trash" href='@Url.Action("Delete/" + @n.NotificationId, "Notification")'></a>
             </td>
         </tr>
     }

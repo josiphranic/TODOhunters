@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using urednistvo.Models;
 
 namespace urednistvo.Controllers
 {
@@ -10,7 +11,12 @@ namespace urednistvo.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
+            {
+                // ovdje u svemu sto se salje na pocetni view filtrirati sto se tice logiranog korisnika
+                // prenijeti i popis tekstova pomocu TUPLEa!
+                return View(db.Notifications.ToList());
+            }
         }
 
         public ActionResult About()
