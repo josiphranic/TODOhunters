@@ -60,8 +60,8 @@ namespace urednistvo.Controllers
             return View();
         }
 
-        // GET: Text/Edit/5
-        public ActionResult Edit(int id)
+        // GET: Text/EditEditor/5
+        public ActionResult EditEditor(int id)
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
@@ -70,9 +70,37 @@ namespace urednistvo.Controllers
             }
         }
 
-        // POST: Text/Edit/5
+        // POST: Text/EditEditor/5
         [HttpPost]
-        public ActionResult Edit(int id, Text text)
+        public ActionResult EditEditor(int id, Text text)
+        {
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
+            {
+                Text t = db.Texts.Find(id);
+                text.Title = t.Title;
+                text.Time = DateTime.Now;
+
+                db.Texts.Remove(t);
+                db.Texts.Add(text);
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+        }
+
+        // GET: Text/EditMember/5
+        public ActionResult EditMember(int id)
+        {
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
+            {
+                var text = db.Texts.Single(d => d.TextId == id);
+                return View(text);
+            }
+        }
+
+        // POST: Text/EditMember/5
+        [HttpPost]
+        public ActionResult EditMember(int id, Text text)
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {

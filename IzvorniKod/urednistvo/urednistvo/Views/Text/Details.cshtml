@@ -103,6 +103,7 @@
 }
 
 <p>
-    @Html.ActionLink("Master editor edit", "Edit", new { id = Model.TextId }) |
+    @Html.ActionLink("Master editor edit", "EditEditor", new { id = Model.TextId }) |
+    @Html.ActionLink("Editorial council member edit", "EditMember", new { id = Model.TextId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
