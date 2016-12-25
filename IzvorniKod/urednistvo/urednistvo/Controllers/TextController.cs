@@ -6,53 +6,62 @@ using System.Web.Mvc;
 using urednistvo.Models;
 using urednistvo.ModelsView;
 using urednistvo.ModelsView.Textual;
+using urednistvo.ModelsView.Utilities;
 
 namespace urednistvo.Controllers
 {
     public class TextController : Controller
     {
+        private UrednistvoDatabase db = new UrednistvoDatabase();
+
+        public TextView getTextView(Text text)
+        {
+            TextView textView = new TextView();
+
+            textView.TextId = text.TextId;
+            textView.Title = text.Title;
+            textView.Subtitle = text.Subtitle;
+            textView.Username = db.Users.Single(u => u.UserId == text.UserId).UserName;
+            textView.UserId = text.UserId;
+            textView.Time = text.Time;
+            textView.Content = text.Content;
+            textView.TextStatus = TextStatusNameGetter.getName(text.TextStatus);
+            textView.WebPublishable = text.WebPublishable.ToString();
+            textView.EditionPublishable = text.EditionPublishable.ToString();
+
+            if (db.Sections.Count() != 0)
+            {
+                Section section = db.Sections.Single(s => s.SectionId == text.FinalSectionId);
+                textView.FinalSection = (section == null) ? "-" : section.Title;
+                section = db.Sections.Single(s => s.SectionId == text.WantedSectionByAuthorId);
+                textView.WantedSectionByAuthor = (section == null) ? "-" : section.Title;
+            }
+            else
+            {
+                textView.FinalSection = "-";
+                textView.WantedSectionByAuthor = "-";
+            }
+
+            return textView;
+        } 
+
         // GET: Text
         public ActionResult Index()
         {
-            using (UrednistvoDatabase db = new UrednistvoDatabase())
+            List<Text> list = db.Texts.ToList();
+            List<TextView> listView = new List<TextView>();
+
+            foreach(Text t in list.ToList())
             {
-                List<Text> list = db.Texts.ToList();
-                List<TextIndexViewModel> listView = new List<TextIndexViewModel>();
-
-                foreach(Text t in list.ToList())
-                {
-                    TextIndexViewModel tivm = new TextIndexViewModel();
-
-                    tivm.TextID = t.TextId;
-                    tivm.Title = t.Title;
-                    tivm.Subtitle = t.Subtitle;
-                    tivm.Username = db.Users.Single(u => u.UserId == t.UserId).UserName;
-                    tivm.UserID = t.UserId;
-
-                    if(t.FinalSection == null)
-                    {
-                        tivm.FinalSection = "-";
-                    }
-                    else
-                    {
-                        tivm.FinalSection = t.FinalSection.ToString();
-                    }
-                    tivm.Time = t.Time;
-
-                    listView.Add(tivm);
-                }
-                return View(listView);
+                listView.Add(getTextView(t));
             }
+            return View(listView);
         }
 
         // GET: Text/Details/5
         public ActionResult Details(int id)
         {
-            using (UrednistvoDatabase db = new UrednistvoDatabase())
-            {
-                var text = db.Texts.Single(d => d.TextId == id);
-                return View(text);
-            }
+            return View(getTextView(db.Texts.Single(u => u.TextId == id)));
         }
 
         // GET: Text/Create
@@ -104,12 +113,20 @@ namespace urednistvo.Controllers
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
-                Text t = db.Texts.Find(id);
-                text.Title = t.Title;
-                text.Time = DateTime.Now;
+                var query = from ord in db.Texts
+                            where ord.TextId == id
+                            select ord;
 
-                db.Texts.Remove(t);
-                db.Texts.Add(text);
+                foreach(Text t in query)
+                {
+                    t.EditionPublishable = text.EditionPublishable;
+                    t.WebPublishable = text.WebPublishable;
+                    //t.TextStatus = TextStatus.ACCEPTED
+                    t.Suggestions = text.Suggestions;
+                    t.FinalSectionId = text.FinalSectionId;
+                    t.FinalSection = text.FinalSection;
+                }
+
                 db.SaveChanges();
 
                 return RedirectToAction("Index");

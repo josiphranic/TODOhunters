@@ -221,7 +221,7 @@
       <DependentUpon>201612251136419_kokos9.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="ModelsView\Textual\TextIndexViewModel.cs" />
+    <Compile Include="ModelsView\Utilities\TextStatusNameGetter.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Edition.cs" />
     <Compile Include="Models\Notification.cs" />

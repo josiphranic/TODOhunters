@@ -1,4 +1,4 @@
-﻿@model List<urednistvo.ModelsView.Textual.TextIndexViewModel>
+﻿@model List<urednistvo.ModelsView.Textual.TextView>
 
 @{
     ViewBag.Title = "Index";
@@ -6,6 +6,7 @@
 
 <h2>Index</h2>
 //Dodati da se moze editati i brisati SVOJ text odavde
+//Dodati pregledavanje podlistaka klikom na section vrijednost
 
 <table class="table">
     <tr>
@@ -29,10 +30,10 @@
     {
         <tr>
             <td>
-                @Html.ActionLink(@text.Title + "(" + @text.Subtitle + ")", "Details/" + @text.TextID, "Text")
+                @Html.ActionLink(@text.Title + "(" + @text.Subtitle + ")", "Details/" + @text.TextId, "Text")
             </td>
             <td>
-                @Html.ActionLink(@text.Username + " ", "Details/" + @text.UserID, "User")
+                @Html.ActionLink(@text.Username + " ", "Details/" + @text.UserId, "User")
             </td>
             <td>
                 @Html.ActionLink(@text.FinalSection + " ", "Index" + @text.FinalSection, "Section")
@@ -41,10 +42,10 @@
                 @Html.DisplayFor(modelItem => text.Time)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit/" + @text.TextID, "Text")
+                @Html.ActionLink("Edit", "Edit/" + @text.TextId, "Text")
             </td>
             <td>
-                @Html.ActionLink("Delete", "Delete/" + @text.TextID, "Text")
+                @Html.ActionLink("Delete", "Delete/" + @text.TextId, "Text")
             </td>
         </tr>
     }

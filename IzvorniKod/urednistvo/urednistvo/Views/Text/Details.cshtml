@@ -1,4 +1,4 @@
-﻿@model urednistvo.Models.Text
+﻿@model urednistvo.ModelsView.Textual.TextView
 
 @{
     ViewBag.Title = "Details";
@@ -80,15 +80,7 @@
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.WantedSectionByAuthorId)
-            </dd>
-
-            <dt>
-                Suggestions
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Suggestions)
+                @Html.DisplayFor(model => model.WantedSectionByAuthor)
             </dd>
 
             <dt>
@@ -96,7 +88,7 @@
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.FinalSectionId)
+                @Html.DisplayFor(model => model.FinalSection)
             </dd>
 
         </dl>
