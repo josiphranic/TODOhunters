@@ -212,7 +212,16 @@
     <Compile Include="Migrations\201612241146541_kokos7.Designer.cs">
       <DependentUpon>201612241146541_kokos7.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612251103071_kokos8.cs" />
+    <Compile Include="Migrations\201612251103071_kokos8.Designer.cs">
+      <DependentUpon>201612251103071_kokos8.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612251136419_kokos9.cs" />
+    <Compile Include="Migrations\201612251136419_kokos9.Designer.cs">
+      <DependentUpon>201612251136419_kokos9.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="ModelsView\Textual\TextIndexViewModel.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Edition.cs" />
     <Compile Include="Models\Notification.cs" />
@@ -345,6 +354,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612241146541_kokos7.resx">
       <DependentUpon>201612241146541_kokos7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612251103071_kokos8.resx">
+      <DependentUpon>201612251103071_kokos8.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612251136419_kokos9.resx">
+      <DependentUpon>201612251136419_kokos9.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

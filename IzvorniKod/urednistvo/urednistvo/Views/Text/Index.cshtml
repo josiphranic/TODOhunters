@@ -1,21 +1,25 @@
-﻿@model IEnumerable<urednistvo.Models.Text>
+﻿@model List<urednistvo.ModelsView.Textual.TextIndexViewModel>
 
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
+//Dodati da se moze editati i brisati SVOJ text odavde
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            Title
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Author)
+            Author
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Time)
+            Section
+        </th>
+        <th>
+            Time
         </th>
         <th></th>
         <th></th>
@@ -25,19 +29,22 @@
     {
         <tr>
             <td>
-                @Html.ActionLink(@text.Title + "(" + @text.Subtitle + ")", "Details/" + @text.TextId, "Text")
+                @Html.ActionLink(@text.Title + "(" + @text.Subtitle + ")", "Details/" + @text.TextID, "Text")
             </td>
             <td>
-                @Html.ActionLink(@text.UserId + " ", "Details/" + @text.UserId, "User")
+                @Html.ActionLink(@text.Username + " ", "Details/" + @text.UserID, "User")
+            </td>
+            <td>
+                @Html.ActionLink(@text.FinalSection + " ", "Index" + @text.FinalSection, "Section")
             </td>
             <td>
                 @Html.DisplayFor(modelItem => text.Time)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit/" + @text.TextId, "Text")
+                @Html.ActionLink("Edit", "Edit/" + @text.TextID, "Text")
             </td>
             <td>
-                @Html.ActionLink("Delete", "Delete/" + @text.TextId, "Text")
+                @Html.ActionLink("Delete", "Delete/" + @text.TextID, "Text")
             </td>
         </tr>
     }

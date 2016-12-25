@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using urednistvo.Models;
 using urednistvo.ModelsView;
+using urednistvo.ModelsView.Textual;
 
 namespace urednistvo.Controllers
 {
@@ -15,7 +16,32 @@ namespace urednistvo.Controllers
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
-                return View(db.Texts.ToList());
+                List<Text> list = db.Texts.ToList();
+                List<TextIndexViewModel> listView = new List<TextIndexViewModel>();
+
+                foreach(Text t in list.ToList())
+                {
+                    TextIndexViewModel tivm = new TextIndexViewModel();
+
+                    tivm.TextID = t.TextId;
+                    tivm.Title = t.Title;
+                    tivm.Subtitle = t.Subtitle;
+                    tivm.Username = db.Users.Single(u => u.UserId == t.UserId).UserName;
+                    tivm.UserID = t.UserId;
+
+                    if(t.FinalSection == null)
+                    {
+                        tivm.FinalSection = "-";
+                    }
+                    else
+                    {
+                        tivm.FinalSection = t.FinalSection.ToString();
+                    }
+                    tivm.Time = t.Time;
+
+                    listView.Add(tivm);
+                }
+                return View(listView);
             }
         }
 
@@ -47,7 +73,9 @@ namespace urednistvo.Controllers
                     text.WebPublishable = false;
                     text.EditionPublishable = false;
                     text.FinalSectionId = -1;
-                    text.UserId = Int32.Parse((String)(Session["UserID"]));
+
+                    text.UserId = Int32.Parse((String)(Session["UserID"]));;
+
                     text.Time = DateTime.Now;
 
                     db.Texts.Add(text);

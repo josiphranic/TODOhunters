@@ -10,12 +10,13 @@ namespace urednistvo.ModelsView.Textual
         public string Title { get; set; }
         public string Subtitle { get; set; }
         public string Content { get; set; }
-        public SectionView WantedSectionByAuthor { get; set; }
-        public SectionView FinalSection { get; set; }
+        public string Username { get; set; }
+        public string WantedSectionByAuthor { get; set; }
+        public string FinalSection { get; set; }
         public bool WebPublishable { get; set; }
-        public IEnumerable<string> Suggestions { get; set; }
-        public IEnumerable<string> Comments { get; set; }
-        public IEnumerable<RatingView> Ratings { get; set; }
+        public ICollection<string> Suggestions { get; set; }
+        public ICollection<string> Comments { get; set; }
+        public ICollection<RatingView> Ratings { get; set; }
         public TextStatus TextStatus { get; set; }
     }
 }
