@@ -99,5 +99,22 @@ namespace urednistvo.Controllers
                 return View();
             }
         }
+
+        public static void createNotification(Text text, string message)
+        {
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
+            {
+                Notification notification = new Notification();
+
+                notification.Title = "Obavijest o vasem tekstu";
+                notification.Content = message;
+                notification.Users.Add(db.Users.Single(u => u.UserId == text.UserId));
+                //PROVJERITI REDAK IZNAD JEL OK
+                notification.Time = DateTime.Now;
+
+                db.Notifications.Add(notification);
+                db.SaveChanges();
+            }
+        }
     }
 }

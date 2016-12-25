@@ -5,8 +5,8 @@
 }
 
 <h2>Index</h2>
-//Dodati da se moze editati i brisati SVOJ text odavde
-//Dodati pregledavanje podlistaka klikom na section vrijednost
+<font color="#FF0000">@TempData["Message"]</font>
+<br /> 
 
 <table class="table">
     <tr>
@@ -53,5 +53,5 @@
 </table>
 
 <p>
-    @Html.ActionLink("Back to List", "Index")
+    <font size="3">@Html.ActionLink("Create New", "Create")</font>
 </p>

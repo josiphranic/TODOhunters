@@ -67,6 +67,11 @@ namespace urednistvo.Controllers
         // GET: Text/Create
         public ActionResult Create()
         {
+            if(Session["UserID"] == null)
+            {
+                TempData["Message"] = "You must be logged in to create a text.";
+                return RedirectToAction("Index");
+            }
             return View();
         }
 
@@ -125,8 +130,16 @@ namespace urednistvo.Controllers
                     t.FinalSectionId = text.FinalSectionId;
                     t.FinalSection = text.FinalSection;
 
-                    if (submit == "Return") t.TextStatus = (int)TextStatus.RETURNED;
-                    else if (submit == "Accept") t.TextStatus = (int)TextStatus.ACCEPTED;
+                    if (submit == "Return")
+                    {
+                        NotificationController.createNotification(t, "Vas tekst mora biti doraden po uputama.");
+                        t.TextStatus = (int)TextStatus.RETURNED;
+                    }
+                    else if (submit == "Accept")
+                    {
+                        NotificationController.createNotification(t, "Vas tekst je prihvacen. Ostatak informacija nalazi se u detaljima teksta.");
+                        t.TextStatus = (int)TextStatus.ACCEPTED;
+                    }
                 }
 
                 db.SaveChanges();

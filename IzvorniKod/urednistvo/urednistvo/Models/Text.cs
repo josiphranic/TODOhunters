@@ -7,6 +7,7 @@ namespace urednistvo.Models
     public class Text
     {
         public int TextId { get; set; }
+
         public string Title { get; set; }
         public string Subtitle { get; set; }
         public string Content { get; set; }
