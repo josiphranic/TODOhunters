@@ -34,9 +34,11 @@ namespace urednistvo.Controllers
                     db.SaveChanges();
                 }
                 ModelState.Clear();
-                ViewBag.Message = account.FirstName + " " + account.LastName + " succesfully registered.";
+                Session["UserID"] = account.UserId.ToString();
+                Session["Username"] = account.UserName.ToString();
+                TempData["Message"] = account.FirstName + " " + account.LastName + " succesfully registered.";
             }
-            return View();
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Login()
@@ -58,7 +60,8 @@ namespace urednistvo.Controllers
                 {
                     Session["UserID"] = user.UserId.ToString();
                     Session["Username"] = user.UserName.ToString();
-                    return RedirectToAction("LoggedIn");
+                    TempData["Message"] = "Successful login";
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
@@ -68,22 +71,13 @@ namespace urednistvo.Controllers
             return View();
         }
 
-        public ActionResult LoggedIn()
-        {
-            if(Session["UserID"] != null)
-            {
-                return View();
-            }
-            return RedirectToAction("Login");
-        }
-
         public ActionResult Logoff()
         {
             Session["UserID"] = null;
             Session["Username"] = null;
 
-            ViewBag.Message = "Successfully logged off";
-            return RedirectToAction("Index");
+            TempData["Message"] = "Successfully logged off";
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Details(int id)

@@ -96,7 +96,8 @@ namespace urednistvo.Controllers
                     db.SaveChanges();
                 }
                 ModelState.Clear();
-                //ViewBag.Message = "Text \"" + text.Title + " made at " + notification.Time + ".";
+                TempData["Message"] = "Tekst je uspjesno stvoren.";
+
                 return RedirectToAction("Index");
             }
             return View();
@@ -144,6 +145,7 @@ namespace urednistvo.Controllers
 
                 db.SaveChanges();
 
+                TempData["Message"] = "Obavijest o odluci je poslana autoru teksta.";
                 return RedirectToAction("Index");
             }
         }

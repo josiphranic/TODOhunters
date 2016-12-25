@@ -23,6 +23,7 @@
                 <ul class="nav navbar-nav">
                     <li><span class="glyphicon glyphicon-home icon" title="Početna" onclick="goHome()"></span></li>
                     <li><span class="glyphicon glyphicon-list icon" title="Tekstovi" onclick="gotoTexts()"></span></li>
+                    <li><span class="glyphicon glyphicon-user icon" title="Korisnici" onclick="gotoUsers()"></span></li>
                     @if (Session["UserID"] != null)
                     {
                         <li><span class="glyphicon glyphicon-inbox icon" title="Obavijesti" onclick="gotoNotifications()"></span></li>
@@ -61,6 +62,9 @@
     }
     function gotoTexts() {
         window.location.href = '@Url.Action("Index", "Text")';
+    }
+    function gotoUsers() {
+        window.location.href = '@Url.Action("Index", "User")';
     }
     function upload() {
         window.location.href = '@Url.Action("Create", "Text")';
