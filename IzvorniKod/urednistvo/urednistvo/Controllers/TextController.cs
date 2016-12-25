@@ -109,7 +109,7 @@ namespace urednistvo.Controllers
 
         // POST: Text/EditEditor/5
         [HttpPost]
-        public ActionResult EditEditor(int id, Text text)
+        public ActionResult EditEditor(int id, Text text, string submit)
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
@@ -121,10 +121,12 @@ namespace urednistvo.Controllers
                 {
                     t.EditionPublishable = text.EditionPublishable;
                     t.WebPublishable = text.WebPublishable;
-                    //t.TextStatus = TextStatus.ACCEPTED
                     t.Suggestions = text.Suggestions;
                     t.FinalSectionId = text.FinalSectionId;
                     t.FinalSection = text.FinalSection;
+
+                    if (submit == "Return") t.TextStatus = (int)TextStatus.RETURNED;
+                    else if (submit == "Accept") t.TextStatus = (int)TextStatus.ACCEPTED;
                 }
 
                 db.SaveChanges();

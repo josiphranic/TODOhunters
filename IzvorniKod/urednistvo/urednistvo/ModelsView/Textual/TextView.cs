@@ -23,6 +23,8 @@ namespace urednistvo.ModelsView.Textual
         public string WebPublishable { get; set; }
         public string EditionPublishable { get; set; }
 
+        public bool Returned { get; set; }
+
         public ICollection<string> Suggestions { get; set; }
         public ICollection<string> Comments { get; set; }
         public ICollection<RatingView> Ratings { get; set; }
