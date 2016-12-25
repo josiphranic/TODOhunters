@@ -26,7 +26,7 @@
                     @if (Session["UserID"] != null)
                     {
                         <li><span class="glyphicon glyphicon-inbox icon" title="Obavijesti" onclick="gotoNotifications()"></span></li>
-                        <li><span class="glyphicon glyphicon-upload icon" title="Upload" onclick="Upload()"></span></li>
+                        <li><span class="glyphicon glyphicon-upload icon" title="Upload" onclick="upload()"></span></li>
                     }
                     <li><span class="glyphicon glyphicon-book icon" title="Arhiva" onclick="gotoArchive()"></span></li>
                 </ul>
@@ -61,6 +61,9 @@
     }
     function gotoTexts() {
         window.location.href = '@Url.Action("Index", "Text")';
+    }
+    function upload() {
+        window.location.href = '@Url.Action("Create", "Text")';
     }
 </script>
 <style>
