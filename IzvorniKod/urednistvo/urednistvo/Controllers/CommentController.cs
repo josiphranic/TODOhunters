@@ -15,18 +15,22 @@ namespace urednistvo.Controllers
     {
         private UrednistvoDatabase db = new UrednistvoDatabase();
 
-        public CommentView createCommentView(Comment comment, int TextId)
+        public CommentView createCommentView(Comment comment)
         {
-            CommentView cView = new CommentView();
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
+            {
 
-            cView.Content = comment.Content;
-            cView.TextId = (int)TextId;
-            //cView.TextTitle = db.Texts.Single(t => t.TextId == (int)TextId).Title;
-            cView.Time = comment.Time;
-            cView.UserId = comment.UserId;
-            //cView.Username = db.Users.Single(u => u.UserId == comment.UserId).UserName;
+                CommentView cView = new CommentView();
 
-            return cView;
+                cView.Content = comment.Content;
+                cView.TextId = comment.TextId;
+                cView.TextTitle = db.Texts.Single(t => t.TextId == comment.TextId).Title;
+                cView.Time = comment.Time;
+                cView.UserId = comment.UserId;
+                cView.Username = db.Users.Single(u => u.UserId == comment.UserId).UserName;
+
+                return cView;
+            }
         }
 
 
@@ -46,7 +50,21 @@ namespace urednistvo.Controllers
             List<CommentView> commentViews = new List<CommentView>();
             foreach(Comment comment in query)
             {
-                commentViews.Add(createCommentView(comment, id));
+                commentViews.Add(createCommentView(comment));
+            }
+            return View(commentViews);
+        }
+
+        public ActionResult ByUser(int id)
+        {
+            var query = from ord in db.Comments
+                        where ord.UserId == id
+                        select ord;
+
+            List<CommentView> commentViews = new List<CommentView>();
+            foreach(Comment comment in query)
+            {
+                commentViews.Add(createCommentView(comment));
             }
             return View(commentViews);
         }

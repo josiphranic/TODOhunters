@@ -181,23 +181,12 @@ namespace urednistvo.Controllers
         // GET: Text/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
-        }
-
-        // POST: Text/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                db.Texts.Remove(db.Texts.Find(id));
+                db.SaveChanges();
             }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("Index");
         }
     }
 }
