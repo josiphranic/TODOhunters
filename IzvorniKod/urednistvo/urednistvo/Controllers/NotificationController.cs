@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using urednistvo.Models;
+using urednistvo.ModelsView.Textual;
 
 namespace urednistvo.Controllers
 {
@@ -15,27 +16,41 @@ namespace urednistvo.Controllers
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
                 int currentId = (Session["UserId"] == null) ? 0 : Int32.Parse((String)Session["UserId"]);
-                List<Notification> notifications = new List<Notification>();
+                List<NotificationView> notificationViews = new List<NotificationView>();
 
                 foreach(Notification n in db.Notifications.ToList())
                 {
                     if(n.Users == null || n.Users.Count == 0)
                     {
-                        notifications.Add(n);
+                        notificationViews.Add(createNotificationView(n, 0));
                         continue;
                     }
                     foreach(User u in n.Users)
                     {
                         if(u.UserId == currentId)
                         {
-                            notifications.Add(n);
+                            notificationViews.Add(createNotificationView(n, currentId));
                             break;
                         }
                     }
                 }
 
-                return View(notifications);
+                return View(notificationViews);
             }
+        }
+
+        private NotificationView createNotificationView(Notification n, int UserId)
+        {
+            NotificationView nView = new NotificationView();
+
+            nView.NotificationId = n.NotificationId;
+            nView.Title = n.Title;
+            nView.Time = n.Time;
+            nView.Content = n.Content;
+            nView.UserId = UserId;
+            nView.ForUser = n.Users.Count == 0 ? "Public" : n.Users.ElementAt(0).UserName;
+
+            return nView;
         }
 
         // GET: Notification/Details/5

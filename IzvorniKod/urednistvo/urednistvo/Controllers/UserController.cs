@@ -4,17 +4,39 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using urednistvo.Models;
+using urednistvo.ModelsView;
+using urednistvo.ModelsView.Utilities;
 
 namespace urednistvo.Controllers
 {
     public class UserController : Controller
     {
+        public UserView createUserView(User user)
+        {
+            UserView uView = new UserView();
+
+            uView.UserId = user.UserId;
+            uView.Email = user.Email;
+            uView.FirstName = user.FirstName;
+            uView.LastName = user.LastName;
+            uView.Role = RoleNameGetter.getName(user.Role);
+            uView.UserName = user.UserName;
+
+            return uView;
+        }
+
         // GET: User
         public ActionResult Index()
         {
             using(UrednistvoDatabase db = new UrednistvoDatabase())
             {
-                return View(db.Users.ToList());
+                List<UserView> userViews = new List<UserView>();
+
+                foreach(User u in db.Users.ToList())
+                {
+                    userViews.Add(createUserView(u));
+                }
+                return View(userViews);
             }
         }
 
@@ -85,7 +107,7 @@ namespace urednistvo.Controllers
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
                 var user = db.Users.Single(d => d.UserId == id);
-                return View(user);
+                return View(createUserView(user));
             }
         }
     }
