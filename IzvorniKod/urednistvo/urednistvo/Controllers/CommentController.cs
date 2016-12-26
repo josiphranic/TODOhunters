@@ -15,16 +15,16 @@ namespace urednistvo.Controllers
     {
         private UrednistvoDatabase db = new UrednistvoDatabase();
 
-        public CommentView createCommentView(Comment comment)
+        public CommentView createCommentView(Comment comment, int TextId)
         {
             CommentView cView = new CommentView();
 
             cView.Content = comment.Content;
-            cView.TextId = comment.TextId;
-            cView.TextTitle = comment.Text.Title;
+            cView.TextId = (int)TextId;
+            //cView.TextTitle = db.Texts.Single(t => t.TextId == (int)TextId).Title;
             cView.Time = comment.Time;
             cView.UserId = comment.UserId;
-            cView.Username = comment.User.UserName;
+            //cView.Username = db.Users.Single(u => u.UserId == comment.UserId).UserName;
 
             return cView;
         }
@@ -37,16 +37,16 @@ namespace urednistvo.Controllers
         }
 
         // GET: Comments
-        public ActionResult ByText(int TextId)
+        public ActionResult ByText(int id)
         {
             var query = from ord in db.Comments
-                        where ord.TextId == TextId
+                        where ord.TextId == id
                         select ord;
 
             List<CommentView> commentViews = new List<CommentView>();
             foreach(Comment comment in query)
             {
-                commentViews.Add(createCommentView(comment));
+                commentViews.Add(createCommentView(comment, id));
             }
             return View(commentViews);
         }
@@ -88,7 +88,7 @@ namespace urednistvo.Controllers
                     
                     comment.Time = DateTime.Now;
                     comment.UserId = Int32.Parse((String)Session["UserID"]);
-                    comment.TextId = 22;
+                    comment.TextId = id;
 
                     //return Content(comment.Content + " " + comment.Time + " " + comment.UserId + " " + comment.TextId);
 

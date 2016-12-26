@@ -25,7 +25,7 @@
     {
         <tr>
             <td>
-                @Html.ActionLink(@comment.Username, "Details/" + @comment.UserId, "User")
+                @Html.ActionLink(@comment.UserId + " ", "Details/" + @comment.UserId, "User")
             </td>
             <td>
                 @Html.DisplayFor(modelItem => comment.Content)

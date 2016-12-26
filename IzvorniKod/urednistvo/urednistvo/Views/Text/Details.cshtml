@@ -77,14 +77,11 @@
             </dd>
 
             <dt>
-                Final section
+                Suggestion
             </dt>
 
             <dd>
-                @foreach (var suggestion in Model.Suggestions)
-                {
-                    <label>suggestion</label>
-                }
+                @Html.DisplayFor(model => model.Suggestions)
             </dd>
 
             <dt>
