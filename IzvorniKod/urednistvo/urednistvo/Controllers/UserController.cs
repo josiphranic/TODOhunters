@@ -58,6 +58,8 @@ namespace urednistvo.Controllers
                 ModelState.Clear();
                 Session["UserID"] = account.UserId.ToString();
                 Session["Username"] = account.UserName.ToString();
+                Session["Role"] = RoleNameGetter.getName(account.Role);
+
                 TempData["Message"] = account.FirstName + " " + account.LastName + " succesfully registered.";
             }
             return RedirectToAction("Index", "Home");
@@ -82,6 +84,8 @@ namespace urednistvo.Controllers
                 {
                     Session["UserID"] = user.UserId.ToString();
                     Session["Username"] = user.UserName.ToString();
+                    Session["Role"] = RoleNameGetter.getName(user.Role);
+
                     TempData["Message"] = "Successful login";
                     return RedirectToAction("Index", "Home");
                 }
@@ -97,6 +101,7 @@ namespace urednistvo.Controllers
         {
             Session["UserID"] = null;
             Session["Username"] = null;
+            Session["Role"] = null;
 
             TempData["Message"] = "Successfully logged off";
             return RedirectToAction("Index", "Home");

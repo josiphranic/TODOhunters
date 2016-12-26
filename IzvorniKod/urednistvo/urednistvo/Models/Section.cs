@@ -11,6 +11,5 @@ namespace urednistvo.Models
         public virtual Edition Edition { get; set; }
 
         public virtual ICollection<Text> Texts { get; set; }
-
     }
 }

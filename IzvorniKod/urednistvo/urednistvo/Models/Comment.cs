@@ -9,7 +9,7 @@ namespace urednistvo.Models
         [Key, ForeignKey("User"), Column(Order = 0)]
         public int UserId { get; set; }
         [Key, ForeignKey("Text"), Column(Order = 1)]
-        public int TextId { get; set; }
+        public int TextId { get; set; }    
 
         public string Content { get; set; }
         public DateTime Time { get; set; }

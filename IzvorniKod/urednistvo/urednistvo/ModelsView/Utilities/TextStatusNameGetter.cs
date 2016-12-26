@@ -9,11 +9,11 @@ namespace urednistvo.ModelsView.Utilities
     {
         public static string getName(int i)
         {
-            if (TextStatus.SENT.Equals(i)) return "Sent";
-            if (TextStatus.DELIVERED.Equals(i)) return "Delivered";
-            if (TextStatus.ACCEPTED.Equals(i)) return "Accepted";
-            if (TextStatus.RETURNED.Equals(i)) return "Returned";
-            if (TextStatus.LECTORED.Equals(i)) return "Lectiored";
+            if ((int)TextStatus.SENT == i) return "Sent";
+            if ((int)TextStatus.DELIVERED == i) return "Delivered";
+            if ((int)TextStatus.ACCEPTED == i) return "Accepted";
+            if ((int)TextStatus.RETURNED == i) return "Returned";
+            if ((int)TextStatus.LECTORED == i) return "Lectiored";
             return "Unknown";
         }
     }

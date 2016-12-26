@@ -1,0 +1,45 @@
+﻿@model List<urednistvo.ModelsView.Textual.CommentView>
+
+@{
+    ViewBag.Title = "ByText";
+}
+
+<h2>ByText</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Author
+        </th>
+        <th>
+            Content
+        </th>
+        <th>
+            Time
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    @foreach (var comment in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(@comment.Username, "Details/" + @comment.UserId, "User")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => comment.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => comment.Time)
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

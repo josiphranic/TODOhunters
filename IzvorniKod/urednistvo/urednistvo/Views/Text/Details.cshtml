@@ -5,6 +5,8 @@
 }
 
 <h2>Text details</h2>
+<font color="#FF0000">@TempData["Message"]</font>
+<br />
 
 <div>
     <hr />
@@ -75,6 +77,17 @@
             </dd>
 
             <dt>
+                Final section
+            </dt>
+
+            <dd>
+                @foreach (var suggestion in Model.Suggestions)
+                {
+                    <label>suggestion</label>
+                }
+            </dd>
+
+            <dt>
                 Wanted section
             </dt>
 
@@ -95,7 +108,17 @@
 }
 
 <p>
-    @Html.ActionLink("Master editor edit", "EditEditor", new { id = Model.TextId }) |
-    @Html.ActionLink("Editorial council member edit", "EditMember", new { id = Model.TextId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @if ((String)Session["Role"] == "Editor")
+    {
+        @Html.ActionLink("Master editor edit", "EditEditor", new { id = Model.TextId });
+        <label> |</label>
+        @Html.ActionLink("Editorial council member edit", "EditMember", new { id = Model.TextId });
+        <label> |</label>
+    }
+    @if ((String)Session["Role"] == "Editorial Council Member") {
+        @Html.ActionLink("Editorial council member edit", "EditMember", new { id = Model.TextId});
+        <label> |</label>
+    }
+    @Html.ActionLink("Back to List", "Index")<label> |</label>
+    @Html.ActionLink("Comment", "Create/" + Model.TextId, "Comment")
 </p>
