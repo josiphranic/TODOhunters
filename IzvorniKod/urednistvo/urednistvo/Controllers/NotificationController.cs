@@ -14,7 +14,27 @@ namespace urednistvo.Controllers
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
-                return View(db.Notifications.ToList());
+                int currentId = (Session["UserId"] == null) ? 0 : Int32.Parse((String)Session["UserId"]);
+                List<Notification> notifications = new List<Notification>();
+
+                foreach(Notification n in db.Notifications.ToList())
+                {
+                    if(n.Users == null || n.Users.Count == 0)
+                    {
+                        notifications.Add(n);
+                        continue;
+                    }
+                    foreach(User u in n.Users)
+                    {
+                        if(u.UserId == currentId)
+                        {
+                            notifications.Add(n);
+                            break;
+                        }
+                    }
+                }
+
+                return View(notifications);
             }
         }
 
@@ -106,7 +126,7 @@ namespace urednistvo.Controllers
             {
                 Notification notification = new Notification();
 
-                notification.Title = "Obavijest o vasem tekstu";
+                notification.Title = "Obavijest o vasem tekstu: \" " + text.Title + "\"";
                 notification.Content = message;
                 notification.Users.Add(db.Users.Single(u => u.UserId == text.UserId));
                 //PROVJERITI REDAK IZNAD JEL OK
