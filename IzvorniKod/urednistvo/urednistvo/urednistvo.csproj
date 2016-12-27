@@ -354,6 +354,9 @@
     <Content Include="Views\Ratings\Create.cshtml" />
     <Content Include="Views\Ratings\Details.cshtml" />
     <Content Include="Views\Ratings\Index.cshtml" />
+    <Content Include="Views\Text\ByAuthor.cshtml" />
+    <Content Include="Views\Text\Edit.cshtml" />
+    <Content Include="Views\Text\ForLectoring.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

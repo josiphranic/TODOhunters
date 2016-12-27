@@ -104,6 +104,11 @@
 }
 
 <p>
+    @if ((String)Session["Role"] == "Editor")
+    {
+        @Html.ActionLink("Edit (editor)", "EditEditor", new { id = Model.TextId });
+        <label> |</label>
+    }
     @if ((String)Session["Role"] == "Editor" || (String)Session["Role"] == "Editorial Council Member")
     {
         @Html.ActionLink("Rate", "EditMember", new { id = Model.TextId });

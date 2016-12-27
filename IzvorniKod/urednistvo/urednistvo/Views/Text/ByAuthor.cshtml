@@ -1,0 +1,61 @@
+﻿@model List<urednistvo.ModelsView.Textual.TextView>
+
+@{
+    ViewBag.Title = "ByAuthor";
+}
+
+<h2>ByAuthor</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            Author
+        </th>
+        <th>
+            Section
+        </th>
+        <th>
+            Time
+        </th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th>Text status</th>
+    </tr>
+    @foreach (var text in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(@text.Title + "(" + @text.Subtitle + ")", "Details/" + @text.TextId, "Text")
+            </td>
+            <td>
+                @Html.ActionLink(@text.Username + " ", "Details/" + @text.UserId, "User")
+            </td>
+            <td>
+                @Html.ActionLink(@text.FinalSection + " ", "Index" + @text.FinalSection, "Section")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => text.Time)
+            </td>
+            <td>
+                @Html.ActionLink("Comments", "ByText/" + @text.TextId, "Comment")
+            </td>
+            <td>
+                @Html.ActionLink("Ratings", "Details/" + @text.TextId, "Ratings")
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit/" + @text.TextId, "Text")
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete/" + @text.TextId, "Text")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => text.TextStatus)
+            </td>
+        </tr>
+    }
+</table>

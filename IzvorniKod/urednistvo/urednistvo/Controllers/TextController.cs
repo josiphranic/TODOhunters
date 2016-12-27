@@ -58,6 +58,40 @@ namespace urednistvo.Controllers
             return View(listView);
         }
 
+        public ActionResult ByAuthor(int id)
+        {
+            List<Text> list = db.Texts.Where(t => t.UserId == id).ToList();
+            if (list.Count == 0)
+            {
+                TempData["Message"] = "No texts for this author.";
+                return RedirectToAction("Index", "User");
+            }
+            List<TextView> listView = new List<TextView>();
+
+            foreach (Text t in list)
+            {
+                listView.Add(getTextView(t));
+            }
+            return View(listView);
+        }
+
+        public ActionResult ForLectoring()
+        {
+            List<Text> list = db.Texts.Where(t => t.TextStatus == (int)TextStatus.ACCEPTED).ToList();
+            if (list.Count == 0)
+            {
+                TempData["Message"] = "No texts for lectoring.";
+                return RedirectToAction("Index", "User");
+            }
+            List<TextView> listView = new List<TextView>();
+
+            foreach (Text t in list)
+            {
+                listView.Add(getTextView(t));
+            }
+            return View(listView);
+        }
+
         // GET: Text/Details/5
         public ActionResult Details(int id)
         {
@@ -101,6 +135,41 @@ namespace urednistvo.Controllers
                 return RedirectToAction("Index");
             }
             return View();
+        }
+
+        public ActionResult Edit(int id)
+        {
+            return View(db.Texts.Single(t => t.TextId == id));
+        }
+
+        [HttpPost]
+        public ActionResult Edit(int id, Text text)
+        {
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
+            {
+                var query = from ord in db.Texts
+                            where ord.TextId == id
+                            select ord;
+
+                foreach (Text t in query)
+                {
+                    t.Content = text.Content;
+
+                    if ((string)Session["Role"] == "Lector")
+                    {
+                        t.TextStatus = (int)TextStatus.LECTORED;
+                    }
+                    else
+                    {
+                        t.TextStatus = (int)TextStatus.SENT;
+                    }
+                }
+
+                db.SaveChanges();
+
+                TempData["Message"] = "Tekst je ispravljen i ponovno poslan.";
+                return RedirectToAction("Index");
+            }
         }
 
         // GET: Text/EditEditor/5
