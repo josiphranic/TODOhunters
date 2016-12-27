@@ -108,11 +108,11 @@
     {
         @Html.ActionLink("Master editor edit", "EditEditor", new { id = Model.TextId });
         <label> |</label>
-        @Html.ActionLink("Editorial council member edit", "EditMember", new { id = Model.TextId });
+        @Html.ActionLink("Rate (member)", "EditMember", new { id = Model.TextId });
         <label> |</label>
     }
     @if ((String)Session["Role"] == "Editorial Council Member") {
-        @Html.ActionLink("Editorial council member edit", "EditMember", new { id = Model.TextId});
+        @Html.ActionLink("Rate (member)", "EditMember", new { id = Model.TextId});
         <label> |</label>
     }
     @Html.ActionLink("Back to List", "Index")<label> |</label>

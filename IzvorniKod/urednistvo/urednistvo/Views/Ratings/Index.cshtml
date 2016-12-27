@@ -15,7 +15,7 @@
             @Html.DisplayNameFor(model => model.Text.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.User.FirstName)
+            @Html.DisplayNameFor(model => model.User.UserName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.WebPublishable)
@@ -35,7 +35,7 @@
             @Html.DisplayFor(modelItem => item.Text.Title)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.User.FirstName)
+            @Html.ActionLink(item.User.UserName, "Details/" + item.User.UserId, "User")
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.WebPublishable)

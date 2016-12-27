@@ -1,10 +1,10 @@
-﻿@model List<urednistvo.ModelsView.Textual.RatingView>
+﻿@model List<urednistvo.Models.Rating>
 
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Details about @Model.First().Text.Title</h2>
 
 <table class="table">
     <tr>
@@ -27,7 +27,7 @@
     {
         <tr>
             <td>
-                @Html.ActionLink(item.Username, "Details/" + item.UserId, "User")
+                @Html.ActionLink(item.User.UserName, "Details/" + item.User.UserId, "User")
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Rate)

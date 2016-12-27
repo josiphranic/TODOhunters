@@ -62,7 +62,7 @@ namespace urednistvo.Controllers
         // GET: Ratings/Details/5
         public ActionResult Details(int? id)
         {
-            if (Session["Role"] == null)
+            /*if (Session["Role"] == null)
             {
                 TempData["Message"] = "You must be logged in to rate.";
                 return RedirectToAction("Details/" + id, "Text");
@@ -71,17 +71,12 @@ namespace urednistvo.Controllers
             {
                 TempData["Message"] = "You must have priviledges to rate.";
                 return RedirectToAction("Details/" + id, "Text");
-            }
+            }*/
+
+            // DODATI OGRANICENJA PRISTUPA OCJENAMA
 
             var ratings = db.Ratings.Where(r => r.TextId == id);
-            List<RatingView> ratingViews = new List<RatingView>();
-
-            foreach(Rating rating in ratings)
-            {
-                ratingViews.Add(createRatingView(rating));
-            }
-
-            return View(ratingViews);
+            return View(ratings.ToList());
         }
 
         // GET: Ratings/Create/5
@@ -94,8 +89,11 @@ namespace urednistvo.Controllers
             }
 
             int userId = Int32.Parse((String)Session["UserID"]);
-            ViewBag.UserName = db.Users.Single(u => u.UserId == userId).UserName;
-            ViewBag.Title = db.Texts.Single(t => t.TextId == id).Title;
+            if(db.Ratings.Count(r => r.UserId == userId && r.TextId == id) != 0)
+            {
+                TempData["Message"] = "You have already rated.";
+                return RedirectToAction("Index", "Text");
+            }
 
             return View();
         }
