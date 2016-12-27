@@ -35,6 +35,11 @@
             </div>
         </div>
     </div>
+    <div id="info-bar" class="info-bar">
+        <span class="glyphicon glyphicon-info-sign"></span>
+        <font color="black">@TempData["Message"]</font>
+        <span class="glyphicon glyphicon-remove" onclick="hide()"></span>
+    </div>
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -54,6 +59,14 @@
 </body>
 </html>
 <script type="text/javascript">
+    window.onload = checkInfos;
+    function checkInfos() {
+        var success = @((TempData["Message"] != null).ToString().ToLower());
+        if(success){
+            document.getElementById('info-bar').style.visibility = 'visible';
+            $("#info-bar").delay(3200).fadeOut(300);
+        }
+    }
     function goHome() {
         window.location.href = '@Url.Action("Index", "Home")';
     }
@@ -69,8 +82,18 @@
     function upload() {
         window.location.href = '@Url.Action("Create", "Text")';
     }
+    function hide() {
+        $('#info-bar').fadeOut();
+        document.getElementById('info-bar').style.visibility = 'hidden';
+    }
 </script>
 <style>
+    .info-bar{
+        position: relative;
+        top: 12px;
+        background-color:lightsalmon;
+        visibility: hidden;
+    }
     .icon {
         top: 18px;
         color: white;

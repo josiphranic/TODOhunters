@@ -10,6 +10,7 @@ namespace urednistvo.Models
 
         public string Title { get; set; }
         public string Subtitle { get; set; }
+        [DataType(DataType.MultilineText)]
         public string Content { get; set; }
         public DateTime Time { get; set; }
         //slike

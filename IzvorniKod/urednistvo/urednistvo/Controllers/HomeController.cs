@@ -14,7 +14,7 @@ namespace urednistvo.Controllers
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
                 // ovdje u svemu sto se salje na pocetni view filtrirati sto se tice logiranog korisnika
-                // prenijeti i popis tekstova pomocu TUPLEa!
+                // prenijeti i popis tekstova!
                 return View(db.Notifications.ToList());
             }
         }
