@@ -29,6 +29,11 @@
                         <li><span class="glyphicon glyphicon-inbox icon" title="Obavijesti" onclick="gotoNotifications()"></span></li>
                         <li><span class="glyphicon glyphicon-upload icon" title="Upload" onclick="upload()"></span></li>
                     }
+                    @if ((string)Session["Role"] == "Lector")
+                    {
+                        <li><span class="glyphicon glyphicon-pencil icon" title="Lektoriraj" onclick="gotoForLectoring()"></span></li>
+                    }
+
                     <li><span class="glyphicon glyphicon-book icon" title="Arhiva" onclick="gotoArchive()"></span></li>
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -85,6 +90,9 @@
     function hide() {
         $('#info-bar').fadeOut();
         document.getElementById('info-bar').style.visibility = 'hidden';
+    }
+    function gotoForLectoring() {
+        window.location.href = '@Url.Action("ForLectoring", "Text")';
     }
 </script>
 <style>
