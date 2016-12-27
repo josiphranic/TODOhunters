@@ -153,29 +153,7 @@ namespace urednistvo.Controllers
         // GET: Text/EditMember/5
         public ActionResult EditMember(int id)
         {
-            using (UrednistvoDatabase db = new UrednistvoDatabase())
-            {
-                var text = db.Texts.Single(d => d.TextId == id);
-                return View(text);
-            }
-        }
-
-        // POST: Text/EditMember/5
-        [HttpPost]
-        public ActionResult EditMember(int id, Text text)
-        {
-            using (UrednistvoDatabase db = new UrednistvoDatabase())
-            {
-                Text t = db.Texts.Find(id);
-                text.Title = t.Title;
-                text.Time = DateTime.Now;
-
-                db.Texts.Remove(t);
-                db.Texts.Add(text);
-                db.SaveChanges();
-
-                return RedirectToAction("Index");
-            }
+            return RedirectToAction("Create/" + id, "Ratings");
         }
 
         // GET: Text/Delete/5

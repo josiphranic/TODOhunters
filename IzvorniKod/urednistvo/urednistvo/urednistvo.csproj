@@ -172,6 +172,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NotificationController.cs" />
+    <Compile Include="Controllers\RatingsController.cs" />
     <Compile Include="Controllers\SectionController.cs" />
     <Compile Include="Controllers\TextController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -229,6 +230,18 @@
     <Compile Include="Migrations\201612261408375_kokos11.cs" />
     <Compile Include="Migrations\201612261408375_kokos11.Designer.cs">
       <DependentUpon>201612261408375_kokos11.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612271053342_kokos14.cs" />
+    <Compile Include="Migrations\201612271053342_kokos14.Designer.cs">
+      <DependentUpon>201612271053342_kokos14.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612271103438_kokos15.cs" />
+    <Compile Include="Migrations\201612271103438_kokos15.Designer.cs">
+      <DependentUpon>201612271103438_kokos15.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612271107229_kokos16.cs" />
+    <Compile Include="Migrations\201612271107229_kokos16.Designer.cs">
+      <DependentUpon>201612271107229_kokos16.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsView\Utilities\RoleNameGetter.cs" />
@@ -338,6 +351,11 @@
     <Content Include="Views\Section\Details.cshtml" />
     <Content Include="Views\Section\Edit.cshtml" />
     <Content Include="Views\Section\Index.cshtml" />
+    <Content Include="Views\Ratings\Create.cshtml" />
+    <Content Include="Views\Ratings\Delete.cshtml" />
+    <Content Include="Views\Ratings\Details.cshtml" />
+    <Content Include="Views\Ratings\Edit.cshtml" />
+    <Content Include="Views\Ratings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -389,6 +407,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612261408375_kokos11.resx">
       <DependentUpon>201612261408375_kokos11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612271053342_kokos14.resx">
+      <DependentUpon>201612271053342_kokos14.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612271103438_kokos15.resx">
+      <DependentUpon>201612271103438_kokos15.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612271107229_kokos16.resx">
+      <DependentUpon>201612271107229_kokos16.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

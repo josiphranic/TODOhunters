@@ -60,7 +60,6 @@ namespace urednistvo.Controllers
         {
             if (ModelState.IsValid)
             {
-                section.EditionId = 1; // PROMIJENITI DA SECTION NE SADRZI EDITION ID
                 db.Sections.Add(section);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -81,7 +80,7 @@ namespace urednistvo.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.EditionId = new SelectList(db.Editions, "EditionId", "EditionId", section.EditionId);
+            //ViewBag.EditionId = new SelectList(db.Editions, "EditionId", "EditionId", section.EditionId);
             return View(section);
         }
 
@@ -98,7 +97,7 @@ namespace urednistvo.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.EditionId = new SelectList(db.Editions, "EditionId", "EditionId", section.EditionId);
+            //ViewBag.EditionId = new SelectList(db.Editions, "EditionId", "EditionId", section.EditionId);
             return View(section);
         }
 
