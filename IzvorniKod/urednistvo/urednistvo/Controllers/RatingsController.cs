@@ -82,14 +82,14 @@ namespace urednistvo.Controllers
         // GET: Ratings/Create/5
         public ActionResult Create(int id)
         {
-            if(Session["UserID"] == null)
+            if (Session["UserID"] == null)
             {
                 TempData["Message"] = "Must be logged in to rate.";
                 return RedirectToAction("Details/" + id, "Text");
             }
 
             int userId = Int32.Parse((String)Session["UserID"]);
-            if(db.Ratings.Count(r => r.UserId == userId && r.TextId == id) != 0)
+            if (db.Ratings.Count(r => r.UserId == userId && r.TextId == id) != 0)
             {
                 TempData["Message"] = "You have already rated.";
                 return RedirectToAction("Index", "Text");
@@ -116,75 +116,5 @@ namespace urednistvo.Controllers
 
             return View();
         }
-
-        // GET: Ratings/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Rating rating = db.Ratings.Find(id);
-            if (rating == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.TextId = new SelectList(db.Texts, "TextId", "Title", rating.TextId);
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "FirstName", rating.UserId);
-            return View(rating);
-        }
-
-        // POST: Ratings/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserId,TextId,WebPublishable,Rate,SectionTitle")] Rating rating)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(rating).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.TextId = new SelectList(db.Texts, "TextId", "Title", rating.TextId);
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "FirstName", rating.UserId);
-            return View(rating);
-        }
-
-        // GET: Ratings/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Rating rating = db.Ratings.Find(id);
-            if (rating == null)
-            {
-                return HttpNotFound();
-            }
-            return View(rating);
-        }
-
-        // POST: Ratings/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Rating rating = db.Ratings.Find(id);
-            db.Ratings.Remove(rating);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-    }
+    } 
 }

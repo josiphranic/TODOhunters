@@ -15,7 +15,7 @@
             @Html.DisplayNameFor(model => model.Text.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.User.UserName)
+            Author
         </th>
         <th>
             @Html.DisplayNameFor(model => model.WebPublishable)
@@ -32,7 +32,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Text.Title)
+            @Html.ActionLink(item.Text.Title, "Details/" + item.Text.TextId, "Text")
         </td>
         <td>
             @Html.ActionLink(item.User.UserName, "Details/" + item.User.UserId, "User")
@@ -47,9 +47,7 @@
             @Html.DisplayFor(modelItem => item.SectionTitle)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("All ratings", "Details/" + item.Text.TextId, "Ratings")
         </td>
     </tr>
 }

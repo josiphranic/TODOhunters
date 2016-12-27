@@ -104,15 +104,9 @@
 }
 
 <p>
-    @if ((String)Session["Role"] == "Editor")
+    @if ((String)Session["Role"] == "Editor" || (String)Session["Role"] == "Editorial Council Member")
     {
-        @Html.ActionLink("Master editor edit", "EditEditor", new { id = Model.TextId });
-        <label> |</label>
-        @Html.ActionLink("Rate (member)", "EditMember", new { id = Model.TextId });
-        <label> |</label>
-    }
-    @if ((String)Session["Role"] == "Editorial Council Member") {
-        @Html.ActionLink("Rate (member)", "EditMember", new { id = Model.TextId});
+        @Html.ActionLink("Rate", "EditMember", new { id = Model.TextId });
         <label> |</label>
     }
     @Html.ActionLink("Back to List", "Index")<label> |</label>

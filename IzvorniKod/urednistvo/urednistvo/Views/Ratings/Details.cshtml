@@ -20,7 +20,6 @@
         <th>
             Recommended Section
         </th>
-        <th></th>
     </tr>
 
     @foreach (var item in Model)
@@ -38,16 +37,15 @@
             <td>
                 @Html.DisplayFor(modelItem => item.SectionTitle)
             </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
         </tr>
     }
 </table>
 
 <p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @if ((String)Session["Role"] == "Editor")
+    {
+        @Html.ActionLink("Final rate (editor)", "EditEditor/" + @Model.First().Text.TextId, "Text")
+        <label>|</label>
+    }
     @Html.ActionLink("Back to List", "Index")
-</p>
+    </p>
