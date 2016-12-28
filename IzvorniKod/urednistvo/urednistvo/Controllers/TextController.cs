@@ -102,6 +102,7 @@ namespace urednistvo.Controllers
                 TempData["Message"] = "Only lector can access this page.";
                 return RedirectToAction("Index", "Text");
             }
+
             List<Text> list = db.Texts.Where(t => t.TextStatus == (int)TextStatus.ACCEPTED).ToList();
             if (list.Count == 0)
             {
@@ -189,7 +190,19 @@ namespace urednistvo.Controllers
 
         public ActionResult Edit(int id)
         {
-            if(Session["UserID"] != null && Int32.Parse((String)Session["UserID"]) == db.Texts.Find(id).UserId)
+            if(Session["UserID"] == null)
+            {
+                TempData["Message"] = "Cannot change this text.";
+                return RedirectToAction("Details/" + id, "Text");
+            }
+
+            if((String)Session["Role"] == "Lector" &&
+                db.Texts.Find(id).TextStatus != (int)TextStatus.ACCEPTED)
+            {
+                return View(db.Texts.Single(t => t.TextId == id));
+            }
+
+            if(Int32.Parse((String)Session["UserID"]) == db.Texts.Find(id).UserId)
             {
                 if(db.Texts.Find(id).TextStatus != (int)TextStatus.RETURNED)
                 {
