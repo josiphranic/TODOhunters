@@ -259,11 +259,16 @@
     <Compile Include="Migrations\201612281349426_kokos19.Designer.cs">
       <DependentUpon>201612281349426_kokos19.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612281546472_kokos20.cs" />
+    <Compile Include="Migrations\201612281546472_kokos20.Designer.cs">
+      <DependentUpon>201612281546472_kokos20.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsView\Utilities\RoleNameGetter.cs" />
     <Compile Include="ModelsView\Utilities\TextStatusNameGetter.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Edition.cs" />
+    <Compile Include="Models\Image.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Rating.cs" />
@@ -446,6 +451,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612281349426_kokos19.resx">
       <DependentUpon>201612281349426_kokos19.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612281546472_kokos20.resx">
+      <DependentUpon>201612281546472_kokos20.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

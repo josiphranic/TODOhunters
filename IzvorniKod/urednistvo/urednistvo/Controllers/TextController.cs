@@ -97,6 +97,11 @@ namespace urednistvo.Controllers
 
         public ActionResult ForLectoring()
         {
+            if((String)Session["Role"] != "Lector")
+            {
+                TempData["Message"] = "Only lector can access this page.";
+                return RedirectToAction("Index", "Text");
+            }
             List<Text> list = db.Texts.Where(t => t.TextStatus == (int)TextStatus.ACCEPTED).ToList();
             if (list.Count == 0)
             {
