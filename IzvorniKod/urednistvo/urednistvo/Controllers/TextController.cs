@@ -48,7 +48,18 @@ namespace urednistvo.Controllers
         // GET: Text
         public ActionResult Index()
         {
-            List<Text> list = db.Texts.ToList();
+            List<Text> list; 
+            if(Session["UserID"] == null || (String)Session["Role"] == "Registered user")
+            {
+                list = db.Texts.Where(t => t.WebPublishable == true).ToList();
+            } else if((String)Session["Role"] == "Author") {
+                int UserId = Int32.Parse((String)Session["UserID"]);
+                list = db.Texts.Where(t => t.UserId == UserId).ToList();
+            } else
+            {
+                list = db.Texts.ToList();
+            }
+            
             List<TextView> listView = new List<TextView>();
 
             foreach(Text t in list.ToList())
@@ -60,7 +71,16 @@ namespace urednistvo.Controllers
 
         public ActionResult ByAuthor(int id)
         {
-            List<Text> list = db.Texts.Where(t => t.UserId == id).ToList();
+            List<Text> list;
+            if (Session["UserID"] == null || (String)Session["Role"] == "Registered user")
+            {
+                list = db.Texts.Where(t => t.WebPublishable == true && t.UserId == id).ToList();
+            }
+            else
+            {
+                list = db.Texts.Where(t => t.UserId == id).ToList();
+            }
+
             if (list.Count == 0)
             {
                 TempData["Message"] = "No texts for this author.";
@@ -112,7 +132,15 @@ namespace urednistvo.Controllers
         // GET: Text/Details/5
         public ActionResult Details(int id)
         {
-            return View(getTextView(db.Texts.Single(u => u.TextId == id)));
+            if (db.Texts.Find(id).WebPublishable) {
+                return View(getTextView(db.Texts.Single(u => u.TextId == id)));
+            }
+            if(Session["UserID"] != null && (String)Session["Role"] != "Registered user")
+            {
+                return View(getTextView(db.Texts.Single(u => u.TextId == id)));
+            }
+            TempData["Message"] = "Cannot view this text.";
+            return RedirectToAction("Index", "Text");
         }
 
         // GET: Text/Create
@@ -156,7 +184,21 @@ namespace urednistvo.Controllers
 
         public ActionResult Edit(int id)
         {
-            return View(db.Texts.Single(t => t.TextId == id));
+            if(Session["UserID"] != null && Int32.Parse((String)Session["UserID"]) == db.Texts.Find(id).UserId)
+            {
+                if(db.Texts.Find(id).TextStatus != (int)TextStatus.RETURNED)
+                {
+                    TempData["Message"] = "Cannot change this text.";
+                    return RedirectToAction("Details/" + id, "Text");
+                }
+
+                return View(db.Texts.Single(t => t.TextId == id));
+            } else
+            {
+                TempData["Message"] = "Only author can edit this text.";
+                return RedirectToAction("Details/" + id, "Text");
+            }
+            
         }
 
         [HttpPost]
@@ -175,16 +217,16 @@ namespace urednistvo.Controllers
                     if ((string)Session["Role"] == "Lector")
                     {
                         t.TextStatus = (int)TextStatus.LECTORED;
+                        TempData["Message"] = "Tekst je lektoriran.";
                     }
                     else
                     {
                         t.TextStatus = (int)TextStatus.SENT;
+                        TempData["Message"] = "Tekst je ispravljen i ponovno poslan.";
                     }
                 }
 
                 db.SaveChanges();
-
-                TempData["Message"] = "Tekst je ispravljen i ponovno poslan.";
                 return RedirectToAction("Index");
             }
         }
@@ -233,6 +275,10 @@ namespace urednistvo.Controllers
                         NotificationController.createNotification(t, "Vas tekst je prihvacen. Ostatak informacija nalazi se u detaljima teksta.");
                         NotificationController.createNotification(Role.LECTOR, t, "Tekst \"" + t.Title + "\" ceka vase lektoriranje.");
                         t.TextStatus = (int)TextStatus.ACCEPTED;
+                    } else if (submit == "Decline")
+                    {
+                        NotificationController.createNotification(t, "Vas tekst je odbijen. Detaljnije objasnjenje u obavijesti.");
+                        t.TextStatus = (int)TextStatus.DECLINED;
                     }
                 }
 

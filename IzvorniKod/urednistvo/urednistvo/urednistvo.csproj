@@ -243,6 +243,22 @@
     <Compile Include="Migrations\201612271107229_kokos16.Designer.cs">
       <DependentUpon>201612271107229_kokos16.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612281328587_kokos17.cs" />
+    <Compile Include="Migrations\201612281328587_kokos17.Designer.cs">
+      <DependentUpon>201612281328587_kokos17.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612281330066_kokos171.cs" />
+    <Compile Include="Migrations\201612281330066_kokos171.Designer.cs">
+      <DependentUpon>201612281330066_kokos171.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612281331526_kokos18.cs" />
+    <Compile Include="Migrations\201612281331526_kokos18.Designer.cs">
+      <DependentUpon>201612281331526_kokos18.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612281349426_kokos19.cs" />
+    <Compile Include="Migrations\201612281349426_kokos19.Designer.cs">
+      <DependentUpon>201612281349426_kokos19.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsView\Utilities\RoleNameGetter.cs" />
     <Compile Include="ModelsView\Utilities\TextStatusNameGetter.cs" />
@@ -418,6 +434,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612271107229_kokos16.resx">
       <DependentUpon>201612271107229_kokos16.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612281328587_kokos17.resx">
+      <DependentUpon>201612281328587_kokos17.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612281330066_kokos171.resx">
+      <DependentUpon>201612281330066_kokos171.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612281331526_kokos18.resx">
+      <DependentUpon>201612281331526_kokos18.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612281349426_kokos19.resx">
+      <DependentUpon>201612281349426_kokos19.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

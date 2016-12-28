@@ -38,6 +38,7 @@
                         <li><span class="glyphicon glyphicon-film icon" title="Graficki uredi" onclick="gotoForGraphEdit()"></span></li>
                     }
 
+                    <li><span class="glyphicon glyphicon-phone-alt icon" title="Kontakt" onclick="gotoContact()"></span></li>
                     <li><span class="glyphicon glyphicon-book icon" title="Arhiva" onclick="gotoArchive()"></span></li>
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -100,6 +101,9 @@
     }
     function gotoForGraphEdit() {
         window.location.href = '@Url.Action("ForGraphicEditing", "Text")';
+    }
+    function gotoContact() {
+        window.location.href = '@Url.Action("Contact", "Home")';
     }
 </script>
 <style>

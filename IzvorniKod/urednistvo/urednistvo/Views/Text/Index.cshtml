@@ -21,6 +21,12 @@
         <th>
             Time
         </th>
+        @if ((String)Session["Role"] == "Editor")
+        {
+            <th>
+                Text status
+            </th>
+        }     
         <th></th>
         <th></th>
         <th></th>
@@ -42,6 +48,12 @@
             <td>
                 @Html.DisplayFor(modelItem => text.Time)
             </td>
+            @if ((String)Session["Role"] == "Editor")
+            {
+                <th>
+                    @Html.DisplayFor(modelItem => text.TextStatus)
+                </th>
+            } 
             <td>
                 @Html.ActionLink("Comments", "ByText/" + @text.TextId, "Comment")
             </td>
