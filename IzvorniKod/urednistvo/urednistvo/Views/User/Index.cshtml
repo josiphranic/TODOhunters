@@ -9,21 +9,21 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.FirstName)
+            Ime
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LastName)
+            Prezime
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UserName)
+            Korisničko ime
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Role)
+            Uloga
         </th>
-        <th>Texts</th>
+        <th>Tekstovi</th>
     </tr>
 
 @foreach (var user in Model) {
@@ -44,7 +44,7 @@
             @Html.DisplayFor(modelItem => user.Role)
         </td>
         <td>
-            @Html.ActionLink("Texts", "ByAuthor/" + @user.UserId, "Text")
+            @Html.ActionLink("Tekstovi", "ByAuthor/" + @user.UserId, "Text")
         </td>
     </tr>
 }

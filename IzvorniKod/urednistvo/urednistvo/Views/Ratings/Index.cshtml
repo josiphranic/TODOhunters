@@ -1,30 +1,28 @@
 ﻿@model IEnumerable<urednistvo.Models.Rating>
 
-@{
-    ViewBag.Title = "Index";
-}
 
-<h2>Index</h2>
+
+<h2>Tekstovi</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Dodaj", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Text.Title)
+            Naslov
         </th>
         <th>
-            Author
+            Autor
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.WebPublishable)
+            Objaviti na web
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Rate)
+            Ocjena
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SectionTitle)
+            Podlistak
         </th>
         <th></th>
     </tr>
@@ -47,7 +45,7 @@
             @Html.DisplayFor(modelItem => item.SectionTitle)
         </td>
         <td>
-            @Html.ActionLink("All ratings", "Details/" + item.Text.TextId, "Ratings")
+            @Html.ActionLink("Sve ocjene", "Details/" + item.Text.TextId, "Ratings")
         </td>
     </tr>
 }

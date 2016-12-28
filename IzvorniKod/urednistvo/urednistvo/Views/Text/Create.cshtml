@@ -1,10 +1,6 @@
 ﻿@model urednistvo.Models.Text
 
-@{
-    ViewBag.Title = "Create";
-}
 
-<h2>Create</h2>
 //Dodati da se ne dodaje text ako si neregistriran
 
 @using (Html.BeginForm()) 
@@ -12,11 +8,11 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Text</h4>
+        <h4>Dodaj tekst</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Naslov</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", required="required" } })
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
@@ -24,7 +20,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Subtitle, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Podnaslov</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Subtitle, new { htmlAttributes = new { @class = "form-control", required = "required" } })
                 @Html.ValidationMessageFor(model => model.Subtitle, "", new { @class = "text-danger" })
@@ -32,7 +28,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2", @style = "" })
+            <label class="control-label col-md-2">Sadržaj</label>
             <div class="col-md-10" style="height:200px">
                 @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control", @style = "height: 100%; max-width: 90% !important", required = "required" } })
                 @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
@@ -40,7 +36,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.WantedSectionByAuthorId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Željeni podlistak(byauthotid?!)</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.WantedSectionByAuthorId, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.WantedSectionByAuthorId, "", new { @class = "text-danger" })
@@ -49,12 +45,12 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Dodaj" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Povratak na popis tekstova", "Index")
 </div>

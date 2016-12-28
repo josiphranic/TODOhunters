@@ -4,27 +4,27 @@
     ViewBag.Title = "ByAuthor";
 }
 
-<h2>ByAuthor</h2>
+<h2>Po autoru</h2>
 
 <table class="table">
     <tr>
         <th>
-            Title
+            Naslov
         </th>
         <th>
-            Author
+            Autor
         </th>
         <th>
-            Section
+            Podlistak
         </th>
         <th>
-            Time
+            Ažurirano
         </th>
         <th></th>
         <th></th>
         <th></th>
         <th></th>
-        <th>Text status</th>
+        <th>Status teksta</th>
     </tr>
     @foreach (var text in Model)
     {
@@ -42,16 +42,16 @@
                 @Html.DisplayFor(modelItem => text.Time)
             </td>
             <td>
-                @Html.ActionLink("Comments", "ByText/" + @text.TextId, "Comment")
+                @Html.ActionLink("Komentari", "ByText/" + @text.TextId, "Comment")
             </td>
             <td>
-                @Html.ActionLink("Ratings", "Details/" + @text.TextId, "Ratings")
+                @Html.ActionLink("Ocjene", "Details/" + @text.TextId, "Ratings")
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit/" + @text.TextId, "Text")
+                @Html.ActionLink("Uređivanje", "Edit/" + @text.TextId, "Text")
             </td>
             <td>
-                @Html.ActionLink("Delete", "Delete/" + @text.TextId, "Text")
+                @Html.ActionLink("Obriši", "Delete/" + @text.TextId, "Text")
             </td>
             <td>
                 @Html.DisplayFor(modelItem => text.TextStatus)
