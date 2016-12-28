@@ -6,6 +6,7 @@ namespace urednistvo.ModelsView.Textual
     {
         public string Title { get; set; }
         public int SectionId { get; internal set; }
-        // TODO IEnumerable<Image> slike
+        
+        public int NumberOfTexts { get; set; }
     }
 }

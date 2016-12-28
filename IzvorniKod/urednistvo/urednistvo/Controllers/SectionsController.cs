@@ -11,24 +11,32 @@ using urednistvo.ModelsView.Textual;
 
 namespace urednistvo.Controllers
 {
-    public class SectionController : Controller
+    public class SectionsController : Controller
     {
         private UrednistvoDatabase db = new UrednistvoDatabase();
 
-        public SectionView createSectionView(Section section)
+        private SectionView createSectionView(Section section)
         {
-            SectionView sView = new SectionView();
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
+            {
+                SectionView sView = new SectionView();
+                sView.SectionId = section.SectionId;
+                sView.Title = section.Title;
+                sView.NumberOfTexts = db.Texts.Count(t => t.FinalSectionId == sView.SectionId);
 
-            sView.Title = section.Title;
-            sView.SectionId = section.SectionId;
-
-            return sView;
+                return sView;
+            }
         }
 
         // GET: Sections
         public ActionResult Index()
         {
-            return View(db.Sections.ToList());
+            List<SectionView> list = new List<SectionView>();
+            foreach(Section s in db.Sections.ToList())
+            {
+                list.Add(createSectionView(s));
+            }
+            return View(list);
         }
 
         // GET: Sections/Details/5
@@ -56,7 +64,8 @@ namespace urednistvo.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Create(Section section)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "SectionId,Title")] Section section)
         {
             if (ModelState.IsValid)
             {
@@ -80,7 +89,6 @@ namespace urednistvo.Controllers
             {
                 return HttpNotFound();
             }
-            //ViewBag.EditionId = new SelectList(db.Editions, "EditionId", "EditionId", section.EditionId);
             return View(section);
         }
 
@@ -89,7 +97,7 @@ namespace urednistvo.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SectionId,Title,EditionId")] Section section)
+        public ActionResult Edit([Bind(Include = "SectionId,Title")] Section section)
         {
             if (ModelState.IsValid)
             {
@@ -97,7 +105,6 @@ namespace urednistvo.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            //ViewBag.EditionId = new SelectList(db.Editions, "EditionId", "EditionId", section.EditionId);
             return View(section);
         }
 

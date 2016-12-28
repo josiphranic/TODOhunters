@@ -173,7 +173,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\RatingsController.cs" />
-    <Compile Include="Controllers\SectionController.cs" />
+    <Compile Include="Controllers\SectionsController.cs" />
     <Compile Include="Controllers\TextController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -379,11 +379,6 @@
     <Content Include="Views\Comment\Index.cshtml" />
     <Content Include="Views\Comment\ByText.cshtml" />
     <Content Include="Views\Comment\ByUser.cshtml" />
-    <Content Include="Views\Section\Create.cshtml" />
-    <Content Include="Views\Section\Delete.cshtml" />
-    <Content Include="Views\Section\Details.cshtml" />
-    <Content Include="Views\Section\Edit.cshtml" />
-    <Content Include="Views\Section\Index.cshtml" />
     <Content Include="Views\Ratings\Create.cshtml" />
     <Content Include="Views\Ratings\Details.cshtml" />
     <Content Include="Views\Ratings\Index.cshtml" />
@@ -391,6 +386,11 @@
     <Content Include="Views\Text\Edit.cshtml" />
     <Content Include="Views\Text\ForLectoring.cshtml" />
     <Content Include="Views\Text\ForGraphicEditing.cshtml" />
+    <Content Include="Views\Sections\Create.cshtml" />
+    <Content Include="Views\Sections\Delete.cshtml" />
+    <Content Include="Views\Sections\Details.cshtml" />
+    <Content Include="Views\Sections\Edit.cshtml" />
+    <Content Include="Views\Sections\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

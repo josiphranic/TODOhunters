@@ -1,4 +1,4 @@
-﻿@model List<urednistvo.Models.Section>
+﻿@model IEnumerable<urednistvo.ModelsView.Textual.SectionView>
 
 @{
     ViewBag.Title = "Index";
@@ -12,7 +12,10 @@
 <table class="table">
     <tr>
         <th>
-            Title
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumberOfTexts)
         </th>
         <th></th>
     </tr>
@@ -21,6 +24,9 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumberOfTexts)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.SectionId }) |
