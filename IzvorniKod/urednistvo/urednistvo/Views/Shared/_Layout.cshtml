@@ -26,12 +26,16 @@
                     <li><span class="glyphicon glyphicon-user icon" title="Korisnici" onclick="gotoUsers()"></span></li>
                     @if (Session["UserID"] != null)
                     {
-                        <li><span class="glyphicon glyphicon-inbox icon" title="Obavijesti" onclick="gotoNotifications()"></span></li>
+                        <li><span class="glyphicon glyphicon-envelope icon" title="Obavijesti" onclick="gotoNotifications()"></span></li>
                         <li><span class="glyphicon glyphicon-upload icon" title="Upload" onclick="upload()"></span></li>
                     }
                     @if ((string)Session["Role"] == "Lector")
                     {
                         <li><span class="glyphicon glyphicon-pencil icon" title="Lektoriraj" onclick="gotoForLectoring()"></span></li>
+                    }
+                    @if ((string)Session["Role"] == "Graphic editor")
+                    {
+                        <li><span class="glyphicon glyphicon-film icon" title="Graficki uredi" onclick="gotoForGraphEdit()"></span></li>
                     }
 
                     <li><span class="glyphicon glyphicon-book icon" title="Arhiva" onclick="gotoArchive()"></span></li>
@@ -93,6 +97,9 @@
     }
     function gotoForLectoring() {
         window.location.href = '@Url.Action("ForLectoring", "Text")';
+    }
+    function gotoForGraphEdit() {
+        window.location.href = '@Url.Action("ForGraphicEditing", "Text")';
     }
 </script>
 <style>

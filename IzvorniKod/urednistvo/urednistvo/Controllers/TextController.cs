@@ -92,6 +92,23 @@ namespace urednistvo.Controllers
             return View(listView);
         }
 
+        public ActionResult ForGraphicEditing()
+        {
+            List<Text> list = db.Texts.Where(t => t.TextStatus == (int)TextStatus.LECTORED).ToList();
+            if (list.Count == 0)
+            {
+                TempData["Message"] = "No texts for graphic editing.";
+                return RedirectToAction("Index", "User");
+            }
+            List<TextView> listView = new List<TextView>();
+
+            foreach (Text t in list)
+            {
+                listView.Add(getTextView(t));
+            }
+            return View(listView);
+        }
+
         // GET: Text/Details/5
         public ActionResult Details(int id)
         {
@@ -177,6 +194,12 @@ namespace urednistvo.Controllers
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
+                if (db.Ratings.Count(r => r.TextId == id) < 1)
+                    //PROMIJENITI NA 5
+                {
+                    TempData["Message"] = "All memebers of editorial council must rate tis text first.";
+                    return RedirectToAction("Details/" + id, "Text");
+                }
                 var text = db.Texts.Single(d => d.TextId == id);
                 return View(text);
             }
@@ -208,6 +231,7 @@ namespace urednistvo.Controllers
                     else if (submit == "Accept")
                     {
                         NotificationController.createNotification(t, "Vas tekst je prihvacen. Ostatak informacija nalazi se u detaljima teksta.");
+                        NotificationController.createNotification(Role.LECTOR, t, "Tekst \"" + t.Title + "\" ceka vase lektoriranje.");
                         t.TextStatus = (int)TextStatus.ACCEPTED;
                     }
                 }

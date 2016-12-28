@@ -75,6 +75,11 @@ namespace urednistvo.Controllers
 
             // DODATI OGRANICENJA PRISTUPA OCJENAMA
 
+            if (db.Ratings.Count(r => r.TextId == id) == 0)
+            {
+                TempData["Message"] = "No ratings for this text.";
+                return RedirectToAction("Index", "Text");
+            }
             var ratings = db.Ratings.Where(r => r.TextId == id);
             return View(ratings.ToList());
         }

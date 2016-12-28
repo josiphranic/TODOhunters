@@ -47,6 +47,12 @@ namespace urednistvo.Controllers
                         where ord.TextId == id
                         select ord;
 
+            if(query.Count() == 0)
+            {
+                TempData["Message"] = "No comments for this text.";
+                return RedirectToAction("Index", "Text");
+            }
+
             List<CommentView> commentViews = new List<CommentView>();
             foreach(Comment comment in query)
             {
@@ -57,6 +63,12 @@ namespace urednistvo.Controllers
 
         public ActionResult ByUser(int id)
         {
+            if (db.Ratings.Count(r => r.UserId == id) == 0)
+            {
+                TempData["Message"] = "No comments for this user.";
+                return RedirectToAction("Index", "Text");
+            }
+
             var query = from ord in db.Comments
                         where ord.UserId == id
                         select ord;

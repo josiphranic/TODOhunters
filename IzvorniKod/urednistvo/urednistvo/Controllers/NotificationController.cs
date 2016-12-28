@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using urednistvo.Models;
 using urednistvo.ModelsView.Textual;
+using urednistvo.ModelsView.Utilities;
 
 namespace urednistvo.Controllers
 {
@@ -145,6 +146,22 @@ namespace urednistvo.Controllers
                 notification.Content = message;
                 notification.Users.Add(db.Users.Single(u => u.UserId == text.UserId));
                 //PROVJERITI REDAK IZNAD JEL OK
+                notification.Time = DateTime.Now;
+
+                db.Notifications.Add(notification);
+                db.SaveChanges();
+            }
+        }
+
+        public static void createNotification(Role Role, Text text, string message)
+        {
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
+            {
+                Notification notification = new Notification();
+
+                notification.Title = "Tekst \" " + text.Title + "\" je spreman za vase lektoriranje.";
+                notification.Content = message;
+                notification.Users.Add(db.Users.Single(u => u.Role == (int)Role));
                 notification.Time = DateTime.Now;
 
                 db.Notifications.Add(notification);
