@@ -12,6 +12,7 @@ namespace urednistvo.ModelsView
         DELIVERED = 0x1,
         ACCEPTED = 0x2,
         RETURNED = 0x4,
-        LECTORED = 0x8
+        LECTORED = 0x8,
+        DECLINED = 0x16
     } 
 }

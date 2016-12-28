@@ -173,7 +173,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\RatingsController.cs" />
-    <Compile Include="Controllers\SectionController.cs" />
+    <Compile Include="Controllers\SectionsController.cs" />
     <Compile Include="Controllers\TextController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -243,11 +243,44 @@
     <Compile Include="Migrations\201612271107229_kokos16.Designer.cs">
       <DependentUpon>201612271107229_kokos16.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612281328587_kokos17.cs" />
+    <Compile Include="Migrations\201612281328587_kokos17.Designer.cs">
+      <DependentUpon>201612281328587_kokos17.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612281330066_kokos171.cs" />
+    <Compile Include="Migrations\201612281330066_kokos171.Designer.cs">
+      <DependentUpon>201612281330066_kokos171.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612281331526_kokos18.cs" />
+    <Compile Include="Migrations\201612281331526_kokos18.Designer.cs">
+      <DependentUpon>201612281331526_kokos18.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612281349426_kokos19.cs" />
+    <Compile Include="Migrations\201612281349426_kokos19.Designer.cs">
+      <DependentUpon>201612281349426_kokos19.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612281546472_kokos20.cs" />
+    <Compile Include="Migrations\201612281546472_kokos20.Designer.cs">
+      <DependentUpon>201612281546472_kokos20.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612281558058_kokot1.cs" />
+    <Compile Include="Migrations\201612281558058_kokot1.Designer.cs">
+      <DependentUpon>201612281558058_kokot1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612281600108_kokot2.cs" />
+    <Compile Include="Migrations\201612281600108_kokot2.Designer.cs">
+      <DependentUpon>201612281600108_kokot2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612281617489_kokot3.cs" />
+    <Compile Include="Migrations\201612281617489_kokot3.Designer.cs">
+      <DependentUpon>201612281617489_kokot3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsView\Utilities\RoleNameGetter.cs" />
     <Compile Include="ModelsView\Utilities\TextStatusNameGetter.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Edition.cs" />
+    <Compile Include="Models\Image.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Rating.cs" />
@@ -346,11 +379,6 @@
     <Content Include="Views\Comment\Index.cshtml" />
     <Content Include="Views\Comment\ByText.cshtml" />
     <Content Include="Views\Comment\ByUser.cshtml" />
-    <Content Include="Views\Section\Create.cshtml" />
-    <Content Include="Views\Section\Delete.cshtml" />
-    <Content Include="Views\Section\Details.cshtml" />
-    <Content Include="Views\Section\Edit.cshtml" />
-    <Content Include="Views\Section\Index.cshtml" />
     <Content Include="Views\Ratings\Create.cshtml" />
     <Content Include="Views\Ratings\Details.cshtml" />
     <Content Include="Views\Ratings\Index.cshtml" />
@@ -358,6 +386,11 @@
     <Content Include="Views\Text\Edit.cshtml" />
     <Content Include="Views\Text\ForLectoring.cshtml" />
     <Content Include="Views\Text\ForGraphicEditing.cshtml" />
+    <Content Include="Views\Sections\Create.cshtml" />
+    <Content Include="Views\Sections\Delete.cshtml" />
+    <Content Include="Views\Sections\Details.cshtml" />
+    <Content Include="Views\Sections\Edit.cshtml" />
+    <Content Include="Views\Sections\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -418,6 +451,30 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612271107229_kokos16.resx">
       <DependentUpon>201612271107229_kokos16.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612281328587_kokos17.resx">
+      <DependentUpon>201612281328587_kokos17.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612281330066_kokos171.resx">
+      <DependentUpon>201612281330066_kokos171.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612281331526_kokos18.resx">
+      <DependentUpon>201612281331526_kokos18.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612281349426_kokos19.resx">
+      <DependentUpon>201612281349426_kokos19.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612281546472_kokos20.resx">
+      <DependentUpon>201612281546472_kokos20.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612281558058_kokot1.resx">
+      <DependentUpon>201612281558058_kokot1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612281600108_kokot2.resx">
+      <DependentUpon>201612281600108_kokot2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612281617489_kokot3.resx">
+      <DependentUpon>201612281617489_kokot3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -14,6 +14,7 @@ namespace urednistvo.ModelsView.Utilities
             if ((int)TextStatus.ACCEPTED == i) return "Accepted";
             if ((int)TextStatus.RETURNED == i) return "Returned";
             if ((int)TextStatus.LECTORED == i) return "Lectiored";
+            if ((int)TextStatus.DECLINED == i) return "Declined";
             return "Unknown";
         }
     }

@@ -15,6 +15,7 @@ namespace urednistvo.Models
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Edition> Editions { get; set; }
+        public virtual DbSet<Image> Images { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
