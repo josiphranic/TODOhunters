@@ -1,9 +1,5 @@
-﻿@model urednistvo.Models.Notification
-@{
-    ViewBag.Title = "Details";
-}
-
-<h2>@ViewBag.Title</h2>
+﻿
+<h2>Detalji</h2>
 
 <div class="form-horizontal">
     
@@ -12,21 +8,21 @@
     </div>
 
     <div class="form-group">
-        <label class="control-label col-md-1">Title</label>
+        <label class="control-label col-md-1">Naslov</label>
         <div class="control-label pull-left">
             @Model.Title
         </div>
     </div>
 
     <div class="form-group">
-        <label class="control-label col-md-1">Content</label>
+        <label class="control-label col-md-1">Sadržaj</label>
         <div class="control-label pull-left">
             @Model.Content
         </div>
     </div>
 
     <div class="form-group">
-        <label class="control-label col-md-1">Time</label>
+        <label class="control-label col-md-1">Ažurirano</label>
         <div class="control-label pull-left">
             @Model.Time
         </div>
@@ -34,5 +30,5 @@
 </div>
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Povratak na listu obavijesti", "Index")
 </div>

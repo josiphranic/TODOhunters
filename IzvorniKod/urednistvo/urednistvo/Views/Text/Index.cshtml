@@ -4,22 +4,22 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Tekst</h2>
 <br /> 
 
 <table class="table">
     <tr>
         <th>
-            Title
+            Naslov
         </th>
         <th>
-            Author
+            Autor
         </th>
         <th>
-            Section
+            Podlistak
         </th>
         <th>
-            Time
+            Ažurirano
         </th>
         <th></th>
         <th></th>
@@ -43,16 +43,16 @@
                 @Html.DisplayFor(modelItem => text.Time)
             </td>
             <td>
-                @Html.ActionLink("Comments", "ByText/" + @text.TextId, "Comment")
+                @Html.ActionLink("Komentari", "ByText/" + @text.TextId, "Comment")
             </td>
             <td>
-                @Html.ActionLink("Ratings", "Details/" + @text.TextId, "Ratings")
+                @Html.ActionLink("Ocjene", "Details/" + @text.TextId, "Ratings")
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit/" + @text.TextId, "Text")
+                @Html.ActionLink("Uređivanje", "Edit/" + @text.TextId, "Text")
             </td>
             <td>
-                @Html.ActionLink("Delete", "Delete/" + @text.TextId, "Text")
+                @Html.ActionLink("Obriši", "Delete/" + @text.TextId, "Text")
             </td>
         </tr>
     }
@@ -60,5 +60,5 @@
 </table>
 
 <p>
-    <font size="3">@Html.ActionLink("Create New", "Create")</font>
+    <font size="3">@Html.ActionLink("Novi tekst", "Create")</font>
 </p>

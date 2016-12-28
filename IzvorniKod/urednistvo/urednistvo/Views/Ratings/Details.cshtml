@@ -4,21 +4,21 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details about @Model.First().Text.Title</h2>
+<h2>Detalji o @Model.First().Text.Title</h2>
 
 <table class="table">
     <tr>
         <th>
-            Username
+            Korisničko ime
         </th>
         <th>
-            Rate
+            Ocjena
         </th>
         <th>
-            Publish on web
+            Objavi na web
         </th>
         <th>
-            Recommended Section
+            Preporučeni podlistak
         </th>
     </tr>
 
@@ -47,5 +47,5 @@
         @Html.ActionLink("Final rate (editor)", "EditEditor/" + @Model.First().Text.TextId, "Text")
         <label>|</label>
     }
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Povratak na listu tekstova", "Index")
     </p>

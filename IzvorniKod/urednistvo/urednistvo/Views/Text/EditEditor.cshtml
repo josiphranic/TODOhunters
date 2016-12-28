@@ -4,13 +4,13 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h2>Uređivanje</h2>
 
 <div>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            Title
+            Naslov
         </dt>
 
         <dd>
@@ -18,7 +18,7 @@
         </dd>
 
         <dt>
-            Subtitle
+            Podnaslov
         </dt>
 
         <dd>
@@ -26,7 +26,7 @@
         </dd>
 
         <dt>
-            Content
+            Sadržaj
         </dt>
 
         <dd>
@@ -34,7 +34,7 @@
         </dd>
 
         <dt>
-            Time
+            Ažurirano
         </dt>
 
         <dd>
@@ -42,7 +42,7 @@
         </dd>
 
         <dt>
-            Wanted section
+            Željeni podlistak
         </dt>
 
         <dd>
@@ -62,7 +62,7 @@
         @Html.HiddenFor(model => model.TextId)
 
         <div class="form-group">
-            <label class="control-label col-md-2">Publish on web</label>
+            <label class="control-label col-md-2">Objavi na web</label>
             <div class="col-md-10">
                 <div class="checkbox">
                     @Html.EditorFor(model => model.WebPublishable)
@@ -72,7 +72,7 @@
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2">Publish in edition</label>
+            <label class="control-label col-md-2">Objavi u uređivanju</label>
             <div class="col-md-10">
                 <div class="checkbox">
                     @Html.EditorFor(model => model.EditionPublishable)
@@ -82,7 +82,7 @@
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2">Add suggestion</label>
+            <label class="control-label col-md-2">Dodaj prijedlog</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Suggestions, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Suggestions, "", new { @class = "text-danger" })
@@ -90,7 +90,7 @@
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2">Final section</label>
+            <label class="control-label col-md-2">Konačni podlistak</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.FinalSectionId, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.FinalSectionId, "", new { @class = "text-danger" })
@@ -99,8 +99,8 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Accept" name="submit" class="btn btn-default" />
-                <input type="submit" value="Return" name="submit" class="btn btn-default" />
+                <input type="submit" value="Potvrdi" name="submit" class="btn btn-default" />
+                <input type="submit" value="Povratak" name="submit" class="btn btn-default" />
             </div>
         </div>
     </div>
@@ -109,5 +109,5 @@
 
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Povratak na listu tekstova", "Index")
 </div>
