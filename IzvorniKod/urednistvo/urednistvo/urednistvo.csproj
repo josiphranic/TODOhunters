@@ -271,6 +271,10 @@
     <Compile Include="Migrations\201612281600108_kokot2.Designer.cs">
       <DependentUpon>201612281600108_kokot2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612281617489_kokot3.cs" />
+    <Compile Include="Migrations\201612281617489_kokot3.Designer.cs">
+      <DependentUpon>201612281617489_kokot3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsView\Utilities\RoleNameGetter.cs" />
     <Compile Include="ModelsView\Utilities\TextStatusNameGetter.cs" />
@@ -468,6 +472,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612281600108_kokot2.resx">
       <DependentUpon>201612281600108_kokot2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612281617489_kokot3.resx">
+      <DependentUpon>201612281617489_kokot3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
