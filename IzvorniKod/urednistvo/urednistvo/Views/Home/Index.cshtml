@@ -28,11 +28,16 @@
     @foreach (var n in Model)
     {
         <div class="col-md-3">
-            <h4>@n.Title</h4>
+          
+            <p>
+                <a href='@Url.Action("Details/" + @n.NotificationId, "Notification")'>
+                    <h4> <span class="glyphicon glyphicon-globe"></span> @n.Title </h4>
+                </a>
+            </p>
             <p>
                 @Html.DisplayFor(modelItem => n.Time)
             </p>
-            <p><a class="btn btn-default" href='@Url.Action("Details/" + @n.NotificationId, "Notification")'>Pročitaj &raquo;</a></p>
+
         </div>
     }
 </div>

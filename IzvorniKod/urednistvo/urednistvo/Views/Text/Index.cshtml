@@ -37,34 +37,54 @@
     {
         <tr>
             <td>
-                @Html.ActionLink(@text.Title + "(" + @text.Subtitle + ")", "Details/" + @text.TextId, "Text")
+                    <a href='@Url.Action("Details/" + @text.TextId, "Text")'>
+                        <span class="glyphicon glyphicon-list"></span> @text.Title (@text.Subtitle)
+                    </a>
             </td>
+            
             <td>
-                @Html.ActionLink(@text.Username + " ", "Details/" + @text.UserId, "User")
-            </td>
+                <a href='@Url.Action("Details/" + @text.UserId, "User")'>
+                    <span class="glyphicon glyphicon-user"></span> @text.Username
+                </a>
+            
             <td>
-                @Html.ActionLink(@text.FinalSection + " ", "Index" + @text.FinalSection, "Section")
+                (popraviti adresu za podlistak)
+                <a href='@Url.Action("Details/" + @text.FinalSection, "Section")'>
+                    <span class="glyphicon glyphicon-file"></span> @text.FinalSection
+                </a>
             </td>
+            
             <td>
                 @Html.DisplayFor(modelItem => text.Time)
             </td>
+            
             @if ((String)Session["Role"] == "Editor")
             {
                 <th>
                     @Html.DisplayFor(modelItem => text.TextStatus)
                 </th>
             } 
+            
             <td>
-                @Html.ActionLink("Komentari", "ByText/" + @text.TextId, "Comment")
+                <a href='@Url.Action("ByText/" + @text.TextId, "Comment")'>
+                    <span class="glyphicon glyphicon-comment" title="Komentari"></span> 
+                </a>
+            </td>
+            
+            <td>
+                <a href='@Url.Action("Details/" + @text.TextId, "Ratings")'>
+                    <span class="glyphicon glyphicon-star" title="Ocjene"></span>
+                </a>
             </td>
             <td>
-                @Html.ActionLink("Ocjene", "Details/" + @text.TextId, "Ratings")
+                <a href='@Url.Action("Edit/" + @text.TextId, "Text")'>
+                    <span class="glyphicon glyphicon-pencil" title="Uređivanje"></span>
+                </a>
             </td>
             <td>
-                @Html.ActionLink("Uređivanje", "Edit/" + @text.TextId, "Text")
-            </td>
-            <td>
-                @Html.ActionLink("Obriši", "Delete/" + @text.TextId, "Text")
+                <a href='@Url.Action("Delete/" + @text.TextId, "Text")'>
+                    <span class="glyphicon glyphicon-trash" title="Obriši"></span>
+                </a>
             </td>
         </tr>
     }

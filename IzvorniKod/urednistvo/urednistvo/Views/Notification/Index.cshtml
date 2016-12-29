@@ -25,7 +25,9 @@
     {
         <tr>
             <td>
-                @Html.ActionLink(@n.Title, "Details/" + @n.NotificationId, "Notification")
+                <a href='@Url.Action("Details/" + @n.NotificationId, "Notification")'>
+                    <h5> <span class="glyphicon glyphicon-globe" title=@n.Content></span> @n.Title </h5>
+                </a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => n.Time)
@@ -41,10 +43,10 @@
                 }  
             </td>
             <td>
-                <a class="glyphicon glyphicon-pencil" href='@Url.Action("Edit/" + @n.NotificationId, "Notification")'></a>
+                <a class="glyphicon glyphicon-pencil" title="Uređivanje" href='@Url.Action("Edit/" + @n.NotificationId, "Notification")'></a>
             </td>
             <td>
-                <a class="glyphicon glyphicon-trash" href='@Url.Action("Delete/" + @n.NotificationId, "Notification")'></a>
+                <a class="glyphicon glyphicon-trash" title="Obriši" href='@Url.Action("Delete/" + @n.NotificationId, "Notification")'></a>
             </td>
         </tr>
     }
