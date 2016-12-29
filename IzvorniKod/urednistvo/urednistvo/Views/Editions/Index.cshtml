@@ -6,26 +6,29 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
-            
+            Title
         </th>
-        <th></th>
+        <th>
+            Time of release
+        </th>
+        <th>
+            Number of texts
+        </th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.ActionLink(item.Title, "Details/" + item.EditionId, "Editions")
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.TimeOfRelease)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.NumberOfTexts }) |
-            @Html.ActionLink("Details", "Details", new { id=item.NumberOfTexts }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.NumberOfTexts })
+            @Html.DisplayFor(modelItem => item.NumberOfTexts)
         </td>
     </tr>
 }

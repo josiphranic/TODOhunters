@@ -1,4 +1,4 @@
-﻿@model urednistvo.Models.Edition
+﻿@model List<urednistvo.ModelsView.Textual.SectionView>
 
 @{
     ViewBag.Title = "Details";
@@ -6,21 +6,26 @@
 
 <h2>Details</h2>
 
-<div>
-    <h4>Edition</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.TimeOfRelease)
-        </dt>
+<table class="table">
+    <tr>
+        <th>
+            Section title
+        </th>
+        <th>
+            Number of texts
+        </th>
+    </tr>
 
-        <dd>
-            @Html.DisplayFor(model => model.TimeOfRelease)
-        </dd>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Title, "Details/" + item.SectionId, "Sections")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfTexts)
+            </td>
+        </tr>
+    }
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.EditionId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+</table>

@@ -15,7 +15,7 @@ namespace urednistvo.Controllers
     {
         private UrednistvoDatabase db = new UrednistvoDatabase();
 
-        private SectionView createSectionView(Section section)
+        private static SectionView createSectionView(Section section)
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
@@ -23,6 +23,19 @@ namespace urednistvo.Controllers
                 sView.SectionId = section.SectionId;
                 sView.Title = section.Title;
                 sView.NumberOfTexts = db.Texts.Count(t => t.FinalSectionId == sView.SectionId);
+
+                return sView;
+            }
+        }
+
+        public static SectionView createSectionView(Section section, DateTime start, DateTime end)
+        {
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
+            {
+                SectionView sView = new SectionView();
+                sView.SectionId = section.SectionId;
+                sView.Title = section.Title;
+                sView.NumberOfTexts = db.Texts.Count(t => t.Time > start && t.Time < end && t.FinalSectionId == section.SectionId);
 
                 return sView;
             }
