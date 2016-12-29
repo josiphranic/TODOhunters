@@ -1,4 +1,4 @@
-﻿@model IEnumerable<urednistvo.Models.Rating>
+﻿@model List<urednistvo.ModelsView.Textual.RatingView>
 
 @{
     ViewBag.Title = "Tekstovi";
@@ -6,9 +6,6 @@
 
 <h2>Tekstovi</h2>
 
-<p>
-    @Html.ActionLink("Dodaj", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -21,10 +18,10 @@
             Objaviti na web
         </th>
         <th>
-            Ocjena
+            Objava u izdanju
         </th>
         <th>
-            Podlistak
+            Predlozeni podlistak
         </th>
         <th></th>
     </tr>
@@ -32,22 +29,29 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink(item.Text.Title, "Details/" + item.Text.TextId, "Text")
+            @Html.ActionLink(item.Title, "Details/" + item.TextId, "Text")
         </td>
         <td>
-            @Html.ActionLink(item.User.UserName, "Details/" + item.User.UserId, "User")
+            @Html.ActionLink(item.Username, "Details/" + item.UserId, "User")
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.WebPublishable)
+            @if (item.WebPublishable == true)
+            {
+                <label>Da</label>
+            }
+            else
+            {
+                <label>Ne</label>
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Rate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.SectionTitle)
+            @Html.ActionLink(item.SectionTitle, "Details/" + item.SectionId, "Sections")
         </td>
         <td>
-            @Html.ActionLink("Sve ocjene", "Details/" + item.Text.TextId, "Ratings")
+            @Html.ActionLink("Sve ocjene", "Details/" + item.TextId, "Ratings")
         </td>
     </tr>
 }

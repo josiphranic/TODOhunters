@@ -18,6 +18,9 @@ namespace urednistvo.ModelsView.Textual
 
         public string WantedSectionByAuthor { get; set; }
         public string FinalSection { get; set; }
+        public int? WantedSectionByAuthorId { get; set; }
+        public int FinalSectionId { get; set; }
+
         public DateTime Time { get; set; }
 
         public string WebPublishable { get; set; }
