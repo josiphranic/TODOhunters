@@ -4,8 +4,8 @@
     ViewBag.Title = "Tekstovi";
 }
 
-<h2>Tekstovi autora <a href='@Url.Action("Delete/" + Model.First().UserId, "User")'>
-    <span class="glyphicon glyphicon-user" title="Obriši"></span> @Model.First().Username
+<h2>Tekstovi autora <a href='@Url.Action("Details/" + Model.First().UserId, "User")'>
+    <span class="glyphicon glyphicon-user"></span> @Model.First().Username
 </a></h2>
 
 <table class="table">
