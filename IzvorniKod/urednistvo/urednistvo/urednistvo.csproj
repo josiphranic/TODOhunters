@@ -288,12 +288,29 @@
     <Compile Include="Migrations\201612291236512_kokos24.Designer.cs">
       <DependentUpon>201612291236512_kokos24.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612291521233_kokos25.cs" />
+    <Compile Include="Migrations\201612291521233_kokos25.Designer.cs">
+      <DependentUpon>201612291521233_kokos25.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612291525025_kokos251.cs" />
+    <Compile Include="Migrations\201612291525025_kokos251.Designer.cs">
+      <DependentUpon>201612291525025_kokos251.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612291526061_kokos26.cs" />
+    <Compile Include="Migrations\201612291526061_kokos26.Designer.cs">
+      <DependentUpon>201612291526061_kokos26.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612291527454_kokos261.cs" />
+    <Compile Include="Migrations\201612291527454_kokos261.Designer.cs">
+      <DependentUpon>201612291527454_kokos261.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsView\Utilities\TextStatusNameGetter.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Edition.cs" />
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\Rate.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Rating.cs" />
@@ -497,6 +514,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612291236512_kokos24.resx">
       <DependentUpon>201612291236512_kokos24.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612291521233_kokos25.resx">
+      <DependentUpon>201612291521233_kokos25.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612291525025_kokos251.resx">
+      <DependentUpon>201612291525025_kokos251.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612291526061_kokos26.resx">
+      <DependentUpon>201612291526061_kokos26.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612291527454_kokos261.resx">
+      <DependentUpon>201612291527454_kokos261.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

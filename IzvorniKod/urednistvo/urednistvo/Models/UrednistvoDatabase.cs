@@ -17,6 +17,7 @@ namespace urednistvo.Models
         public virtual DbSet<Edition> Editions { get; set; }
         public virtual DbSet<Image> Images { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<Rate> Rates { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

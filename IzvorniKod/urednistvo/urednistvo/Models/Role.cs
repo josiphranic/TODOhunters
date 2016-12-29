@@ -7,7 +7,8 @@ namespace urednistvo.Models
 {
     public class Role
     {
-        public int RoleId { get; set; }
+        public int RoleId { get; set; }        
         public string RoleName { get; set; }
+        public int Value { get; set; }
     }
 }
