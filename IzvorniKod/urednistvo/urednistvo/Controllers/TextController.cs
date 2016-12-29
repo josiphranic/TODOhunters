@@ -30,18 +30,18 @@ namespace urednistvo.Controllers
                 textView.TextStatus = TextStatusNameGetter.getName(text.TextStatus);
                 textView.WebPublishable = text.WebPublishable.ToString();
                 textView.EditionPublishable = text.EditionPublishable.ToString();
+                textView.FinalSectionId = text.FinalSectionId;
+                textView.WantedSectionByAuthorId = text.WantedSectionByAuthorId;
 
-                if (db.Sections.Count() > 1000)
-                // CHANGE THIS TO > 0
+                Section section = db.Sections.Find(text.FinalSectionId);
+                textView.FinalSection = (section == null) ? "-" : section.Title;
+
+                if (text.WantedSectionByAuthorId != null)
                 {
-                    Section section = db.Sections.Single(s => s.SectionId == text.FinalSectionId);
-                    textView.FinalSection = (section == null) ? "-" : section.Title;
-                    section = db.Sections.Single(s => s.SectionId == text.WantedSectionByAuthorId);
+                    section = db.Sections.Find(text.WantedSectionByAuthorId);
                     textView.WantedSectionByAuthor = (section == null) ? "-" : section.Title;
-                }
-                else
+                } else
                 {
-                    textView.FinalSection = "-";
                     textView.WantedSectionByAuthor = "-";
                 }
 
@@ -266,6 +266,8 @@ namespace urednistvo.Controllers
                     return RedirectToAction("Details/" + id, "Text");
                 }
                 var text = db.Texts.Single(d => d.TextId == id);
+
+                ViewBag.DropDownListSections = new SelectList(db.Sections, "SectionId", "Title");
                 return View(text);
             }
         }
@@ -306,7 +308,7 @@ namespace urednistvo.Controllers
                 }
 
                 db.SaveChanges();
-
+                ViewBag.DropDownListSections = new SelectList(db.Sections, "SectionId", "Title");
                 TempData["Message"] = "Obavijest o odluci je poslana autoru teksta.";
                 return RedirectToAction("Index");
             }

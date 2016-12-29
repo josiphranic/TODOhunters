@@ -21,8 +21,12 @@ namespace urednistvo.Controllers
             {
                 RatingView rView = new RatingView();
 
-                rView.Rate = rating.Rate;
+                Rate rate = db.Rates.Single(r => r.Value == rating.Rate);
+                if (rate == null) rView.Rate = "-";
+                else rView.Rate = rate.Name;
+
                 rView.SectionId = rating.SectionId;
+                rView.SectionTitle = db.Sections.Find(rView.SectionId).Title;
                 rView.TextId = rating.TextId;
                 rView.UserId = rating.UserId;
                 rView.Title = db.Texts.Find(rView.TextId).Title;
@@ -31,6 +35,7 @@ namespace urednistvo.Controllers
                 rView.Subtitle = db.Texts.Find(rView.TextId).Subtitle;
                 rView.Content = db.Texts.Find(rView.TextId).Content;
                 rView.Time = db.Texts.Find(rView.TextId).Time;
+                rView.WebPublishable = rating.WebPublishable;
 
                 return rView;
             }
@@ -55,12 +60,18 @@ namespace urednistvo.Controllers
         // GET: Ratings
         public ActionResult Index()
         {
-            var ratings = db.Ratings.Include(r => r.Text).Include(r => r.User);
-            return View(ratings.ToList());
+            var ratings = db.Ratings.ToList();
+            List<RatingView> rViews = new List<RatingView>();
+
+            foreach (Rating rating in ratings)
+            {
+                rViews.Add(createRatingView(rating));
+            }
+            return View(rViews);
         }
 
         // GET: Ratings/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
             /*if (Session["Role"] == null)
             {
@@ -75,13 +86,21 @@ namespace urednistvo.Controllers
 
             // DODATI OGRANICENJA PRISTUPA OCJENAMA
 
-            if (db.Ratings.Count(r => r.TextId == id) == 0)
+            var ratings = db.Ratings.Where(r => r.TextId == id).ToList();
+
+            if (ratings.Count == 0)
             {
                 TempData["Message"] = "No ratings for this text.";
                 return RedirectToAction("Index", "Text");
             }
-            var ratings = db.Ratings.Where(r => r.TextId == id);
-            return View(ratings.ToList());
+
+            List<RatingView> rViews = new List<RatingView>();
+
+            foreach (Rating rating in ratings)
+            {
+                rViews.Add(createRatingView(rating));
+            }
+            return View(rViews);
         }
 
         // GET: Ratings/Create/5

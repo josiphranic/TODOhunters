@@ -21,7 +21,7 @@
         <th>
             Ažurirano
         </th>
-        @if ((String)Session["Role"] == "Editor")
+        @if ((String)Session["Role"] == "Glavni urednik")
         {
             <th>
                 Text status
@@ -48,8 +48,7 @@
                 </a>
             
             <td>
-                (popraviti adresu za podlistak)
-                <a href='@Url.Action("Details/" + @text.FinalSection, "Section")'>
+                <a href='@Url.Action("Details/" + @text.FinalSectionId, "Sections")'>
                     <span class="glyphicon glyphicon-file"></span> @text.FinalSection
                 </a>
             </td>
@@ -58,7 +57,7 @@
                 @Html.DisplayFor(modelItem => text.Time)
             </td>
             
-            @if ((String)Session["Role"] == "Editor")
+            @if ((String)Session["Role"] == "Glavni urednik")
             {
                 <th>
                     @Html.DisplayFor(modelItem => text.TextStatus)
