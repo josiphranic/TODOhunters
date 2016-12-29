@@ -40,7 +40,7 @@
         <div class="form-group">
             <label class="control-label col-md-2">Željeni podlistak(byauthotid?!)</label>
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.WantedSectionByAuthorId, (IEnumerable<SelectListItem>)ViewBag.DropDownList, "Select wanted section")
+                @Html.DropDownListFor(model => model.WantedSectionByAuthorId, (IEnumerable<SelectListItem>)ViewBag.DropDownList, "Select wanted section", new { @class = "dropdown" })
             </div>
         </div>
 
@@ -55,3 +55,13 @@
 <div>
     @Html.ActionLink("Povratak na popis tekstova", "Index")
 </div>
+
+<style>
+    .dropdown {
+        width: 20%;
+        height: 46px;
+        display: block;
+        border: 1px solid #dfd7ca;
+        border-radius: 4px;
+    }
+</style>
