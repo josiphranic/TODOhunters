@@ -29,13 +29,17 @@
                         <li><span class="glyphicon glyphicon-globe icon" title="Obavijesti" onclick="gotoNotifications()"></span></li>
                         <li><span class="glyphicon glyphicon-upload icon" title="Upload" onclick="upload()"></span></li>
                     }
-                    @if ((string)Session["Role"] == "Lector")
+                    @if ((string)Session["Role"] == "Lektor")
                     {
                         <li><span class="glyphicon glyphicon-pencil icon" title="Lektoriraj" onclick="gotoForLectoring()"></span></li>
                     }
-                    @if ((string)Session["Role"] == "Graphic editor")
+                    @if ((string)Session["Role"] == "Grafički urednik")
                     {
-                        <li><span class="glyphicon glyphicon-film icon" title="Graficki uredi" onclick="gotoForGraphEdit()"></span></li>
+                        <li><span class="glyphicon glyphicon-film icon" title="Grafički uredi" onclick="gotoForGraphEdit()"></span></li>
+                    }
+                    @if ((string)Session["Role"] == "Glavni urednik")
+                    {
+                        <li><span class="glyphicon glyphicon-star icon" title="Ocjene" onclick="gotoRatings()"></span></li>
                     }
 
                     <li><span class="glyphicon glyphicon-phone-alt icon" title="Kontakt" onclick="gotoContact()"></span></li>
@@ -104,6 +108,9 @@
     }
     function gotoContact() {
         window.location.href = '@Url.Action("Contact", "Home")';
+    }
+    function gotoRatings() {
+        window.location.href = '@Url.Action("Index", "Ratings")';
     }
 </script>
 <style>

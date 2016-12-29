@@ -1,10 +1,10 @@
-﻿@model List<urednistvo.Models.Rating>
+﻿@model List<urednistvo.ModelsView.Textual.RatingView>
 
 @{
     ViewBag.Title = "Detalji ocjena";
 }
 
-<h2>Detalji o @Model.First().Text.Title</h2>
+<h2>Detalji o @Model.First().Title</h2>
 
 <table class="table">
     <tr>
@@ -26,16 +26,23 @@
     {
         <tr>
             <td>
-                @Html.ActionLink(item.User.UserName, "Details/" + item.User.UserId, "User")
+                @Html.ActionLink(item.Username, "Details/" + item.UserId, "User")
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Rate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.WebPublishable)
+                @if (item.WebPublishable == true)
+                {
+                    <label>Da</label>
+                }
+                else
+                {
+                    <label>Ne</label>
+                }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SectionTitle)
+                @Html.ActionLink(item.SectionTitle, "Details/" + item.SectionId, "Sections")
             </td>
         </tr>
     }
@@ -44,7 +51,7 @@
 <p>
     @if ((String)Session["Role"] == "Editor")
     {
-        @Html.ActionLink("Final rate (editor)", "EditEditor/" + @Model.First().Text.TextId, "Text")
+        @Html.ActionLink("Final rate (editor)", "EditEditor/" + @Model.First().TextId, "Text")
         <label>|</label>
     }
     @Html.ActionLink("Povratak na listu tekstova", "Index")
