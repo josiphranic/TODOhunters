@@ -104,12 +104,12 @@
 }
 
 <p>
-    @if ((String)Session["Role"] == "Editor")
+    @if ((String)Session["Role"] == "Glavni urednik")
     {
         @Html.ActionLink("Uredi (editor)", "EditEditor", new { id = Model.TextId });
         <label> |</label>
     }
-    @if ((String)Session["Role"] == "Editor" || (String)Session["Role"] == "Editorial Council Member")
+    @if ((String)Session["Role"] == "Glavni urednik" || (String)Session["Role"] == "Član uredničkog vijeća")
     {
         @Html.ActionLink("Ocjeni", "EditMember", new { id = Model.TextId });
         <label> |</label>

@@ -21,7 +21,7 @@ namespace urednistvo.Controllers
             uView.Email = user.Email;
             uView.FirstName = user.FirstName;
             uView.LastName = user.LastName;
-            uView.Role = RoleNameGetter.getName(user.Role);
+            uView.Role = db.Roles.Find(user.Role).RoleName;
             uView.UserName = user.UserName;
 
             return uView;
@@ -43,7 +43,8 @@ namespace urednistvo.Controllers
         }
 
         public ActionResult Register()
-        {  
+        {
+            ViewBag.DropDownList = new SelectList(db.Roles, "RoleId", "RoleName");
             return View();
         }
 
@@ -60,7 +61,7 @@ namespace urednistvo.Controllers
                 ModelState.Clear();
                 Session["UserID"] = account.UserId.ToString();
                 Session["Username"] = account.UserName.ToString();
-                Session["Role"] = RoleNameGetter.getName(account.Role);
+                Session["Role"] = db.Roles.Find(account.Role).RoleName;
 
                 TempData["Message"] = account.FirstName + " " + account.LastName + " succesfully registered.";
             }
@@ -86,7 +87,7 @@ namespace urednistvo.Controllers
                 {
                     Session["UserID"] = user.UserId.ToString();
                     Session["Username"] = user.UserName.ToString();
-                    Session["Role"] = RoleNameGetter.getName(user.Role);
+                    Session["Role"] = db.Roles.Find(user.Role).RoleName;
 
                     TempData["Message"] = "Successful login";
                     return RedirectToAction("Index", "Home");
