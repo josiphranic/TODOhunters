@@ -14,35 +14,39 @@ namespace urednistvo.Controllers
     {
         private UrednistvoDatabase db = new UrednistvoDatabase();
 
-        public TextView getTextView(Text text)
+        public static TextView getTextView(Text text)
         {
-            TextView textView = new TextView();
-
-            textView.TextId = text.TextId;
-            textView.Title = text.Title;
-            textView.Subtitle = text.Subtitle;
-            textView.Username = db.Users.Single(u => u.UserId == text.UserId).UserName;
-            textView.UserId = text.UserId;
-            textView.Time = text.Time;
-            textView.Content = text.Content;
-            textView.TextStatus = TextStatusNameGetter.getName(text.TextStatus);
-            textView.WebPublishable = text.WebPublishable.ToString();
-            textView.EditionPublishable = text.EditionPublishable.ToString();
-
-            if (db.Sections.Count() != 0)
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
-                Section section = db.Sections.Single(s => s.SectionId == text.FinalSectionId);
-                textView.FinalSection = (section == null) ? "-" : section.Title;
-                section = db.Sections.Single(s => s.SectionId == text.WantedSectionByAuthorId);
-                textView.WantedSectionByAuthor = (section == null) ? "-" : section.Title;
-            }
-            else
-            {
-                textView.FinalSection = "-";
-                textView.WantedSectionByAuthor = "-";
-            }
+                TextView textView = new TextView();
 
-            return textView;
+                textView.TextId = text.TextId;
+                textView.Title = text.Title;
+                textView.Subtitle = text.Subtitle;
+                textView.Username = db.Users.Single(u => u.UserId == text.UserId).UserName;
+                textView.UserId = text.UserId;
+                textView.Time = text.Time;
+                textView.Content = text.Content;
+                textView.TextStatus = TextStatusNameGetter.getName(text.TextStatus);
+                textView.WebPublishable = text.WebPublishable.ToString();
+                textView.EditionPublishable = text.EditionPublishable.ToString();
+
+                if (db.Sections.Count() > 1000)
+                // CHANGE THIS TO > 0
+                {
+                    Section section = db.Sections.Single(s => s.SectionId == text.FinalSectionId);
+                    textView.FinalSection = (section == null) ? "-" : section.Title;
+                    section = db.Sections.Single(s => s.SectionId == text.WantedSectionByAuthorId);
+                    textView.WantedSectionByAuthor = (section == null) ? "-" : section.Title;
+                }
+                else
+                {
+                    textView.FinalSection = "-";
+                    textView.WantedSectionByAuthor = "-";
+                }
+
+                return textView;
+            }
         } 
 
         // GET: Text

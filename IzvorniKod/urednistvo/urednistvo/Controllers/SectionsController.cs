@@ -32,7 +32,7 @@ namespace urednistvo.Controllers
         public ActionResult Index()
         {
             List<SectionView> list = new List<SectionView>();
-            foreach(Section s in db.Sections.ToList())
+            foreach (Section s in db.Sections.ToList())
             {
                 list.Add(createSectionView(s));
             }
@@ -40,18 +40,17 @@ namespace urednistvo.Controllers
         }
 
         // GET: Sections/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
-            if (id == null)
+            List<Text> list = db.Texts.Where(s => s.FinalSectionId == id).ToList();
+            List<TextView> textViews = new List<TextView>();
+
+            foreach (Text t in list)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                textViews.Add(TextController.getTextView(t));
             }
-            Section section = db.Sections.Find(id);
-            if (section == null)
-            {
-                return HttpNotFound();
-            }
-            return View(section);
+
+            return View(textViews);
         }
 
         // GET: Sections/Create
@@ -75,72 +74,6 @@ namespace urednistvo.Controllers
             }
 
             return View(section);
-        }
-
-        // GET: Sections/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Section section = db.Sections.Find(id);
-            if (section == null)
-            {
-                return HttpNotFound();
-            }
-            return View(section);
-        }
-
-        // POST: Sections/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SectionId,Title")] Section section)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(section).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(section);
-        }
-
-        // GET: Sections/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Section section = db.Sections.Find(id);
-            if (section == null)
-            {
-                return HttpNotFound();
-            }
-            return View(section);
-        }
-
-        // POST: Sections/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Section section = db.Sections.Find(id);
-            db.Sections.Remove(section);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }
