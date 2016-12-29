@@ -153,7 +153,7 @@ namespace urednistvo.Controllers
             }
         }
 
-        public static void createNotification(urednistvo.ModelsView.Utilities.Role Role, Text text, string message)
+        public static void createNotification(int Role, Text text, string message)
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
@@ -161,7 +161,7 @@ namespace urednistvo.Controllers
 
                 notification.Title = "Tekst \" " + text.Title + "\" je spreman za vase lektoriranje.";
                 notification.Content = message;
-                notification.Users.Add(db.Users.Single(u => u.Role == (int)Role));
+                notification.Users.Add(db.Users.Single(u => u.Role == Role));
                 notification.Time = DateTime.Now;
 
                 db.Notifications.Add(notification);
