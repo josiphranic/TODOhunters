@@ -26,7 +26,7 @@
                     <li><span class="glyphicon glyphicon-user icon" title="Korisnici" onclick="gotoUsers()"></span></li>
                     @if (Session["UserID"] != null)
                     {
-                        <li><span class="glyphicon glyphicon-envelope icon" title="Obavijesti" onclick="gotoNotifications()"></span></li>
+                        <li><span class="glyphicon glyphicon-globe icon" title="Obavijesti" onclick="gotoNotifications()"></span></li>
                         <li><span class="glyphicon glyphicon-upload icon" title="Upload" onclick="upload()"></span></li>
                     }
                     @if ((string)Session["Role"] == "Lector")

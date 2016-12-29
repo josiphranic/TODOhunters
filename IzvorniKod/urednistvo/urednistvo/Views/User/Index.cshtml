@@ -35,16 +35,21 @@
             @Html.DisplayFor(modelItem => user.LastName)
         </td>
         <td>
-            @Html.ActionLink(@user.UserName + " ", "Details/" + @user.UserId, "User")
+            <a href='@Url.Action("Details/" + @user.UserId, "User")'>
+                <span class="glyphicon glyphicon-user"></span> @user.UserName
+            </a>
         </td>
         <td>
-            @Html.DisplayFor(modelItem => user.Email)
+                <span class="glyphicon glyphicon-envelope">
+                @Html.DisplayFor(modelItem => user.Email)
         </td>
         <td>
             @Html.DisplayFor(modelItem => user.Role)
         </td>
         <td>
-            @Html.ActionLink("Tekstovi", "ByAuthor/" + @user.UserId, "Text")
+            <a href='@Url.Action("ByAuthor/" + @user.UserId, "Text")'>
+                <span class="glyphicon glyphicon-list" title="Tekstovi autora @user.UserName"></span>
+            </a>
         </td>
     </tr>
 }
