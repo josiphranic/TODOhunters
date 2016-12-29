@@ -15,10 +15,27 @@ namespace urednistvo.Controllers
     {
         private UrednistvoDatabase db = new UrednistvoDatabase();
 
+        private EditionView createEditionView(Edition edition)
+        {
+            using (UrednistvoDatabase db = new UrednistvoDatabase()) {
+                EditionView eView = new EditionView();
+                eView.TimeOfRelease = edition.TimeOfRelease;
+                eView.EndTime = eView.TimeOfRelease.AddDays(7);
+                eView.NumberOfTexts = db.Texts.Where(t => t.Time > eView.TimeOfRelease &&
+                                                            t.Time < eView.EndTime).Count();
+                return eView;
+            }
+        }
+
         // GET: Editions
         public ActionResult Index()
         {
-            return View(db.Editions.ToList());
+            List<EditionView> eViews = new List<EditionView>();
+            foreach(Edition e in db.Editions.ToList())
+            {
+                eViews.Add(createEditionView(e));
+            }
+            return View(eViews);
         }
 
         // GET: Editions/Details/5
