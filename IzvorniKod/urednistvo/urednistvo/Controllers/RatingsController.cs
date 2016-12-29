@@ -22,7 +22,7 @@ namespace urednistvo.Controllers
                 RatingView rView = new RatingView();
 
                 rView.Rate = rating.Rate;
-                rView.SectionTitle = rating.SectionTitle;
+                rView.SectionId = rating.SectionId;
                 rView.TextId = rating.TextId;
                 rView.UserId = rating.UserId;
                 rView.Title = db.Texts.Find(rView.TextId).Title;
@@ -100,6 +100,8 @@ namespace urednistvo.Controllers
                 return RedirectToAction("Index", "Text");
             }
 
+            ViewBag.DropDownListRates = new SelectList(db.Rates, "Value", "Name");
+            ViewBag.DropDownListSections = new SelectList(db.Sections, "SectionId", "Title");
             return View();
         }
 

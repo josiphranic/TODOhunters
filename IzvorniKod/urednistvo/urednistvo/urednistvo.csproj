@@ -304,6 +304,10 @@
     <Compile Include="Migrations\201612291527454_kokos261.Designer.cs">
       <DependentUpon>201612291527454_kokos261.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612291543075_kokos27.cs" />
+    <Compile Include="Migrations\201612291543075_kokos27.Designer.cs">
+      <DependentUpon>201612291543075_kokos27.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsView\Utilities\TextStatusNameGetter.cs" />
     <Compile Include="Models\Comment.cs" />
@@ -526,6 +530,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612291527454_kokos261.resx">
       <DependentUpon>201612291527454_kokos261.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612291543075_kokos27.resx">
+      <DependentUpon>201612291543075_kokos27.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -18,6 +18,6 @@ namespace urednistvo.ModelsView.Textual
 
         public int Rate { get; set; }
         public bool WebPublishable { get; set; }
-        public string SectionTitle { get; set; }
+        public int SectionId { get; set; }
     }
 }
