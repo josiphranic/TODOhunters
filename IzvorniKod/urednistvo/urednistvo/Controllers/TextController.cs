@@ -161,6 +161,7 @@ namespace urednistvo.Controllers
                 TempData["Message"] = "You must be logged in to create a text.";
                 return RedirectToAction("Index");
             }
+            ViewBag.DropDownList = new SelectList(db.Sections, "SectionId", "Title");
             return View();
         }
 
@@ -295,7 +296,7 @@ namespace urednistvo.Controllers
                     else if (submit == "Accept")
                     {
                         NotificationController.createNotification(t, "Vas tekst je prihvacen. Ostatak informacija nalazi se u detaljima teksta.");
-                        NotificationController.createNotification(Role.LECTOR, t, "Tekst \"" + t.Title + "\" ceka vase lektoriranje.");
+                        NotificationController.createNotification(urednistvo.ModelsView.Utilities.Role.LECTOR, t, "Tekst \"" + t.Title + "\" ceka vase lektoriranje.");
                         t.TextStatus = (int)TextStatus.ACCEPTED;
                     } else if (submit == "Decline")
                     {

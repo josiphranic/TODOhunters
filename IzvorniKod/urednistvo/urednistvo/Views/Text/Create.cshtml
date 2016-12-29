@@ -40,8 +40,7 @@
         <div class="form-group">
             <label class="control-label col-md-2">Željeni podlistak(byauthotid?!)</label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.WantedSectionByAuthorId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.WantedSectionByAuthorId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.WantedSectionByAuthorId, (IEnumerable<SelectListItem>)ViewBag.DropDownList, "---Select a value---")
             </div>
         </div>
 

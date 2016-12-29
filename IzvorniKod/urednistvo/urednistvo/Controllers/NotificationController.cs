@@ -153,7 +153,7 @@ namespace urednistvo.Controllers
             }
         }
 
-        public static void createNotification(Role Role, Text text, string message)
+        public static void createNotification(urednistvo.ModelsView.Utilities.Role Role, Text text, string message)
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {

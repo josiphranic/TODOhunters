@@ -11,6 +11,8 @@ namespace urednistvo.Controllers
 {
     public class UserController : Controller
     {
+        private UrednistvoDatabase db = new UrednistvoDatabase();
+
         public UserView createUserView(User user)
         {
             UserView uView = new UserView();
@@ -41,7 +43,7 @@ namespace urednistvo.Controllers
         }
 
         public ActionResult Register()
-        {
+        {  
             return View();
         }
 
