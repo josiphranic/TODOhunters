@@ -424,6 +424,7 @@
     <Content Include="Views\Editions\Create.cshtml" />
     <Content Include="Views\Editions\Details.cshtml" />
     <Content Include="Views\Editions\Index.cshtml" />
+    <Content Include="Views\Home\EditorialCouncil.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

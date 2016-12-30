@@ -24,9 +24,9 @@
                     <li><span class="glyphicon glyphicon-home icon" title="Početna" onclick="goHome()"></span></li>
                     <li><span class="glyphicon glyphicon-list icon" title="Tekstovi" onclick="gotoTexts()"></span></li>
                     <li><span class="glyphicon glyphicon-user icon" title="Korisnici" onclick="gotoUsers()"></span></li>
+                    <li><span class="glyphicon glyphicon-globe icon" title="Obavijesti" onclick="gotoNotifications()"></span></li>
                     @if (Session["UserID"] != null)
                     {
-                        <li><span class="glyphicon glyphicon-globe icon" title="Obavijesti" onclick="gotoNotifications()"></span></li>
                         <li><span class="glyphicon glyphicon-upload icon" title="Upload" onclick="upload()"></span></li>
                     }
                     @if ((string)Session["Role"] == "Lektor")
@@ -42,6 +42,7 @@
                         <li><span class="glyphicon glyphicon-star icon" title="Ocjene" onclick="gotoRatings()"></span></li>
                     }
 
+                    <li><span class="glyphicon glyphicon-king icon" title="Uredničko vijeće" onclick="gotoEditorialCouncil()"></span></li>
                     <li><span class="glyphicon glyphicon-phone-alt icon" title="Kontakt" onclick="gotoContact()"></span></li>
                     <li><span class="glyphicon glyphicon-book icon" title="Arhiva" onclick="gotoArchive()"></span></li>
                 </ul>
@@ -111,6 +112,9 @@
     }
     function gotoRatings() {
         window.location.href = '@Url.Action("Index", "Ratings")';
+    }
+    function gotoEditorialCouncil() {
+        window.location.href = '@Url.Action("EditorialCouncil", "Home")';
     }
 </script>
 <style>

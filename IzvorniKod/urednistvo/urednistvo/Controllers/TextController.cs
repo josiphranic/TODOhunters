@@ -53,10 +53,10 @@ namespace urednistvo.Controllers
         public ActionResult Index()
         {
             List<Text> list; 
-            if(Session["UserID"] == null || (String)Session["Role"] == "Registered user")
+            if(Session["UserID"] == null || (String)Session["Role"] == "Registrirani korisnik")
             {
                 list = db.Texts.Where(t => t.WebPublishable == true).ToList();
-            } else if((String)Session["Role"] == "Author") {
+            } else if((String)Session["Role"] == "Autor") {
                 int UserId = Int32.Parse((String)Session["UserID"]);
                 list = db.Texts.Where(t => t.UserId == UserId).ToList();
             } else

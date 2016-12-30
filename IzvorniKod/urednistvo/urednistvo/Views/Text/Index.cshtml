@@ -48,9 +48,16 @@
                 </a>
             
             <td>
-                <a href='@Url.Action("Details/" + @text.FinalSectionId, "Sections")'>
-                    <span class="glyphicon glyphicon-file"></span> @text.FinalSection
-                </a>
+                @if (text.FinalSectionId != -1)
+                {
+                    <a href='@Url.Action("Details/" + @text.FinalSectionId, "Sections")'>
+                        <span class="glyphicon glyphicon-file"></span> @text.FinalSection
+                    </a>
+                }
+                else
+                {
+                    <label><span class="glyphicon glyphicon-file"></span> @text.FinalSection </label>
+                }
             </td>
             
             <td>

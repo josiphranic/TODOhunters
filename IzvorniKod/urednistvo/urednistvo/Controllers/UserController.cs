@@ -13,18 +13,21 @@ namespace urednistvo.Controllers
     {
         private UrednistvoDatabase db = new UrednistvoDatabase();
 
-        public UserView createUserView(User user)
+        public static UserView createUserView(User user)
         {
-            UserView uView = new UserView();
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
+            {
+                UserView uView = new UserView();
 
-            uView.UserId = user.UserId;
-            uView.Email = user.Email;
-            uView.FirstName = user.FirstName;
-            uView.LastName = user.LastName;
-            uView.Role = db.Roles.Find(user.Role).RoleName;
-            uView.UserName = user.UserName;
+                uView.UserId = user.UserId;
+                uView.Email = user.Email;
+                uView.FirstName = user.FirstName;
+                uView.LastName = user.LastName;
+                uView.Role = db.Roles.Find(user.Role).RoleName;
+                uView.UserName = user.UserName;
 
-            return uView;
+                return uView;
+            }
         }
 
         // GET: User

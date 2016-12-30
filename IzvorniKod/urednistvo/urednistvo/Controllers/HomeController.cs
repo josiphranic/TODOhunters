@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using urednistvo.Models;
+using urednistvo.ModelsView;
 
 namespace urednistvo.Controllers
 {
@@ -28,9 +29,25 @@ namespace urednistvo.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
+        }
+
+        public ActionResult EditorialCouncil()
+        {
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
+            {
+                int RoleEditor = db.Roles.Single(r => r.RoleName == "Glavni urednik").Value;
+                int RoleMember = db.Roles.Single(r => r.RoleName == "Član uredničkog vijeća").Value;
+
+                List<UserView> uViews = new List<UserView>();
+
+                foreach (User user in db.Users.Where(u => u.Role == RoleEditor || u.Role == RoleMember))
+                {
+                    uViews.Add(UserController.createUserView(user));
+                }
+
+                return View(uViews);
+            }
         }
     }
 }
