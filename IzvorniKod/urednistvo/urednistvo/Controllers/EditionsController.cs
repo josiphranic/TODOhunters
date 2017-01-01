@@ -76,6 +76,11 @@ namespace urednistvo.Controllers
         {
             if (ModelState.IsValid)
             {
+                if(edition.Title == null)
+                {
+                    TempData["Message"] = "Tiskovina mora imati naslov.";
+                    return RedirectToAction("Create", "Editions");
+                }
                 edition.TimeOfRelease = DateTime.Now;
                 db.Editions.Add(edition);
                 db.SaveChanges();
