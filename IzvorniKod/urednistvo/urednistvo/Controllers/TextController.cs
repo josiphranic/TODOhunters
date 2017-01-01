@@ -293,17 +293,17 @@ namespace urednistvo.Controllers
                     t.FinalSectionId = text.FinalSectionId;
                     t.FinalSection = text.FinalSection;
 
-                    if (submit == "Return")
+                    if (submit == "Vrati na doradu")
                     {
                         NotificationController.createNotification(t, "Vas tekst mora biti doraden po uputama.");
                         t.TextStatus = (int)TextStatus.RETURNED;
                     }
-                    else if (submit == "Accept")
+                    else if (submit == "Prihvati")
                     {
                         NotificationController.createNotification(t, "Vas tekst je prihvacen. Ostatak informacija nalazi se u detaljima teksta.");
                         NotificationController.createNotification(db.Roles.Single(r => r.RoleName == "Lektor").RoleId, t, "Tekst \"" + t.Title + "\" ceka vase lektoriranje.");
                         t.TextStatus = (int)TextStatus.ACCEPTED;
-                    } else if (submit == "Decline")
+                    } else if (submit == "Odbij")
                     {
                         NotificationController.createNotification(t, "Vas tekst je odbijen. Detaljnije objasnjenje u obavijesti.");
                         t.TextStatus = (int)TextStatus.DECLINED;

@@ -56,6 +56,12 @@ namespace urednistvo.Controllers
         public ActionResult Details(int id)
         {
             List<Text> list = db.Texts.Where(s => s.FinalSectionId == id).ToList();
+            if(list.Count == 0)
+            {
+                TempData["Message"] = "No texts in this section";
+                return RedirectToAction("Index");
+            }
+
             List<TextView> textViews = new List<TextView>();
 
             foreach (Text t in list)
