@@ -1,10 +1,10 @@
 ﻿@model List<urednistvo.ModelsView.Textual.TextView>
 
 @{
-    ViewBag.Title = "Tekstovi";
+    ViewBag.Title = "Arhiva";
 }
 
-<h2>Svi tekstovi</h2>
+<h2>Arhiva</h2>
 <br />
 
 <table class="table">
@@ -81,7 +81,7 @@
                 </a>
             </td>
             <td>
-                <a href='@Url.Action("Delete/" + @text.TextId, "Text")'>
+                <a href='@Url.Action("Download/" + @text.TextId, "Text")'>
                     <span class="glyphicon glyphicon-download" title="Preuzmi"></span>
                 </a>
             </td>
@@ -89,3 +89,7 @@
     }
 
 </table>
+
+<p>
+    <font size="3">@Html.ActionLink("Dodaj tekst u arhivu", "Upload")</font>
+</p>

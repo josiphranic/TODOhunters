@@ -427,6 +427,7 @@
     <Content Include="Views\Editions\Index.cshtml" />
     <Content Include="Views\Home\EditorialCouncil.cshtml" />
     <Content Include="Views\Archive\Index.cshtml" />
+    <Content Include="Views\Archive\Upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

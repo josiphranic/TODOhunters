@@ -346,7 +346,7 @@ namespace urednistvo.Controllers
             {
                 return createRTF((db.Texts.Single(u => u.TextId == id)));
             }
-            TempData["Message"] = "Cannot download this text.";
+            TempData["Message"] = "Can not download this text.";
             return RedirectToAction("Index", "Text");
         }
 
