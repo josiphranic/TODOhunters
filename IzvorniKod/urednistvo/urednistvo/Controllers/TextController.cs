@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using urednistvo.Models;
 using urednistvo.ModelsView;
 using urednistvo.ModelsView.Textual;
 using urednistvo.ModelsView.Utilities;
+using static System.Net.WebRequestMethods;
 
 namespace urednistvo.Controllers
 {
@@ -153,6 +155,7 @@ namespace urednistvo.Controllers
             return RedirectToAction("Index", "Text");
         }
 
+     
         // GET: Text/Create
         public ActionResult Create()
         {
@@ -330,5 +333,34 @@ namespace urednistvo.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        //GET: Text/Download/<id>
+        public ActionResult Download(int id)
+        {
+
+            if (db.Texts.Find(id).WebPublishable)
+            {
+                return createRTF(db.Texts.Single(u => u.TextId == id));
+            }
+            if (Session["UserID"] != null && (String)Session["Role"] != "Registered user")
+            {
+                return createRTF((db.Texts.Single(u => u.TextId == id)));
+            }
+            TempData["Message"] = "Cannot download this text.";
+            return RedirectToAction("Index", "Text");
+        }
+
+        private FileContentResult createRTF(Text text)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(text.Title).Append("\n\n");
+            sb.Append(text.Content).Append("\n\n");
+            sb.Append(text.Author.FirstName + " " + text.Author.LastName).Append("\n");
+            sb.Append(text.Time.ToString()).Append("\n").Append("\n");
+
+            return File(Encoding.UTF8.GetBytes(sb.ToString()), "text/plain", text.Title + ".rtf");
+        }
+
+
     }
 }

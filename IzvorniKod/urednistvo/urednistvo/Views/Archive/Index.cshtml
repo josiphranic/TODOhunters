@@ -5,7 +5,7 @@
 }
 
 <h2>Svi tekstovi</h2>
-<br /> 
+<br />
 
 <table class="table">
     <tr>
@@ -21,12 +21,6 @@
         <th>
             Ažurirano
         </th>
-        @if ((String)Session["Role"] == "Glavni urednik")
-        {
-            <th>
-                Text status
-            </th>
-        }     
         <th></th>
         <th></th>
         <th></th>
@@ -38,16 +32,16 @@
     {
         <tr>
             <td>
-                    <a href='@Url.Action("Details/" + @text.TextId, "Text")'>
-                        <span class="glyphicon glyphicon-list"></span> @text.Title (@text.Subtitle)
-                    </a>
+                <a href='@Url.Action("Details/" + @text.TextId, "Text")'>
+                    <span class="glyphicon glyphicon-list"></span> @text.Title (@text.Subtitle)
+                </a>
             </td>
-            
+
             <td>
                 <a href='@Url.Action("Details/" + @text.UserId, "User")'>
                     <span class="glyphicon glyphicon-user"></span> @text.Username
                 </a>
-            
+
             <td>
                 @if (text.FinalSectionId != -1)
                 {
@@ -60,24 +54,17 @@
                     <label><span class="glyphicon glyphicon-file"></span> @text.FinalSection </label>
                 }
             </td>
-            
+
             <td>
                 @Html.DisplayFor(modelItem => text.Time)
             </td>
-            
-            @if ((String)Session["Role"] == "Glavni urednik")
-            {
-                <th>
-                    @Html.DisplayFor(modelItem => text.TextStatus)
-                </th>
-            } 
-            
+
             <td>
                 <a href='@Url.Action("ByText/" + @text.TextId, "Comment")'>
-                    <span class="glyphicon glyphicon-comment" title="Komentari"></span> 
+                    <span class="glyphicon glyphicon-comment" title="Komentari"></span>
                 </a>
             </td>
-            
+
             <td>
                 <a href='@Url.Action("Details/" + @text.TextId, "Ratings")'>
                     <span class="glyphicon glyphicon-star" title="Ocjene"></span>
@@ -94,7 +81,7 @@
                 </a>
             </td>
             <td>
-                <a href='@Url.Action("Download/" + @text.TextId, "Text")'>
+                <a href='@Url.Action("Delete/" + @text.TextId, "Text")'>
                     <span class="glyphicon glyphicon-download" title="Preuzmi"></span>
                 </a>
             </td>
@@ -102,7 +89,3 @@
     }
 
 </table>
-
-<p>
-    <font size="3">@Html.ActionLink("Novi tekst", "Create")</font>
-</p>
