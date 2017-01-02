@@ -29,20 +29,33 @@
                     {
                         <li><span class="glyphicon glyphicon-upload icon" title="Upload" onclick="upload()"></span></li>
                     }
-                    @if ((string)Session["Role"] == "Lektor")
-                    {
-                        <li><span class="glyphicon glyphicon-pencil icon" title="Lektoriraj" onclick="gotoForLectoring()"></span></li>
-                    }
-                    @if ((string)Session["Role"] == "Grafički urednik")
-                    {
-                        <li><span class="glyphicon glyphicon-film icon" title="Grafički uredi" onclick="gotoForGraphEdit()"></span></li>
-                    }
-                    @if ((string)Session["Role"] == "Glavni urednik")
-                    {
-                        <li><span class="glyphicon glyphicon-star icon" title="Ocjene" onclick="gotoRatings()"></span></li>
-                    }
+                    <li>
+                        <div class="btn-group actions-div">
+                            <button class="btn btn-lg dropdown-toggle actions-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-flash"></span><!--<span class="caret"></span>-->
+                            </button>
+                            <ul class="dropdown-menu">
+                                @if (Session["UserID"] == null)
+                                {
+                                    <li>Nema dostupnih akcija</li>
+                                }
+                                @if ((string)Session["Role"] == "Lektor")
+                                {
+                                    <li><span class="glyphicon glyphicon-pencil icon" title="Lektoriraj" onclick="gotoForLectoring()"></span></li>
+                                }
+                                @if ((string)Session["Role"] == "Grafički urednik")
+                                {
+                                    <li><span class="glyphicon glyphicon-film icon" title="Grafički uredi" onclick="gotoForGraphEdit()"></span></li>
+                                }
+                                @if ((string)Session["Role"] == "Glavni urednik")
+                                {
+                                    <li><span class="glyphicon glyphicon-star icon" title="Ocjene" onclick="gotoRatings()"></span></li>
+                                }
+                            </ul>
+                        </div>
+                    </li>
 
-                    <li><span class="glyphicon glyphicon-king icon" title="Uredničko vijeće" onclick="gotoEditorialCouncil()"></span></li>
+                    <li><span class="glyphicon glyphicon-certificate icon" title="Uredničko vijeće" onclick="gotoEditorialCouncil()"></span></li>
                     <li><span class="glyphicon glyphicon-phone-alt icon" title="Kontakt" onclick="gotoContact()"></span></li>
                     <li><span class="glyphicon glyphicon-book icon" title="Arhiva" onclick="gotoArchive()"></span></li>
                 </ul>
@@ -118,6 +131,20 @@
     }
 </script>
 <style>
+    .actions-dropdown{
+        padding: 0;
+        top: 18px;
+        background-color: transparent;
+        color: white;
+        font-size: 20px;
+    }
+    .actions-dropdown:hover {
+        color: black;
+        cursor: pointer;
+    }
+    .actions-div{
+        padding-left: 22px;
+    }
     .info-bar{
         position: relative;
         top: 12px;
