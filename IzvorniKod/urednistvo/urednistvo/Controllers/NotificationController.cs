@@ -21,17 +21,20 @@ namespace urednistvo.Controllers
 
                 foreach(Notification n in db.Notifications.ToList())
                 {
-                    if(n.Users == null || n.Users.Count == 0)
+                    if (n.Users == null || n.Users.Count == 0)
                     {
                         notificationViews.Add(createNotificationView(n, 0));
                         continue;
                     }
-                    foreach(User u in n.Users)
+                    else if(currentId != 0)
                     {
-                        if(u.UserId == currentId)
+                        foreach (User u in n.Users)
                         {
-                            notificationViews.Add(createNotificationView(n, currentId));
-                            break;
+                            if (u.UserId == currentId)
+                            {
+                                notificationViews.Add(createNotificationView(n, currentId));
+                                break;
+                            }
                         }
                     }
                 }

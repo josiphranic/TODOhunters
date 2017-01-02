@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -126,10 +127,28 @@ namespace urednistvo.Controllers
 
         public ActionResult ForGraphicEditing()
         {
+
             List<Text> list = db.Texts.Where(t => t.TextStatus == (int)TextStatus.LECTORED).ToList();
             if (list.Count == 0)
             {
                 TempData["Message"] = "Nema tekstova za grafičko uređivanje.";
+                return RedirectToAction("Index", "User");
+            }
+            List<TextView> listView = new List<TextView>();
+
+            foreach (Text t in list)
+            {
+                listView.Add(getTextView(t));
+            }
+            return View(listView);
+        }
+
+        public ActionResult ForCorrection()
+        {
+            List<Text> list = db.Texts.Where(t => t.TextStatus == (int)TextStatus.GRAPH_EDITED).ToList();
+            if (list.Count == 0)
+            {
+                TempData["Message"] = "Nema tekstova za korekciju.";
                 return RedirectToAction("Index", "User");
             }
             List<TextView> listView = new List<TextView>();
@@ -386,23 +405,50 @@ namespace urednistvo.Controllers
 
                 uploadFile.SaveAs(path);
 
-                //DODATAK ZA BAZU
-                /*
-                 * Pdf pdf = new Pdf();
-                 * pdf.PdfName = name;
-                 * pdf.TextId = id;
-                 * pdf.Text = db.Texts.Find(id);
-                 * db.Pdfs.Add(pdf);
-                 * db.SaveChanges();              
-                 */
+                Pdf pdf = new Pdf();
+                pdf.PdfName = name;
+                pdf.TextId = (int)id;
+                pdf.Text = db.Texts.Find(id);
+                db.Pdfs.Add(pdf);
+                db.SaveChanges();
 
                 NotificationController.createNotification(db.Roles.Single(r => r.RoleName == "Korektor").Value,
                    db.Texts.Find(id), "Tekst \"" + db.Texts.Find(id).Title + "\"je spreman za vasu korekciju.");
+
+                Text text = db.Texts.Find(id);
+                text.TextStatus = (int)TextStatus.GRAPH_EDITED;
+                db.SaveChanges();
 
                 return RedirectToAction("ForGraphicEditing/" + id);
             }
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult DownloadPDF(int? id)
+        {
+            if ((String)Session["Role"] != "Glavni urednik" && (String)Session["Role"] != "Korektor")
+            {
+                TempData["Message"] = "Nemate ovlati pristupiti ovoj stranici.";
+                return RedirectToAction("Index", "Text");
+            }
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Pdf pdf = db.Pdfs.Single(p => p.TextId == (int)id);
+
+            if (pdf == null)
+            {
+                return HttpNotFound();
+            }
+
+            string path = Server.MapPath("~/PDFs/" + pdf.PdfName);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(path);
+            string fileName = pdf.PdfName;
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
     }
 }

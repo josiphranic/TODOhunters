@@ -15,6 +15,7 @@ namespace urednistvo.ModelsView.Utilities
             if ((int)TextStatus.RETURNED == i) return "Vraćen";
             if ((int)TextStatus.LECTORED == i) return "Lektoriran";
             if ((int)TextStatus.DECLINED == i) return "Odbijen";
+            if ((int)TextStatus.GRAPH_EDITED == i) return "Grafički uređen";
             return "Nepoznat";
         }
     }

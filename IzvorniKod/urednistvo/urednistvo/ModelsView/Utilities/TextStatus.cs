@@ -13,6 +13,7 @@ namespace urednistvo.ModelsView
         ACCEPTED = 0x2,
         RETURNED = 0x4,
         LECTORED = 0x8,
-        DECLINED = 0x16
+        DECLINED = 0x16,
+        GRAPH_EDITED = 0x32
     } 
 }

@@ -477,10 +477,12 @@
     <Content Include="Views\Image\Index.cshtml" />
     <Content Include="Views\Image\ByText.cshtml" />
     <Content Include="Views\Editions\Edit.cshtml" />
+    <Content Include="Views\Text\ForCorrection.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\" />
+    <Folder Include="PDFs\" />
     <Folder Include="Views\Statistics\" />
   </ItemGroup>
   <ItemGroup>
