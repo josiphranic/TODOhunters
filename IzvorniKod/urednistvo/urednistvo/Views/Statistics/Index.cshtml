@@ -6,7 +6,12 @@
 <script src="../../Scripts/jquery-1.10.2.min.js" type="text/javascript"></script>
 <html>
 <body>
-    <input id="datetimepicker" type="text" />
+    <p>Odaberi razdoblje za prikaz statistike:</p>
+    <form id='your-range-form' action='@Url.Action("DataForRange","Statistics")' method='post'>
+        <input id='datetimepicker' name='from' value="Od" />
+        <input id='datetimepicker' name='to'  value="Do"/>
+        <input type='submit' value='Set Range' />
+    </form>
 
 </body>
 </html>

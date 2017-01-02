@@ -355,6 +355,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsView\Statistics\StatisticsView.cs" />
+    <Compile Include="ModelsView\Statistics\AuthorView.cs" />
     <Compile Include="ModelsView\Utilities\TextStatusNameGetter.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Edition.cs" />
@@ -483,6 +484,8 @@
     <Content Include="Views\Image\ByText.cshtml" />
     <Content Include="Views\Editions\Edit.cshtml" />
     <Content Include="Views\Statistics\Index.cshtml" />
+    <Content Include="Views\Statistics\DataForRange.cshtml" />
+    <Content Include="Views\Statistics\ByAuthor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
