@@ -322,6 +322,30 @@
     <Compile Include="Migrations\201701021501165_kokot5.Designer.cs">
       <DependentUpon>201701021501165_kokot5.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701021552226_kokos30.cs" />
+    <Compile Include="Migrations\201701021552226_kokos30.Designer.cs">
+      <DependentUpon>201701021552226_kokos30.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701021554590_kokos31.cs" />
+    <Compile Include="Migrations\201701021554590_kokos31.Designer.cs">
+      <DependentUpon>201701021554590_kokos31.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701021557459_kokos32.cs" />
+    <Compile Include="Migrations\201701021557459_kokos32.Designer.cs">
+      <DependentUpon>201701021557459_kokos32.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701021559432_kokos33.cs" />
+    <Compile Include="Migrations\201701021559432_kokos33.Designer.cs">
+      <DependentUpon>201701021559432_kokos33.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701021601295_kokos34.cs" />
+    <Compile Include="Migrations\201701021601295_kokos34.Designer.cs">
+      <DependentUpon>201701021601295_kokos34.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701021602108_kokos35.cs" />
+    <Compile Include="Migrations\201701021602108_kokos35.Designer.cs">
+      <DependentUpon>201701021602108_kokos35.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsView\Utilities\TextStatusNameGetter.cs" />
     <Compile Include="Models\Comment.cs" />
@@ -565,6 +589,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701021501165_kokot5.resx">
       <DependentUpon>201701021501165_kokot5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701021552226_kokos30.resx">
+      <DependentUpon>201701021552226_kokos30.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701021554590_kokos31.resx">
+      <DependentUpon>201701021554590_kokos31.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701021557459_kokos32.resx">
+      <DependentUpon>201701021557459_kokos32.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701021559432_kokos33.resx">
+      <DependentUpon>201701021559432_kokos33.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701021601295_kokos34.resx">
+      <DependentUpon>201701021601295_kokos34.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701021602108_kokos35.resx">
+      <DependentUpon>201701021602108_kokos35.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
