@@ -172,6 +172,7 @@
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\EditionsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\RatingsController.cs" />
@@ -309,6 +310,10 @@
     <Compile Include="Migrations\201612291543075_kokos27.Designer.cs">
       <DependentUpon>201612291543075_kokos27.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701021252362_kokos29.cs" />
+    <Compile Include="Migrations\201701021252362_kokos29.Designer.cs">
+      <DependentUpon>201701021252362_kokos29.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsView\Utilities\TextStatusNameGetter.cs" />
     <Compile Include="Models\Comment.cs" />
@@ -428,9 +433,16 @@
     <Content Include="Views\Home\EditorialCouncil.cshtml" />
     <Content Include="Views\Archive\Index.cshtml" />
     <Content Include="Views\Archive\Upload.cshtml" />
+    <Content Include="Views\Picture\Create.cshtml" />
+    <Content Include="Views\Image\Create.cshtml" />
+    <Content Include="Views\Image\Delete.cshtml" />
+    <Content Include="Views\Image\Details.cshtml" />
+    <Content Include="Views\Image\Edit.cshtml" />
+    <Content Include="Views\Image\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -536,6 +548,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612291543075_kokos27.resx">
       <DependentUpon>201612291543075_kokos27.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701021252362_kokos29.resx">
+      <DependentUpon>201701021252362_kokos29.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

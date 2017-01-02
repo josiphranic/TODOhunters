@@ -9,6 +9,7 @@ namespace urednistvo.Models
     {
         public int ImageId { get; set; }
         public string ImageName { get; set; }
+        public string Type { get; set; }
 
         public byte[] Content { get; set; }
 

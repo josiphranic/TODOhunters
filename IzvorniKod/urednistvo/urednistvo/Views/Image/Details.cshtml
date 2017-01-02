@@ -1,0 +1,47 @@
+﻿@model urednistvo.Models.Image
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Image</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Text.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Text.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ImageName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Content)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Content)
+        </dd>
+
+    </dl>
+</div>
+
+<img src="@Url.Content("~/Images/" + Model.ImageName)" alt="IMAGES" />
+<img src="@Url.Content("~/Images/" + Model.ImageName)" alt="" />
+<img src="~/Images/(@Model.ImageName).png" />
+<img src="@Html.Raw("~/Images/" + Model.ImageName)" alt="a description of the image">
+
+<p>
+    @Html.ActionLink("Sve slike", "Index")
+</p>
