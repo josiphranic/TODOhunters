@@ -76,7 +76,7 @@ namespace urednistvo.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(edition.Title == null)
+                if(edition.Title == null || edition.Title.Length == 0)
                 {
                     TempData["Message"] = "Tiskovina mora imati naslov.";
                     return RedirectToAction("Create", "Editions");
@@ -88,6 +88,29 @@ namespace urednistvo.Controllers
             }
 
             return View(edition);
+        }
+
+        public ActionResult Edit(int? id)
+        {
+            var edition = db.Editions.SingleOrDefault(e => e.EditionId == id);
+            if(edition == null)
+            {
+                return RedirectToAction("Index");
+            }
+            return View(edition);
+        }
+        [HttpPost]
+        public ActionResult Edit(Edition edition)
+        {
+            var ed = db.Editions.SingleOrDefault(e => e.EditionId == edition.EditionId);
+            if (edition.Title == null || edition.Title.Length == 0)
+            {
+                TempData["Message"] = "Tiskovina mora imati naslov.";
+                return RedirectToAction("Edit", edition.EditionId);
+            }
+            ed.Title = edition.Title;
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }

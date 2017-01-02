@@ -361,6 +361,29 @@ namespace urednistvo.Controllers
             return File(Encoding.UTF8.GetBytes(sb.ToString()), "text/plain", text.Title + ".rtf");
         }
 
+        [HttpPost]
+        public ActionResult UploadPDF(int? id, HttpPostedFileBase uploadFile)
+        {
+            if (uploadFile != null && uploadFile.ContentLength > 0)
+            {
+                string name = System.IO.Path.GetFileName(uploadFile.FileName);
+                string type = name.Substring(name.LastIndexOf(".") + 1);
 
+                if(type != "pdf")
+                {
+                    TempData["Message"] = "Krivi oblik datoteke.";
+                    return RedirectToAction("Index");
+                }
+
+                string path = System.IO.Path.Combine(
+                                       Server.MapPath("~/PDFs"), name);
+
+                uploadFile.SaveAs(path);
+
+                return RedirectToAction("ForGraphicEditing/" + id);
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }

@@ -9,8 +9,7 @@ namespace urednistvo.Models
     {
         public int ImageId { get; set; }
         public string ImageName { get; set; }
-
-        public byte[] Content { get; set; }
+        public string Type { get; set; }
 
         public int TextId { get; set; }
         public virtual Text Text { get; set; }
