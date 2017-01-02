@@ -64,6 +64,7 @@
         </div>
     </div>
     <div id="info-bar" class="info-bar">
+        <span class="life-meaning"></span>
         <span class="glyphicon glyphicon-info-sign"></span>
         <font color="black">@TempData["Message"]</font>
         <span class="glyphicon glyphicon-remove" onclick="hide()"></span>
@@ -131,6 +132,10 @@
     }
 </script>
 <style>
+    .life-meaning{
+        width:50px;
+        display: inline-block;
+    }
     .actions-dropdown{
         padding: 0;
         top: 18px;
@@ -148,7 +153,8 @@
     .info-bar{
         position: relative;
         top: 12px;
-        background-color:lightsalmon;
+        color: #00529B;
+        background-color:#BDE5F8;
         visibility: hidden;
     }
     .icon {
