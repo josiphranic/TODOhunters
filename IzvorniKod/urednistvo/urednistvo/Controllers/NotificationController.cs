@@ -90,52 +90,6 @@ namespace urednistvo.Controllers
             return View();
         }
 
-        // GET: Notification/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Notification/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, Notification notification)
-        {
-            using (UrednistvoDatabase db = new UrednistvoDatabase())
-            {
-                Notification n = db.Notifications.Find(id);
-                notification.Title = n.Title;
-                notification.Time = DateTime.Now;
-
-                db.Notifications.Remove(n);
-                db.Notifications.Add(notification);
-                db.SaveChanges();
-
-                return RedirectToAction("Index");
-            }
-        }
-
-        // GET: Notification/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Notification/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
         public static void createNotification(Text text, string message)
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())

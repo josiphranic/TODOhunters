@@ -17,8 +17,6 @@
         <th>
             <label>Za</label>
         </th>
-        <th></th>
-        <th></th>
     </tr>
 
     @foreach (var n in Model)
@@ -33,7 +31,7 @@
                 @Html.DisplayFor(modelItem => n.Time)
             </td>
             <td>
-                @if (n.ForUser == "Public")
+                @if (n.ForUser == "Javno")
                 {
                     @Html.DisplayFor(modelItem => n.ForUser)
                 }
@@ -41,12 +39,6 @@
                 {
                     @Html.ActionLink(@n.ForUser, "Details/" + @n.UserId, "User")
                 }  
-            </td>
-            <td>
-                <a class="glyphicon glyphicon-pencil" title="Uređivanje" href='@Url.Action("Edit/" + @n.NotificationId, "Notification")'></a>
-            </td>
-            <td>
-                <a class="glyphicon glyphicon-trash" title="Obriši" href='@Url.Action("Delete/" + @n.NotificationId, "Notification")'></a>
             </td>
         </tr>
     }
