@@ -314,6 +314,14 @@
     <Compile Include="Migrations\201701021252362_kokos29.Designer.cs">
       <DependentUpon>201701021252362_kokos29.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701021454443_kokot4.cs" />
+    <Compile Include="Migrations\201701021454443_kokot4.Designer.cs">
+      <DependentUpon>201701021454443_kokot4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701021501165_kokot5.cs" />
+    <Compile Include="Migrations\201701021501165_kokot5.Designer.cs">
+      <DependentUpon>201701021501165_kokot5.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsView\Utilities\TextStatusNameGetter.cs" />
     <Compile Include="Models\Comment.cs" />
@@ -439,6 +447,7 @@
     <Content Include="Views\Image\Details.cshtml" />
     <Content Include="Views\Image\Edit.cshtml" />
     <Content Include="Views\Image\Index.cshtml" />
+    <Content Include="Views\Editions\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -551,6 +560,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701021252362_kokos29.resx">
       <DependentUpon>201701021252362_kokos29.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701021454443_kokot4.resx">
+      <DependentUpon>201701021454443_kokot4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701021501165_kokot5.resx">
+      <DependentUpon>201701021501165_kokot5.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
