@@ -11,8 +11,6 @@ namespace urednistvo.Models
         public string ImageName { get; set; }
         public string Type { get; set; }
 
-        public byte[] Content { get; set; }
-
         public int TextId { get; set; }
         public virtual Text Text { get; set; }
     }
