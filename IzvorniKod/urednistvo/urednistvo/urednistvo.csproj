@@ -347,12 +347,17 @@
     <Compile Include="Migrations\201701021602108_kokos35.Designer.cs">
       <DependentUpon>201701021602108_kokos35.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701021710534_kokot6.cs" />
+    <Compile Include="Migrations\201701021710534_kokot6.Designer.cs">
+      <DependentUpon>201701021710534_kokot6.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsView\Utilities\TextStatusNameGetter.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Edition.cs" />
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\Pdf.cs" />
     <Compile Include="Models\Rate.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\User.cs" />
@@ -611,6 +616,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701021602108_kokos35.resx">
       <DependentUpon>201701021602108_kokos35.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701021710534_kokot6.resx">
+      <DependentUpon>201701021710534_kokot6.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
