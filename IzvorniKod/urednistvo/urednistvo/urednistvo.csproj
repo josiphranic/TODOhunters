@@ -443,10 +443,9 @@
     <Content Include="Views\Archive\Upload.cshtml" />
     <Content Include="Views\Picture\Create.cshtml" />
     <Content Include="Views\Image\Create.cshtml" />
-    <Content Include="Views\Image\Delete.cshtml" />
     <Content Include="Views\Image\Details.cshtml" />
-    <Content Include="Views\Image\Edit.cshtml" />
     <Content Include="Views\Image\Index.cshtml" />
+    <Content Include="Views\Image\ByText.cshtml" />
     <Content Include="Views\Editions\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>

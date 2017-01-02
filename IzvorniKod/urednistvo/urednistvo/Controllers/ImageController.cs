@@ -18,12 +18,24 @@ namespace urednistvo.Controllers
         // GET: Image
         public ActionResult Index()
         {
+            if((String)Session["Role"] != "Glavni urednik" && (String)Session["Role"] != "Grafički urednik")
+            {
+                TempData["Message"] = "Nemate ovlati pristupiti ovoj stranici.";
+                return RedirectToAction("Index", "Text");
+            }
+
             return View(db.Images.ToList());
         }
 
         // GET: Image/Details/5
         public ActionResult Details(int? id)
         {
+            if ((String)Session["Role"] != "Glavni urednik" && (String)Session["Role"] != "Grafički urednik")
+            {
+                TempData["Message"] = "Nemate ovlati pristupiti ovoj stranici.";
+                return RedirectToAction("Index", "Text");
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -36,9 +48,43 @@ namespace urednistvo.Controllers
             return View(image);
         }
 
+        public ActionResult ByText(int? id)
+        {
+            if ((String)Session["Role"] != "Glavni urednik" && (String)Session["Role"] != "Grafički urednik")
+            {
+                TempData["Message"] = "Nemate ovlati pristupiti ovoj stranici.";
+                return RedirectToAction("Index", "Text");
+            }
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Text text = db.Texts.Find(id);
+            if (text == null)
+            {
+                return HttpNotFound();
+            }
+
+            var images = db.Images.Where(i => i.TextId == id);
+            if(images.Count() == 0)
+            {
+                TempData["Message"] = "Nema slika za ovaj tekst.";
+                return RedirectToAction("Index");
+            }
+
+            return View(images.ToList());
+        }
+
         // GET: Image/Create
         public ActionResult Create()
         {
+            if ((String)Session["Role"] != "Glavni urednik" && (String)Session["Role"] != "Grafički urednik")
+            {
+                TempData["Message"] = "Nemate ovlati pristupiti ovoj stranici.";
+                return RedirectToAction("Index", "Text");
+            }
+
             ViewBag.TextId = new SelectList(db.Texts, "TextId", "Title");
             return View();
         }
@@ -57,92 +103,40 @@ namespace urednistvo.Controllers
 
                 string path = System.IO.Path.Combine(
                                        Server.MapPath("~/Images"), image.ImageName + "." + type);
-                // file is uploaded
-                file.SaveAs(path);
 
-                // save the image path path to the database or you can send image 
-                // directly to database
-                // in-case if you want to store byte[] ie. for DB
+                file.SaveAs(path);
 
                 image.Type = type;
                 db.Images.Add(image);
                 db.SaveChanges();
 
-                /*using (MemoryStream ms = new MemoryStream())
-                {
-                    file.InputStream.CopyTo(ms);
-                    byte[] array = ms.GetBuffer();
-                }*/
             }
             return RedirectToAction("Index");
         }
 
-        // GET: Image/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Download(int? id)
         {
+            if ((String)Session["Role"] != "Glavni urednik" && (String)Session["Role"] != "Grafički urednik")
+            {
+                TempData["Message"] = "Nemate ovlati pristupiti ovoj stranici.";
+                return RedirectToAction("Index", "Text");
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Image image = db.Images.Find(id);
             if (image == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.TextId = new SelectList(db.Texts, "TextId", "Title", image.TextId);
-            return View(image);
-        }
 
-        // POST: Image/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ImageId,ImageName,Content,TextId")] Image image)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(image).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.TextId = new SelectList(db.Texts, "TextId", "Title", image.TextId);
-            return View(image);
-        }
-
-        // GET: Image/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Image image = db.Images.Find(id);
-            if (image == null)
-            {
-                return HttpNotFound();
-            }
-            return View(image);
-        }
-
-        // POST: Image/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Image image = db.Images.Find(id);
-            db.Images.Remove(image);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            string path = Server.MapPath("~/Images/" + image.ImageName + "." + image.Type);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(path);
+            string fileName = image.ImageName + "." + image.Type;
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
     }
 }
