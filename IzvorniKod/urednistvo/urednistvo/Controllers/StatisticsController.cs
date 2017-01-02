@@ -98,10 +98,10 @@ namespace urednistvo.Controllers
             List<AuthorView> authors = new List<AuthorView>();
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
-                foreach (User u in db.Users)
+                foreach (User u in db.Users.ToList())
                 {
                     AuthorView a = createAuthorView(u);
-                    foreach (Text t in u.Texts)
+                    foreach (Text t in u.Texts.ToList())
                     {
                         if (TextStatusNameGetter.getName(t.TextStatus) == "Prihvaćen")
                         {
