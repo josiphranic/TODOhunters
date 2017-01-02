@@ -25,9 +25,10 @@ namespace urednistvo.Models
 
         public int UserId { get; set; }
         public virtual User Author { get; set; }
-
+        
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Rating> Ratings { get; set; }
         public virtual ICollection<Image> Images { get; set; }
+        public virtual ICollection<Pdf> Pdf { get; set; }
     }
 }

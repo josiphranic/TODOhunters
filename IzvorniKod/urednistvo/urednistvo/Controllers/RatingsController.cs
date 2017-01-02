@@ -121,6 +121,12 @@ namespace urednistvo.Controllers
 
             ViewBag.DropDownListRates = new SelectList(db.Rates, "Value", "Name");
             ViewBag.DropDownListSections = new SelectList(db.Sections, "SectionId", "Title");
+
+            if (db.Ratings.Count(r => r.UserId == userId && r.TextId == id) > 5)
+            {
+                NotificationController.createNotification(db.Roles.Single(r => r.RoleName == "Glavni urednik").Value, 
+                    db.Texts.Find(id), "Tekst \"" + db.Texts.Find(id).Title + "\"je ocijenjen od svih clanova urednickog vijeca.");
+            }
             return View();
         }
 

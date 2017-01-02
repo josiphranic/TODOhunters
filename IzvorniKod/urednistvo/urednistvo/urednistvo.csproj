@@ -349,6 +349,10 @@
     <Compile Include="Migrations\201701021602108_kokos35.Designer.cs">
       <DependentUpon>201701021602108_kokos35.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701021710534_kokot6.cs" />
+    <Compile Include="Migrations\201701021710534_kokot6.Designer.cs">
+      <DependentUpon>201701021710534_kokot6.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsView\Statistics\StatisticsView.cs" />
     <Compile Include="ModelsView\Utilities\TextStatusNameGetter.cs" />
@@ -356,6 +360,7 @@
     <Compile Include="Models\Edition.cs" />
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\Pdf.cs" />
     <Compile Include="Models\Rate.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\User.cs" />
@@ -381,6 +386,7 @@
     <Content Include="Content\bootstrap-sandstone.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\jquery.datetimepicker.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -391,6 +397,7 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.datetimepicker.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -475,11 +482,11 @@
     <Content Include="Views\Image\Index.cshtml" />
     <Content Include="Views\Image\ByText.cshtml" />
     <Content Include="Views\Editions\Edit.cshtml" />
+    <Content Include="Views\Statistics\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\" />
-    <Folder Include="Views\Statistics\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -612,6 +619,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701021602108_kokos35.resx">
       <DependentUpon>201701021602108_kokos35.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701021710534_kokot6.resx">
+      <DependentUpon>201701021710534_kokot6.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
