@@ -1,7 +1,64 @@
-﻿@{
+﻿@model IEnumerable<urednistvo.ModelsView.AuthorView>
+@{
     ViewBag.Title = "ByAuthor";
 }
 
 <h2>Statistika po autorima</h2>
 
+<table class="table">
+    <tr>
+        <th>
+            Ime
+        </th>
+        <th>
+            Prezime
+        </th>
+        <th>
+            Korisničko ime
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            Broj objavljenih tekstova
+        </th>
+        <th>
+            Broj odbijenih tekstova
+        </th>
+        <th>
+            Broj tekstova u procesu ocjenjivanja
+        </th>
+    </tr>
 
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => user.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => user.LastName)
+            </td>
+            <td>
+                <a href='@Url.Action("Details/" + @user.UserId, "User")'>
+                    <span class="glyphicon glyphicon-user"></span> @user.UserName
+                </a>
+            </td>
+            <td>
+                <span class="glyphicon glyphicon-envelope">
+                    @Html.DisplayFor(modelItem => user.Email)
+                </span>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => user.numPublishedTexts)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => user.numDeclinedTexts)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => user.numSentTexes)
+            </td>
+        </tr>
+    }
+
+</table>
