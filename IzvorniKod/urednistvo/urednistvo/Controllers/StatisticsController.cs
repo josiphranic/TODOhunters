@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using urednistvo.Models;
 using urednistvo.ModelsView;
 using urednistvo.ModelsView.Textual;
+using urednistvo.ModelsView.Utilities;
 
 namespace urednistvo.Controllers
 {
@@ -90,6 +91,50 @@ namespace urednistvo.Controllers
             return View(stat);
         }
         
-    }
+        //GET: Statistics/ByAuthors
+        public ActionResult ByAuthors()
+        {
+            List<AuthorView> authors = new List<AuthorView>();
+            using(UrednistvoDatabase db = new UrednistvoDatabase())
+            {
+                foreach(User u in db.Users)
+                {
+                    AuthorView a = createAuthorView(u);
+                    foreach(Text t in u.Texts)
+                    {
+                        if(TextStatusNameGetter.getName(t.TextStatus) == "Prihvaćen")
+                        {
+                            a.numPublishedTexts++;
+                        } else if(TextStatusNameGetter.getName(t.TextStatus) == "Odbijen")
+                        {
+                            a.numDeclinedTexts++;
+                        } else
+                        {
+                            a.numSentTexes++;
+                        }
+                    }
+                }
+            }
+            return View(authors);
+        }
+
+        public static AuthorView createAuthorView(User user)
+        {
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
+            {
+                AuthorView aView = new AuthorView();
+
+                aView.UserId = user.UserId;
+                aView.Email = user.Email;
+                aView.FirstName = user.FirstName;
+                aView.LastName = user.LastName;
+                aView.UserName = user.UserName;
+                aView.numDeclinedTexts = 0;
+                aView.numPublishedTexts = 0;
+                aView.numSentTexes = 0;
+
+                return aView;
+            }
+        }
 
 }
