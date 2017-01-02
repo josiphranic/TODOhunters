@@ -49,7 +49,7 @@ namespace urednistvo.Controllers
             nView.Time = n.Time;
             nView.Content = n.Content;
             nView.UserId = UserId;
-            nView.ForUser = n.Users.Count == 0 ? "Public" : n.Users.ElementAt(0).UserName;
+            nView.ForUser = n.Users.Count == 0 ? "Javno" : n.Users.ElementAt(0).UserName;
 
             return nView;
         }

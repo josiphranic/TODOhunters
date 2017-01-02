@@ -90,7 +90,7 @@ namespace urednistvo.Controllers
 
             if (ratings.Count == 0)
             {
-                TempData["Message"] = "No ratings for this text.";
+                TempData["Message"] = "Nema ocjena ovog teksta.";
                 return RedirectToAction("Index", "Text");
             }
 
@@ -108,14 +108,14 @@ namespace urednistvo.Controllers
         {
             if (Session["UserID"] == null)
             {
-                TempData["Message"] = "Must be logged in to rate.";
+                TempData["Message"] = "Morate biti logirani za ovu akciju.";
                 return RedirectToAction("Details/" + id, "Text");
             }
 
             int userId = Int32.Parse((String)Session["UserID"]);
             if (db.Ratings.Count(r => r.UserId == userId && r.TextId == id) != 0)
             {
-                TempData["Message"] = "You have already rated.";
+                TempData["Message"] = "Već ste ocijenili ovaj tekst.";
                 return RedirectToAction("Index", "Text");
             }
 

@@ -49,7 +49,7 @@ namespace urednistvo.Controllers
 
             if(query.Count() == 0)
             {
-                TempData["Message"] = "No comments for this text.";
+                TempData["Message"] = "Nema kometara za ovaj tekst.";
                 return RedirectToAction("Index", "Text");
             }
 
@@ -65,7 +65,7 @@ namespace urednistvo.Controllers
         {
             if (db.Ratings.Count(r => r.UserId == id) == 0)
             {
-                TempData["Message"] = "No comments for this user.";
+                TempData["Message"] = "Nema komentara ovog korisnika.";
                 return RedirectToAction("Index", "Text");
             }
 

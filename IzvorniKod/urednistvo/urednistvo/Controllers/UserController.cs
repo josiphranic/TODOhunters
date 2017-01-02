@@ -66,7 +66,7 @@ namespace urednistvo.Controllers
                 Session["Username"] = account.UserName.ToString();
                 Session["Role"] = db.Roles.Find(account.Role).RoleName;
 
-                TempData["Message"] = account.FirstName + " " + account.LastName + " succesfully registered.";
+                TempData["Message"] = account.FirstName + " " + account.LastName + " uspješno registiran.";
             }
             return RedirectToAction("Index", "Home");
         }
@@ -92,12 +92,12 @@ namespace urednistvo.Controllers
                     Session["Username"] = user.UserName.ToString();
                     Session["Role"] = db.Roles.Find(user.Role).RoleName;
 
-                    TempData["Message"] = "Successful login";
+                    TempData["Message"] = "Uspješna prijava.";
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Username or password wrong");
+                    ModelState.AddModelError("", "Korisničko ime ili lozinka pogrešni.");
                 }
             }
             return View();
@@ -109,7 +109,7 @@ namespace urednistvo.Controllers
             Session["Username"] = null;
             Session["Role"] = null;
 
-            TempData["Message"] = "Successfully logged off";
+            TempData["Message"] = "Uspješno ste odjavljeni.";
             return RedirectToAction("Index", "Home");
         }
 

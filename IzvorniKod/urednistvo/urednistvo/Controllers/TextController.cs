@@ -78,7 +78,7 @@ namespace urednistvo.Controllers
         public ActionResult ByAuthor(int id)
         {
             List<Text> list;
-            if (Session["UserID"] == null || (String)Session["Role"] == "Registered user")
+            if (Session["UserID"] == null || (String)Session["Role"] == "Registrirani korisnik")
             {
                 list = db.Texts.Where(t => t.WebPublishable == true && t.UserId == id).ToList();
             }
@@ -89,7 +89,7 @@ namespace urednistvo.Controllers
 
             if (list.Count == 0)
             {
-                TempData["Message"] = "No texts for this author.";
+                TempData["Message"] = "Nema tekstova ovog autora.";
                 return RedirectToAction("Index", "User");
             }
             List<TextView> listView = new List<TextView>();
@@ -103,16 +103,16 @@ namespace urednistvo.Controllers
 
         public ActionResult ForLectoring()
         {
-            if((String)Session["Role"] != "Lector")
+            if((String)Session["Role"] != "Lektor")
             {
-                TempData["Message"] = "Only lector can access this page.";
+                TempData["Message"] = "Samo lektor može pristupiti ovoj stranici.";
                 return RedirectToAction("Index", "Text");
             }
 
             List<Text> list = db.Texts.Where(t => t.TextStatus == (int)TextStatus.ACCEPTED).ToList();
             if (list.Count == 0)
             {
-                TempData["Message"] = "No texts for lectoring.";
+                TempData["Message"] = "Nema tekstova za lektoriranje.";
                 return RedirectToAction("Index", "User");
             }
             List<TextView> listView = new List<TextView>();
@@ -129,7 +129,7 @@ namespace urednistvo.Controllers
             List<Text> list = db.Texts.Where(t => t.TextStatus == (int)TextStatus.LECTORED).ToList();
             if (list.Count == 0)
             {
-                TempData["Message"] = "No texts for graphic editing.";
+                TempData["Message"] = "Nema tekstova za grafičko uređivanje.";
                 return RedirectToAction("Index", "User");
             }
             List<TextView> listView = new List<TextView>();
@@ -147,11 +147,11 @@ namespace urednistvo.Controllers
             if (db.Texts.Find(id).WebPublishable) {
                 return View(getTextView(db.Texts.Single(u => u.TextId == id)));
             }
-            if(Session["UserID"] != null && (String)Session["Role"] != "Registered user")
+            if(Session["UserID"] != null && (String)Session["Role"] != "Registrirani korisnik")
             {
                 return View(getTextView(db.Texts.Single(u => u.TextId == id)));
             }
-            TempData["Message"] = "Cannot view this text.";
+            TempData["Message"] = "Ne možete vidjeti ovaj tekst.";
             return RedirectToAction("Index", "Text");
         }
 
@@ -161,7 +161,7 @@ namespace urednistvo.Controllers
         {
             if(Session["UserID"] == null)
             {
-                TempData["Message"] = "You must be logged in to create a text.";
+                TempData["Message"] = "Morate biti logirani da napišete tekst.";
                 return RedirectToAction("Index");
             }
             ViewBag.DropDownList = new SelectList(db.Sections, "SectionId", "Title");
@@ -189,7 +189,7 @@ namespace urednistvo.Controllers
                     db.SaveChanges();
                 }
                 ModelState.Clear();
-                TempData["Message"] = "Tekst je uspjesno stvoren.";
+                TempData["Message"] = "Tekst je uspješno napisan.";
 
                 return RedirectToAction("Index");
             }
@@ -200,11 +200,11 @@ namespace urednistvo.Controllers
         {
             if(Session["UserID"] == null)
             {
-                TempData["Message"] = "Cannot change this text.";
+                TempData["Message"] = "Ne možete mijenjati ovaj tekst.";
                 return RedirectToAction("Details/" + id, "Text");
             }
 
-            if((String)Session["Role"] == "Lector" &&
+            if((String)Session["Role"] == "Lektor" &&
                 db.Texts.Find(id).TextStatus != (int)TextStatus.ACCEPTED)
             {
                 return View(db.Texts.Single(t => t.TextId == id));
@@ -214,14 +214,14 @@ namespace urednistvo.Controllers
             {
                 if(db.Texts.Find(id).TextStatus != (int)TextStatus.RETURNED)
                 {
-                    TempData["Message"] = "Cannot change this text.";
+                    TempData["Message"] = "Ne možete mijenjati ovaj tekst.";
                     return RedirectToAction("Details/" + id, "Text");
                 }
 
                 return View(db.Texts.Single(t => t.TextId == id));
             } else
             {
-                TempData["Message"] = "Only author can edit this text.";
+                TempData["Message"] = "Samo autor može mijenjati ovaj tekst.";
                 return RedirectToAction("Details/" + id, "Text");
             }
             
@@ -240,7 +240,7 @@ namespace urednistvo.Controllers
                 {
                     t.Content = text.Content;
 
-                    if ((string)Session["Role"] == "Lector")
+                    if ((string)Session["Role"] == "Lektor")
                     {
                         t.TextStatus = (int)TextStatus.LECTORED;
                         TempData["Message"] = "Tekst je lektoriran.";
@@ -265,7 +265,7 @@ namespace urednistvo.Controllers
                 if (db.Ratings.Count(r => r.TextId == id) < 1)
                     //PROMIJENITI NA 5
                 {
-                    TempData["Message"] = "All memebers of editorial council must rate tis text first.";
+                    TempData["Message"] = "Svi članovi uredničkog vijeća moraju ocijeniti tekst.";
                     return RedirectToAction("Details/" + id, "Text");
                 }
                 var text = db.Texts.Single(d => d.TextId == id);
@@ -342,7 +342,7 @@ namespace urednistvo.Controllers
             {
                 return createRTF(db.Texts.Single(u => u.TextId == id));
             }
-            if (Session["UserID"] != null && (String)Session["Role"] != "Registered user")
+            if (Session["UserID"] != null && (String)Session["Role"] != "Registrirani korisnik")
             {
                 return createRTF((db.Texts.Single(u => u.TextId == id)));
             }

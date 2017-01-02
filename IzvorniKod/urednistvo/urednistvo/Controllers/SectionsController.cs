@@ -58,7 +58,7 @@ namespace urednistvo.Controllers
             List<Text> list = db.Texts.Where(s => s.FinalSectionId == id).ToList();
             if(list.Count == 0)
             {
-                TempData["Message"] = "No texts in this section";
+                TempData["Message"] = "Nema tekstova u ovom podlistku.";
                 return RedirectToAction("Index");
             }
 

@@ -18,7 +18,7 @@
         <th>
             Ažurirano
         </th>
-        @if ((String)Session["Role"] == "Editor")
+        @if ((String)Session["Role"] == "Glavni urednik")
         {
             <th>
                 Text status
@@ -44,7 +44,7 @@
             <td>
                 @Html.DisplayFor(modelItem => text.Time)
             </td>
-            @if ((String)Session["Role"] == "Editor")
+            @if ((String)Session["Role"] == "Glavni urednik")
             {
                 <th>
                     @Html.DisplayFor(modelItem => text.TextStatus)

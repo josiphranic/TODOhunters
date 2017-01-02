@@ -49,9 +49,9 @@
 </table>
 
 <p>
-    @if ((String)Session["Role"] == "Editor")
+    @if ((String)Session["Role"] == "Glavni urednik")
     {
-        @Html.ActionLink("Final rate (editor)", "EditEditor/" + @Model.First().TextId, "Text")
+        @Html.ActionLink("Konačna ocjena", "EditEditor/" + @Model.First().TextId, "Text")
         <label>|</label>
     }
     @Html.ActionLink("Povratak na listu tekstova", "Index")
