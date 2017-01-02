@@ -313,6 +313,11 @@ namespace urednistvo.Controllers
                 db.SaveChanges();
                 ViewBag.DropDownListSections = new SelectList(db.Sections, "SectionId", "Title");
                 TempData["Message"] = "Obavijest o odluci je poslana autoru teksta.";
+
+                NotificationController.createNotification(text, "Vaš tekst \"" + text.Title + "\"je ocijenjen od strane urednika.");
+                NotificationController.createNotification(db.Roles.Single(r => r.RoleName == "Lektor").Value,
+                   db.Texts.Find(id), "Tekst \"" + db.Texts.Find(id).Title + "\"je spreman za vase lektoriranje.");
+
                 return RedirectToAction("Index");
             }
         }
@@ -331,6 +336,7 @@ namespace urednistvo.Controllers
                 db.Texts.Remove(db.Texts.Find(id));
                 db.SaveChanges();
             }
+
             return RedirectToAction("Index");
         }
 
@@ -379,6 +385,19 @@ namespace urednistvo.Controllers
                                        Server.MapPath("~/PDFs"), name);
 
                 uploadFile.SaveAs(path);
+
+                //DODATAK ZA BAZU
+                /*
+                 * Pdf pdf = new Pdf();
+                 * pdf.PdfName = name;
+                 * pdf.TextId = id;
+                 * pdf.Text = db.Texts.Find(id);
+                 * db.Pdfs.Add(pdf);
+                 * db.SaveChanges();              
+                 */
+
+                NotificationController.createNotification(db.Roles.Single(r => r.RoleName == "Korektor").Value,
+                   db.Texts.Find(id), "Tekst \"" + db.Texts.Find(id).Title + "\"je spreman za vasu korekciju.");
 
                 return RedirectToAction("ForGraphicEditing/" + id);
             }
