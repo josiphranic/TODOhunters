@@ -15,7 +15,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Text.Title)
+            @Html.ActionLink(Model.Text.Title, "Details/" + Model.TextId, "Text")
         </dd>
 
         <dt>
@@ -27,20 +27,32 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Content)
+            @Html.DisplayNameFor(model => model.Type)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Content)
+            .@Model.Type
         </dd>
 
+        <dt>
+            <label></label>
+        </dt>
+
+        <dd>
+            <img src="@Url.Content("~/Images/" + Model.ImageName + "." + Model.Type)" alt="@Model.ImageName" />
+        </dd>
+
+        <dt>
+            
+        </dt>
+
+        <dd>
+            <a href='@Url.Action("Download/" + @Model.ImageId, "Image")'>
+                <span class="glyphicon glyphicon-download"></span> "Preuzmi sliku"
+            </a>
+        </dd>
     </dl>
 </div>
-
-<img src="@Url.Content("~/Images/" + Model.ImageName)" alt="IMAGES" />
-<img src="@Url.Content("~/Images/" + Model.ImageName)" alt="" />
-<img src="~/Images/(@Model.ImageName).png" />
-<img src="@Html.Raw("~/Images/" + Model.ImageName)" alt="a description of the image">
 
 <p>
     @Html.ActionLink("Sve slike", "Index")

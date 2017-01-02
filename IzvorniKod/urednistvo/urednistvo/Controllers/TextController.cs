@@ -360,7 +360,5 @@ namespace urednistvo.Controllers
 
             return File(Encoding.UTF8.GetBytes(sb.ToString()), "text/plain", text.Title + ".rtf");
         }
-
-
     }
 }
