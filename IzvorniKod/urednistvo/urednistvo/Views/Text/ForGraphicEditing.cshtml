@@ -48,7 +48,7 @@
                 </a>
             </td>
             <td>
-                @using (Html.BeginForm("UploadPDF", "Text", FormMethod.Post, new { id = "attachment", enctype = "multipart/form-data", encoding = "multipart/form-data" }))
+                @using (Html.BeginForm("UploadPDF/" + @text.TextId, "Text", FormMethod.Post, new { id = "attachment", enctype = "multipart/form-data", encoding = "multipart/form-data" }))
                 {
 
                     <input type="file" name="uploadFile" id="uploadFile" />
