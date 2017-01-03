@@ -6,7 +6,36 @@
     @Html.AntiForgeryToken()
 
     <ul class="nav navbar-nav navbar-right">
-        <li><span class="glyphicon glyphicon-user noclick-icon"></span></li>
+        <li>
+            <div class="btn-group actions-div">
+                <button class="btn btn-lg dropdown-toggle actions-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="glyphicon glyphicon-globe"></span><!--<span class="caret"></span>-->
+                </button>
+                <ul class="dropdown-menu">
+                    @if (Session["UserID"] == null)
+                    {
+                        <li>Nema dostupnih akcija</li>
+                    }
+                    @if ((string)Session["Role"] == "Lektor")
+                    {
+                        <li><span class="glyphicon glyphicon-pencil icon" title="Lektoriraj" onclick="gotoForLectoring()"></span></li>
+                    }
+                    @if ((string)Session["Role"] == "Grafički urednik")
+                    {
+                        <li><span class="glyphicon glyphicon-film icon" title="Grafički uredi" onclick="gotoForGraphEdit()"></span></li>
+                    }
+                    @if ((string)Session["Role"] == "Glavni urednik")
+                    {
+                        <li><span class="glyphicon glyphicon-star icon" title="Ocjene" onclick="gotoRatings()"></span></li>
+                    }
+                    @if ((string)Session["Role"] == "Korektor")
+                    {
+                        <li><span class="glyphicon glyphicon-check icon" title="Ispravi" onclick="gotoForCorrection()"></span></li>
+                    }
+                </ul>
+            </div>
+        </li>
+
         <li>
             @Html.ActionLink("Pozdrav " + (String)Session["Username"] + "!", "Details/" + (String)Session["UserID"], "User")
         </li>

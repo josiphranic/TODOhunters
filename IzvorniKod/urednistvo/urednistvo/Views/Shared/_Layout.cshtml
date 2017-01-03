@@ -23,7 +23,17 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><span class="glyphicon glyphicon-home icon" title="Početna" onclick="goHome()"></span></li>
-                    <li><span class="glyphicon glyphicon-list icon" title="Tekstovi" onclick="gotoTexts()"></span></li>
+                    <li>
+                        <div class="btn-group actions-div">
+                            <button class="btn btn-lg dropdown-toggle actions-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-list"></span><!--<span class="caret"></span>-->
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><span class="text-style" title="Izdanja" onclick="gotoTexts()">Svi tekstovi</span></li>
+                                <li><span class="text-style" title="Podlistci" onclick="gotoAs()">Najave</span></li>
+                            </ul>
+                        </div>
+                    </li>
                     <li><span class="glyphicon glyphicon-user icon" title="Korisnici" onclick="gotoUsers()"></span></li>
                     <li><span class="glyphicon glyphicon-globe icon" title="Obavijesti" onclick="gotoNotifications()"></span></li>
                     <li>
@@ -32,8 +42,8 @@
                                 <span class="glyphicon glyphicon-search"></span><!--<span class="caret"></span>-->
                             </button>
                             <ul class="dropdown-menu">
-                                <li><span class="glyphicon glyphicon-book icon" title="Izdanja" onclick="gotoEditions()"></span></li>
-                                <li><span class="glyphicon glyphicon-fire icon" title="Podlistci" onclick="gotoSections()"></span></li>
+                                <li><span class="text-style" title="Izdanja" onclick="gotoEditions()">Izdanja</span></li>
+                                <li><span class="text-style" title="Podlistci" onclick="gotoSections()">Podlisci</span></li>
                             </ul>
                         </div>
                     </li>
@@ -41,35 +51,6 @@
                     {
                         <li><span class="glyphicon glyphicon-upload icon" title="Upload" onclick="upload()"></span></li>
                     }
-                    <li>
-                        <div class="btn-group actions-div">
-                            <button class="btn btn-lg dropdown-toggle actions-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="glyphicon glyphicon-flash"></span><!--<span class="caret"></span>-->
-                            </button>
-                            <ul class="dropdown-menu">
-                                @if (Session["UserID"] == null)
-                                {
-                                    <li>Nema dostupnih akcija</li>
-                                }
-                                @if ((string)Session["Role"] == "Lektor")
-                                {
-                                    <li><span class="glyphicon glyphicon-pencil icon" title="Lektoriraj" onclick="gotoForLectoring()"></span></li>
-                                }
-                                @if ((string)Session["Role"] == "Grafički urednik")
-                                {
-                                    <li><span class="glyphicon glyphicon-film icon" title="Grafički uredi" onclick="gotoForGraphEdit()"></span></li>
-                                }
-                                @if ((string)Session["Role"] == "Glavni urednik")
-                                {
-                                    <li><span class="glyphicon glyphicon-star icon" title="Ocjene" onclick="gotoRatings()"></span></li>
-                                }
-                                @if ((string)Session["Role"] == "Korektor")
-                                {
-                                    <li><span class="glyphicon glyphicon-check icon" title="Ispravi" onclick="gotoForCorrection()"></span></li>
-                                }
-                            </ul>
-                        </div>
-                    </li>
 
                     <li><span class="glyphicon glyphicon-certificate icon" title="Uredničko vijeće" onclick="gotoEditorialCouncil()"></span></li>
                     <li><span class="glyphicon glyphicon-phone-alt icon" title="Kontakt" onclick="gotoContact()"></span></li>
@@ -124,6 +105,9 @@
     function gotoTexts() {
         window.location.href = '@Url.Action("Index", "Text")';
     }
+    function gotoAs() {
+        window.location.href = '@Url.Action("AnnouncementTexts", "Text")';
+    }
     function gotoUsers() {
         window.location.href = '@Url.Action("Index", "User")';
     }
@@ -160,13 +144,20 @@
     }
 </script>
 <style>
+    .text-style{
+
+    }
+    .text-style:hover{
+        color: white;
+        cursor: pointer;
+    }
     .life-meaning{
         width:50px;
         display: inline-block;
     }
     .actions-dropdown{
         padding: 0;
-        top: 18px;
+        top: 12px;
         background-color: transparent;
         color: white;
         font-size: 20px;
