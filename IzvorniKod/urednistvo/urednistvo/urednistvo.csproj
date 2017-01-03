@@ -364,6 +364,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsView\Statistics\StatisticsView.cs" />
     <Compile Include="ModelsView\Statistics\AuthorView.cs" />
+    <Compile Include="ModelsView\Utilities\RoleNames.cs" />
     <Compile Include="ModelsView\Utilities\TextStatusNameGetter.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Edition.cs" />

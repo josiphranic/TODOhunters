@@ -15,7 +15,7 @@ namespace urednistvo.Controllers
         // GET: Statistics
         public ActionResult Index()
         {
-            if ((String)Session["Role"] == "Glavni urednik" || (String)Session["Role"] == "Član uredničkog vijeća")
+            if ((String)Session["Role"] == RoleNames.EDITOR || (String)Session["Role"] == RoleNames.EDITORIAL_COUNCIL_MEMBER)
             {
                 TempData["Message"] = "Samo glavni urednik i članovi uredničko vijeća imaju pristup statistikama.";
                 return RedirectToAction("Index", "Statistics");
@@ -96,7 +96,6 @@ namespace urednistvo.Controllers
                 }
                 authors.Add(aView);
             }
-            
             return View(authors);
         }
 
@@ -114,27 +113,6 @@ namespace urednistvo.Controllers
             aView.numSentTexes = 0;
 
             return aView;
-        }
-
-        private List<TextView> addTexts(List<Text> texts)
-        {
-            List<TextView> tView = new List<TextView>();
-
-            foreach(Text t in texts)
-            {
-                tView.Add(TextController.getTextView(t));
-            }
-            return tView;
-        }
-
-        private List<EditionView> addEditions (List<Edition> editions)
-        {
-            List<EditionView> eView = new List<EditionView>();
-            foreach(Edition e in editions)
-            {
-                eView.Add(EditionsController.createEditionView(e));
-            }
-            return eView;
         }
 
         private List<User> getAuthors()

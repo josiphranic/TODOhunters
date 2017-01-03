@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using urednistvo.Models;
 using urednistvo.ModelsView;
+using urednistvo.ModelsView.Utilities;
 
 namespace urednistvo.Controllers
 {
@@ -59,8 +60,8 @@ namespace urednistvo.Controllers
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
-                int RoleEditor = db.Roles.Single(r => r.RoleName == "Glavni urednik").Value;
-                int RoleMember = db.Roles.Single(r => r.RoleName == "Član uredničkog vijeća").Value;
+                int RoleEditor = db.Roles.Single(r => r.RoleName == RoleNames.EDITOR).Value;
+                int RoleMember = db.Roles.Single(r => r.RoleName == RoleNames.EDITORIAL_COUNCIL_MEMBER).Value;
 
                 List<UserView> uViews = new List<UserView>();
 

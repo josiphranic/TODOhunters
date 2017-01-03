@@ -57,10 +57,10 @@ namespace urednistvo.Controllers
         {
             DateTime dateArchive = DateTime.Today.AddDays(-14);
             List<Text> list; 
-            if(Session["UserID"] == null || (String)Session["Role"] == "Registrirani korisnik")
+            if(Session["UserID"] == null || (String)Session["Role"] == RoleNames.REGISTERED_USER)
             {
                 list = db.Texts.Where(t => t.WebPublishable == true && t.Time.CompareTo(dateArchive) > 0).ToList();
-            } else if((String)Session["Role"] == "Autor") {
+            } else if((String)Session["Role"] == RoleNames.AUTHOR) {
                 int UserId = Int32.Parse((String)Session["UserID"]);
                 list = db.Texts.Where(t => t.UserId == UserId && t.Time.CompareTo(dateArchive) > 0).ToList();
             } else
@@ -80,7 +80,7 @@ namespace urednistvo.Controllers
         public ActionResult ByAuthor(int id)
         {
             List<Text> list;
-            if (Session["UserID"] == null || (String)Session["Role"] == "Registrirani korisnik")
+            if (Session["UserID"] == null || (String)Session["Role"] == RoleNames.REGISTERED_USER)
             {
                 list = db.Texts.Where(t => t.WebPublishable == true && t.UserId == id).ToList();
             }
@@ -105,7 +105,7 @@ namespace urednistvo.Controllers
 
         public ActionResult ForLectoring()
         {
-            if((String)Session["Role"] != "Lektor")
+            if((String)Session["Role"] != RoleNames.LECTOR)
             {
                 TempData["Message"] = "Samo lektor može pristupiti ovoj stranici.";
                 return RedirectToAction("Index", "Text");
@@ -166,7 +166,7 @@ namespace urednistvo.Controllers
             if (db.Texts.Find(id).WebPublishable) {
                 return View(getTextView(db.Texts.Single(u => u.TextId == id)));
             }
-            if(Session["UserID"] != null && (String)Session["Role"] != "Registrirani korisnik")
+            if(Session["UserID"] != null && (String)Session["Role"] != RoleNames.REGISTERED_USER)
             {
                 return View(getTextView(db.Texts.Single(u => u.TextId == id)));
             }
@@ -223,7 +223,7 @@ namespace urednistvo.Controllers
                 return RedirectToAction("Details/" + id, "Text");
             }
 
-            if((String)Session["Role"] == "Lektor" &&
+            if((String)Session["Role"] == RoleNames.LECTOR &&
                 db.Texts.Find(id).TextStatus == (int)TextStatus.ACCEPTED)
             {
                 return View(db.Texts.Single(t => t.TextId == id));
@@ -259,7 +259,7 @@ namespace urednistvo.Controllers
                 {
                     t.Content = text.Content;
 
-                    if ((string)Session["Role"] == "Lektor")
+                    if ((string)Session["Role"] == RoleNames.LECTOR)
                     {
                         t.TextStatus = (int)TextStatus.LECTORED;
                         TempData["Message"] = "Tekst je lektoriran.";
@@ -359,7 +359,7 @@ namespace urednistvo.Controllers
             {
                 return createRTF(db.Texts.Single(u => u.TextId == id));
             }
-            if (Session["UserID"] != null && (String)Session["Role"] != "Registrirani korisnik")
+            if (Session["UserID"] != null && (String)Session["Role"] != RoleNames.REGISTERED_USER)
             {
                 return createRTF((db.Texts.Single(u => u.TextId == id)));
             }
@@ -416,9 +416,9 @@ namespace urednistvo.Controllers
                     db.Pdfs.Add(pdf);
                     db.SaveChanges();              
                     
-                    if ((string)Session["Role"] == "Grafički urednik")
+                    if ((string)Session["Role"] == RoleNames.GRAPHIC_EDITOR)
                     {
-                        NotificationController.createNotification(db.Roles.Single(r => r.RoleName == "Korektor").Value,
+                        NotificationController.createNotification(db.Roles.Single(r => r.RoleName == RoleNames.CORRECTOR).Value,
                             db.Texts.Find(id), "Tekst \"" + db.Texts.Find(id).Title + "\"je spreman za vasu korekciju.");
 
                         Text t = db.Texts.Find(id);
@@ -427,7 +427,7 @@ namespace urednistvo.Controllers
 
                         return RedirectToAction("ForGraphicEditing/" + id);
                     }
-                    else if ((string)Session["Role"] == "Korektor")
+                    else if ((string)Session["Role"] == RoleNames.CORRECTOR)
                     {
                         Text t = db.Texts.Find(id);
                         t.TextStatus = (int)TextStatus.CORRECTED;
@@ -459,7 +459,7 @@ namespace urednistvo.Controllers
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, pdf.PdfName);
         }
 
-        public ActionResult AnnouncementTexts(int? id)
+        public ActionResult AnnouncementTexts()
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
