@@ -112,5 +112,31 @@ namespace urednistvo.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        public ActionResult EditionTexts(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Edition edition = db.Editions.Find((int)id);
+            if (edition == null)
+            {
+                return HttpNotFound();
+            }
+
+            EditionView eView = createEditionView(edition);
+            List<Text> texts = db.Texts.Where(t => t.Time < eView.TimeOfRelease &&
+                                                            t.Time > eView.StartTime).ToList();
+
+            List<TextView> textViews = new List<TextView>();
+            foreach(Text t in texts)
+            {
+                textViews.Add(TextController.getTextView(t));
+            }
+
+            return View(textViews);
+        }
     }
 }

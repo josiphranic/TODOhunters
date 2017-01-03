@@ -497,6 +497,7 @@
     <Content Include="Views\Archive\Text.cshtml" />
     <Content Include="Views\Archive\Author.cshtml" />
     <Content Include="Views\Text\ForCorrection.cshtml" />
+    <Content Include="Views\Editions\EditionTexts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
