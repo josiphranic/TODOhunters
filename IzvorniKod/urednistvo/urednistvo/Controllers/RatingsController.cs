@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using urednistvo.Models;
 using urednistvo.ModelsView.Textual;
+using urednistvo.ModelsView.Utilities;
 
 namespace urednistvo.Controllers
 {
@@ -60,7 +61,7 @@ namespace urednistvo.Controllers
         // GET: Ratings
         public ActionResult Index()
         {
-            if ((String)Session["Role"] != "Glavni urednik")
+            if ((String)Session["Role"] != RoleNames.EDITOR)
             {
                 TempData["Message"] = "Nemate ovlati pristupiti ocjenama.";
                 return RedirectToAction("Index", "Text");
@@ -91,7 +92,7 @@ namespace urednistvo.Controllers
             }*/
 
             // DODATI OGRANICENJA PRISTUPA OCJENAMA
-            if ((String)Session["Role"] != "Glavni urednik")
+            if ((String)Session["Role"] != RoleNames.EDITOR)
             {
                 TempData["Message"] = "Nemate ovlati pristupiti ocjenama.";
                 return RedirectToAction("Index", "Text");

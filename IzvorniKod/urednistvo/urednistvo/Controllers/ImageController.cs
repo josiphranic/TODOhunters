@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using urednistvo.Models;
+using urednistvo.ModelsView.Utilities;
 
 namespace urednistvo.Controllers
 {
@@ -18,7 +19,7 @@ namespace urednistvo.Controllers
         // GET: Image
         public ActionResult Index()
         {
-            if((String)Session["Role"] != "Glavni urednik" && (String)Session["Role"] != "Grafički urednik")
+            if((String)Session["Role"] != RoleNames.EDITOR && (String)Session["Role"] != RoleNames.GRAPHIC_EDITOR)
             {
                 TempData["Message"] = "Nemate ovlati pristupiti ovoj stranici.";
                 return RedirectToAction("Index", "Text");
@@ -30,7 +31,7 @@ namespace urednistvo.Controllers
         // GET: Image/Details/5
         public ActionResult Details(int? id)
         {
-            if ((String)Session["Role"] != "Glavni urednik" && (String)Session["Role"] != "Grafički urednik")
+            if ((String)Session["Role"] != RoleNames.EDITOR && (String)Session["Role"] != RoleNames.GRAPHIC_EDITOR)
             {
                 TempData["Message"] = "Nemate ovlati pristupiti ovoj stranici.";
                 return RedirectToAction("Index", "Text");
@@ -50,7 +51,7 @@ namespace urednistvo.Controllers
 
         public ActionResult ByText(int? id)
         {
-            if ((String)Session["Role"] != "Glavni urednik" && (String)Session["Role"] != "Grafički urednik")
+            if ((String)Session["Role"] != RoleNames.EDITOR && (String)Session["Role"] != RoleNames.GRAPHIC_EDITOR)
             {
                 TempData["Message"] = "Nemate ovlati pristupiti ovoj stranici.";
                 return RedirectToAction("Index", "Text");
@@ -79,7 +80,7 @@ namespace urednistvo.Controllers
         // GET: Image/Create
         public ActionResult Create()
         {
-            if ((String)Session["Role"] != "Glavni urednik" && (String)Session["Role"] != "Grafički urednik")
+            if ((String)Session["Role"] != RoleNames.EDITOR && (String)Session["Role"] != RoleNames.GRAPHIC_EDITOR)
             {
                 TempData["Message"] = "Nemate ovlati pristupiti ovoj stranici.";
                 return RedirectToAction("Index", "Text");
@@ -116,7 +117,7 @@ namespace urednistvo.Controllers
 
         public ActionResult Download(int? id)
         {
-            if ((String)Session["Role"] != "Glavni urednik" && (String)Session["Role"] != "Grafički urednik")
+            if ((String)Session["Role"] != RoleNames.EDITOR && (String)Session["Role"] != RoleNames.GRAPHIC_EDITOR)
             {
                 TempData["Message"] = "Nemate ovlati pristupiti ovoj stranici.";
                 return RedirectToAction("Index", "Text");
