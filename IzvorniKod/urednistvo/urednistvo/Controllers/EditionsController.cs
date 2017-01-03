@@ -25,8 +25,10 @@ namespace urednistvo.Controllers
                 eView.Title = edition.Title;
                 eView.TimeOfRelease = edition.TimeOfRelease;
                 eView.StartTime = eView.TimeOfRelease.AddDays(-7);
-                eView.NumberOfTexts = db.Texts.Where(t => t.Time < eView.TimeOfRelease &&
-                                                            t.Time > eView.StartTime).Count();
+                eView.NumberOfTexts = db.Texts.Where(t => ((t.WebPublishable == true && t.TextStatus == (int)TextStatus.LECTORED) ||
+                                                    (t.EditionPublishable == true && t.TextStatus == (int)TextStatus.CORRECTED)) &&
+                                                        t.Time < eView.TimeOfRelease &&
+                                                        t.Time > eView.StartTime).Count();
                 return eView;
             }
         }

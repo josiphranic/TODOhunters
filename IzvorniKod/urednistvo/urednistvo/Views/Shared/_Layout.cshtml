@@ -26,6 +26,17 @@
                     <li><span class="glyphicon glyphicon-list icon" title="Tekstovi" onclick="gotoTexts()"></span></li>
                     <li><span class="glyphicon glyphicon-user icon" title="Korisnici" onclick="gotoUsers()"></span></li>
                     <li><span class="glyphicon glyphicon-globe icon" title="Obavijesti" onclick="gotoNotifications()"></span></li>
+                    <li>
+                        <div class="btn-group actions-div">
+                            <button class="btn btn-lg dropdown-toggle actions-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-search"></span><!--<span class="caret"></span>-->
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><span class="glyphicon glyphicon-book icon" title="Izdanja" onclick="gotoEditions()"></span></li>
+                                <li><span class="glyphicon glyphicon-fire icon" title="Podlistci" onclick="gotoSections()"></span></li>
+                            </ul>
+                        </div>
+                    </li>
                     @if (Session["UserID"] != null)
                     {
                         <li><span class="glyphicon glyphicon-upload icon" title="Upload" onclick="upload()"></span></li>
@@ -140,6 +151,12 @@
     }
     function gotoForCorrection() {
         window.location.href = '@Url.Action("ForCorrection", "Text")';
+    }
+    function gotoEditions() {
+        window.location.href = '@Url.Action("Index", "Editions")';
+    }
+    function gotoSections() {
+        window.location.href = '@Url.Action("Index", "Sections")';
     }
 </script>
 <style>
