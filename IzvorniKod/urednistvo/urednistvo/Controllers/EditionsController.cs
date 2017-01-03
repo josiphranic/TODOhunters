@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using urednistvo.Models;
+using urednistvo.ModelsView;
 using urednistvo.ModelsView.Textual;
 
 namespace urednistvo.Controllers
@@ -24,8 +25,10 @@ namespace urednistvo.Controllers
                 eView.Title = edition.Title;
                 eView.TimeOfRelease = edition.TimeOfRelease;
                 eView.StartTime = eView.TimeOfRelease.AddDays(-7);
-                eView.NumberOfTexts = db.Texts.Where(t => t.Time < eView.TimeOfRelease &&
-                                                            t.Time > eView.StartTime).Count();
+                eView.NumberOfTexts = db.Texts.Where(t => ((t.WebPublishable == true && t.TextStatus == (int)TextStatus.LECTORED) ||
+                                                    (t.EditionPublishable == true && t.TextStatus == (int)TextStatus.CORRECTED)) &&
+                                                        t.Time < eView.TimeOfRelease &&
+                                                        t.Time > eView.StartTime).Count();
                 return eView;
             }
         }
@@ -111,6 +114,34 @@ namespace urednistvo.Controllers
             ed.Title = edition.Title;
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult EditionTexts(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Edition edition = db.Editions.Find((int)id);
+            if (edition == null)
+            {
+                return HttpNotFound();
+            }
+
+            EditionView eView = createEditionView(edition);
+            List<Text> texts = db.Texts.Where(t => ((t.WebPublishable == true && t.TextStatus == (int)TextStatus.LECTORED) ||
+                                                    (t.EditionPublishable == true && t.TextStatus == (int)TextStatus.CORRECTED)) &&
+                                                        t.Time < eView.TimeOfRelease &&
+                                                        t.Time > eView.StartTime).ToList();
+
+            List<TextView> textViews = new List<TextView>();
+            foreach(Text t in texts)
+            {
+                textViews.Add(TextController.getTextView(t));
+            }
+
+            return View(textViews);
         }
     }
 }

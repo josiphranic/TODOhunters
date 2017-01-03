@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -54,16 +55,17 @@ namespace urednistvo.Controllers
         // GET: Text
         public ActionResult Index()
         {
+            DateTime dateArchive = DateTime.Today.AddDays(-14);
             List<Text> list; 
             if(Session["UserID"] == null || (String)Session["Role"] == "Registrirani korisnik")
             {
-                list = db.Texts.Where(t => t.WebPublishable == true).ToList();
+                list = db.Texts.Where(t => t.WebPublishable == true && t.Time.CompareTo(dateArchive) > 0).ToList();
             } else if((String)Session["Role"] == "Autor") {
                 int UserId = Int32.Parse((String)Session["UserID"]);
-                list = db.Texts.Where(t => t.UserId == UserId).ToList();
+                list = db.Texts.Where(t => t.UserId == UserId && t.Time.CompareTo(dateArchive) > 0).ToList();
             } else
             {
-                list = db.Texts.ToList();
+                list = db.Texts.Where(t => t.Time.CompareTo(dateArchive) > 0).ToList();
             }
             
             List<TextView> listView = new List<TextView>();
@@ -141,6 +143,23 @@ namespace urednistvo.Controllers
             return View(listView);
         }
 
+        public ActionResult ForCorrection()
+        {
+            List<Text> list = db.Texts.Where(t => t.TextStatus == (int)TextStatus.GRAPHIC).ToList();
+            if (list.Count == 0)
+            {
+                TempData["Message"] = "Nema tekstova za korekturu.";
+                return RedirectToAction("Index", "User");
+            }
+            List<TextView> listView = new List<TextView>();
+
+            foreach (Text t in list)
+            {
+                listView.Add(getTextView(t));
+            }
+            return View(listView);
+        }
+
         // GET: Text/Details/5
         public ActionResult Details(int id)
         {
@@ -205,7 +224,7 @@ namespace urednistvo.Controllers
             }
 
             if((String)Session["Role"] == "Lektor" &&
-                db.Texts.Find(id).TextStatus != (int)TextStatus.ACCEPTED)
+                db.Texts.Find(id).TextStatus == (int)TextStatus.ACCEPTED)
             {
                 return View(db.Texts.Single(t => t.TextId == id));
             }
@@ -281,42 +300,34 @@ namespace urednistvo.Controllers
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
-                var query = from ord in db.Texts
-                            where ord.TextId == id
-                            select ord;
+                Text t = db.Texts.Find(id);
 
-                foreach(Text t in query)
+                t.EditionPublishable = text.EditionPublishable;
+                t.WebPublishable = text.WebPublishable;
+                t.Suggestions = text.Suggestions;
+                t.FinalSectionId = text.FinalSectionId;
+                t.FinalSection = text.FinalSection;
+
+                if (submit == "Vrati na doradu")
                 {
-                    t.EditionPublishable = text.EditionPublishable;
-                    t.WebPublishable = text.WebPublishable;
-                    t.Suggestions = text.Suggestions;
-                    t.FinalSectionId = text.FinalSectionId;
-                    t.FinalSection = text.FinalSection;
-
-                    if (submit == "Vrati na doradu")
-                    {
-                        NotificationController.createNotification(t, "Vas tekst mora biti doraden po uputama.");
-                        t.TextStatus = (int)TextStatus.RETURNED;
-                    }
-                    else if (submit == "Prihvati")
-                    {
-                        NotificationController.createNotification(t, "Vas tekst je prihvacen. Ostatak informacija nalazi se u detaljima teksta.");
-                        NotificationController.createNotification(db.Roles.Single(r => r.RoleName == "Lektor").RoleId, t, "Tekst \"" + t.Title + "\" ceka vase lektoriranje.");
-                        t.TextStatus = (int)TextStatus.ACCEPTED;
-                    } else if (submit == "Odbij")
-                    {
-                        NotificationController.createNotification(t, "Vas tekst je odbijen. Detaljnije objasnjenje u obavijesti.");
-                        t.TextStatus = (int)TextStatus.DECLINED;
-                    }
+                    NotificationController.createNotification(t, "Vas tekst mora biti doraden po uputama.");
+                    t.TextStatus = (int)TextStatus.RETURNED;
+                }
+                else if (submit == "Prihvati")
+                {
+                    NotificationController.createNotification(t, "Vas tekst je prihvacen. Ostatak informacija nalazi se u detaljima teksta.");
+                    NotificationController.createNotification(db.Roles.Single(r => r.RoleName == "Lektor").Value,
+                        db.Texts.Find(id), "Tekst \"" + db.Texts.Find(id).Title + "\"je spreman za vase lektoriranje.");
+                    t.TextStatus = (int)TextStatus.ACCEPTED;
+                } else if (submit == "Odbij")
+                {
+                    NotificationController.createNotification(t, "Vas tekst je odbijen. Detaljnije objasnjenje u obavijesti.");
+                    t.TextStatus = (int)TextStatus.DECLINED;
                 }
 
                 db.SaveChanges();
                 ViewBag.DropDownListSections = new SelectList(db.Sections, "SectionId", "Title");
                 TempData["Message"] = "Obavijest o odluci je poslana autoru teksta.";
-
-                NotificationController.createNotification(text, "Vaš tekst \"" + text.Title + "\"je ocijenjen od strane urednika.");
-                NotificationController.createNotification(db.Roles.Single(r => r.RoleName == "Lektor").Value,
-                   db.Texts.Find(id), "Tekst \"" + db.Texts.Find(id).Title + "\"je spreman za vase lektoriranje.");
 
                 return RedirectToAction("Index");
             }
@@ -368,41 +379,111 @@ namespace urednistvo.Controllers
         }
 
         [HttpPost]
-        public ActionResult UploadPDF(int? id, HttpPostedFileBase uploadFile)
+        public ActionResult UploadRTF(int? id, HttpPostedFileBase uploadFile)
         {
-            if (uploadFile != null && uploadFile.ContentLength > 0)
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
-                string name = System.IO.Path.GetFileName(uploadFile.FileName);
-                string type = name.Substring(name.LastIndexOf(".") + 1);
-
-                if(type != "pdf")
+                if (uploadFile != null && uploadFile.ContentLength > 0)
                 {
-                    TempData["Message"] = "Krivi oblik datoteke.";
-                    return RedirectToAction("Index");
+                    string name = System.IO.Path.GetFileName(uploadFile.FileName);
+                    string type = name.Substring(name.LastIndexOf(".") + 1);
+
+                    if (type != "rtf")
+                    {
+                        TempData["Message"] = "Krivi oblik datoteke.";
+                        return RedirectToAction("Index");
+                    }
+
+                    List<Pdf> pdfs = db.Pdfs.Where(p => p.TextId == (int)id).ToList();
+                    foreach(Pdf p in pdfs)
+                    {
+                        System.IO.File.Delete(System.IO.Path.Combine(
+                                           Server.MapPath("~/RTFs"), p.PdfName));
+                        db.Pdfs.Remove(p);
+                        db.SaveChanges();
+                    }
+
+                    string path = System.IO.Path.Combine(
+                                           Server.MapPath("~/RTFs"), name);
+
+                    uploadFile.SaveAs(path);
+
+
+                    Pdf pdf = new Pdf();
+                    pdf.PdfName = name;
+                    pdf.TextId = (int)id;
+                    pdf.Text = db.Texts.Find(id);
+                    db.Pdfs.Add(pdf);
+                    db.SaveChanges();              
+                    
+                    if ((string)Session["Role"] == "Grafički urednik")
+                    {
+                        NotificationController.createNotification(db.Roles.Single(r => r.RoleName == "Korektor").Value,
+                            db.Texts.Find(id), "Tekst \"" + db.Texts.Find(id).Title + "\"je spreman za vasu korekciju.");
+
+                        Text t = db.Texts.Find(id);
+                        t.TextStatus = (int)TextStatus.GRAPHIC;
+                        db.SaveChanges();
+
+                        return RedirectToAction("ForGraphicEditing/" + id);
+                    }
+                    else if ((string)Session["Role"] == "Korektor")
+                    {
+                        Text t = db.Texts.Find(id);
+                        t.TextStatus = (int)TextStatus.CORRECTED;
+                        db.SaveChanges();
+
+                        return RedirectToAction("ForCorrection/" + id);
+                    }
                 }
 
-                string path = System.IO.Path.Combine(
-                                       Server.MapPath("~/PDFs"), name);
+                return RedirectToAction("Index");
+            }
+        }
 
-                uploadFile.SaveAs(path);
-
-                //DODATAK ZA BAZU
-                /*
-                 * Pdf pdf = new Pdf();
-                 * pdf.PdfName = name;
-                 * pdf.TextId = id;
-                 * pdf.Text = db.Texts.Find(id);
-                 * db.Pdfs.Add(pdf);
-                 * db.SaveChanges();              
-                 */
-
-                NotificationController.createNotification(db.Roles.Single(r => r.RoleName == "Korektor").Value,
-                   db.Texts.Find(id), "Tekst \"" + db.Texts.Find(id).Title + "\"je spreman za vasu korekciju.");
-
-                return RedirectToAction("ForGraphicEditing/" + id);
+        public ActionResult DownloadRTF(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            return RedirectToAction("Index");
+            Pdf pdf = db.Pdfs.Single(p => p.TextId == (int)id);
+            if (pdf == null)
+            {
+                return HttpNotFound();
+            }
+
+            string path = Server.MapPath("~/RTFs/" + pdf.PdfName);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(path);
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, pdf.PdfName);
+        }
+
+        public ActionResult AnnouncementTexts(int? id)
+        {
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
+            {
+                DateTime lastPublised = DateTime.Now.AddYears(-100);
+
+                List<Edition> editions = db.Editions.ToList();
+                foreach (Edition edition in editions)
+                {
+                    if (DateTime.Compare(edition.TimeOfRelease, lastPublised) > 0)
+                    {
+                        lastPublised = edition.TimeOfRelease;
+                    }
+                }
+
+                List<Text> texts = db.Texts.Where(t => DateTime.Compare(t.Time, lastPublised) > 0).ToList();
+                List<TextView> textViews = new List<TextView>();
+
+                foreach (Text text in texts)
+                {
+                    textViews.Add(getTextView(text));
+                }
+
+                return View(textViews);
+            }
         }
     }
 }

@@ -1,11 +1,10 @@
 ﻿@model List<urednistvo.ModelsView.Textual.TextView>
 
 @{
-    ViewBag.Title = "Arhiva";
+    ViewBag.Title = "EditionTexts";
 }
 
-<h2>Arhiva</h2>
-<br />
+<h2>Svi tekstovi izdanja</h2>
 
 <table class="table">
     <tr>
@@ -21,24 +20,26 @@
         <th>
             Ažurirano
         </th>
-        <th></th>
-        <th></th>
-        <th></th>
+        @if ((String)Session["Role"] == "Glavni urednik")
+        {
+            <th>
+                Text status
+            </th>
+        }
         <th></th>
         <th></th>
     </tr>
-
     @foreach (var text in Model)
     {
         <tr>
             <td>
-                <a href='@Url.Action("Text/" + @text.TextId, "Archive")'>
+                <a href='@Url.Action("Details/" + @text.TextId, "Text")'>
                     <span class="glyphicon glyphicon-list"></span> @text.Title (@text.Subtitle)
                 </a>
             </td>
 
             <td>
-                <a href='@Url.Action("Author/" + @text.UserId, "Archive")'>
+                <a href='@Url.Action("Details/" + @text.UserId, "User")'>
                     <span class="glyphicon glyphicon-user"></span> @text.Username
                 </a>
 
@@ -59,6 +60,13 @@
                 @Html.DisplayFor(modelItem => text.Time)
             </td>
 
+            @if ((String)Session["Role"] == "Glavni urednik")
+            {
+                <th>
+                    @Html.DisplayFor(modelItem => text.TextStatus)
+                </th>
+            }
+
             <td>
                 <a href='@Url.Action("ByText/" + @text.TextId, "Comment")'>
                     <span class="glyphicon glyphicon-comment" title="Komentari"></span>
@@ -66,30 +74,16 @@
             </td>
 
             <td>
-                <a href='@Url.Action("Details/" + @text.TextId, "Ratings")'>
-                    <span class="glyphicon glyphicon-star" title="Ocjene"></span>
-                </a>
-            </td>
-            <td>
-                <a href='@Url.Action("Edit/" + @text.TextId, "Text")'>
-                    <span class="glyphicon glyphicon-pencil" title="Uređivanje"></span>
-                </a>
-            </td>
-            <td>
-                <a href='@Url.Action("Delete/" + @text.TextId, "Text")'>
-                    <span class="glyphicon glyphicon-trash" title="Obriši"></span>
-                </a>
-            </td>
-            <td>
-                <a href='@Url.Action("Download/" + @text.TextId, "Text")'>
-                    <span class="glyphicon glyphicon-download" title="Preuzmi"></span>
-                </a>
-            </td>
+                @if (text.EditionPublishable == "True")
+                {
+                    <a href='@Url.Action("DownloadRTF/" + @text.TextId, "Text")'>
+                        <span class="glyphicon glyphicon-download" title="Preuzmi"></span>
+                    </a>
+                }
+        </td>
         </tr>
     }
-
 </table>
-
 <p>
-    <font size="3">@Html.ActionLink("Dodaj tekst u arhivu", "Upload")</font>
+    <font size="3">@Html.ActionLink("Novi tekst", "Create")</font>
 </p>

@@ -1,11 +1,10 @@
 ﻿@model List<urednistvo.ModelsView.Textual.TextView>
 
 @{
-    ViewBag.Title = "Arhiva";
+    ViewBag.Title = "AnnouncementTexts";
 }
 
-<h2>Arhiva</h2>
-<br />
+<h2>Najava tekstova</h2>
 
 <table class="table">
     <tr>
@@ -21,24 +20,29 @@
         <th>
             Ažurirano
         </th>
+        @if ((String)Session["Role"] == "Glavni urednik")
+        {
+            <th>
+                Text status
+            </th>
+        }
         <th></th>
         <th></th>
         <th></th>
         <th></th>
         <th></th>
     </tr>
-
     @foreach (var text in Model)
     {
         <tr>
             <td>
-                <a href='@Url.Action("Text/" + @text.TextId, "Archive")'>
+                <a href='@Url.Action("Details/" + @text.TextId, "Text")'>
                     <span class="glyphicon glyphicon-list"></span> @text.Title (@text.Subtitle)
                 </a>
             </td>
 
             <td>
-                <a href='@Url.Action("Author/" + @text.UserId, "Archive")'>
+                <a href='@Url.Action("Details/" + @text.UserId, "User")'>
                     <span class="glyphicon glyphicon-user"></span> @text.Username
                 </a>
 
@@ -58,6 +62,13 @@
             <td>
                 @Html.DisplayFor(modelItem => text.Time)
             </td>
+
+            @if ((String)Session["Role"] == "Glavni urednik")
+            {
+                <th>
+                    @Html.DisplayFor(modelItem => text.TextStatus)
+                </th>
+            }
 
             <td>
                 <a href='@Url.Action("ByText/" + @text.TextId, "Comment")'>
@@ -87,9 +98,7 @@
             </td>
         </tr>
     }
-
 </table>
-
 <p>
-    <font size="3">@Html.ActionLink("Dodaj tekst u arhivu", "Upload")</font>
+    <font size="3">@Html.ActionLink("Novi tekst", "Create")</font>
 </p>

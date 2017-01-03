@@ -15,9 +15,9 @@ namespace urednistvo.ModelsView.Textual
         public Int32 numAuthors { get; set; }
         public Int32 numTexts { get; set; }
 
-        public List<EditionView> editions { get; set; }
-        public SortedDictionary<UserView, Int32> authors { get; set; }
-        public List<TextView> texts { get; set; }
+        public List<Edition> editions { get; set; }
+        public List<AuthorView> authors { get; set; }
+        public List<Text> texts { get; set; }
 
     }
 }

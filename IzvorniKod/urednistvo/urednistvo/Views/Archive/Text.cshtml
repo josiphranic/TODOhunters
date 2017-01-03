@@ -117,7 +117,6 @@
         @Html.ActionLink("Ocjeni", "EditMember", new { id = Model.TextId });
         <label> |</label>
     }
-    @Html.ActionLink("Povratak na listu tekstova ", "Index")<label>  | </label>
-    @Html.ActionLink("Komentari na tekst", "ByText/" + Model.TextId, "Comment" ) <label> | </label>
-    @Html.ActionLink("Komentiraj", "Create/" + Model.TextId, "Comment")
+    @Html.ActionLink("Povratak u arhivu tekstova ", "Index") <label> | </label>
+    @Html.ActionLink("Komentari na tekst", "Comment/" + Model.TextId, "Archive")
 </p>

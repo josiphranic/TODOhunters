@@ -14,6 +14,12 @@ namespace urednistvo.Controllers
         // GET: Notification
         public ActionResult Index()
         {
+            if ((String)Session["Role"] == null)
+            {
+                TempData["Message"] = "Nemate ovlasti pristupiti obavijestima.";
+                return RedirectToAction("Index", "Text");
+            }
+
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
                 int currentId = (Session["UserId"] == null) ? 0 : Int32.Parse((String)Session["UserId"]);
@@ -21,17 +27,20 @@ namespace urednistvo.Controllers
 
                 foreach(Notification n in db.Notifications.ToList())
                 {
-                    if(n.Users == null || n.Users.Count == 0)
+                    if (n.Users == null || n.Users.Count == 0)
                     {
                         notificationViews.Add(createNotificationView(n, 0));
                         continue;
                     }
-                    foreach(User u in n.Users)
+                    else if(currentId != 0)
                     {
-                        if(u.UserId == currentId)
+                        foreach (User u in n.Users)
                         {
-                            notificationViews.Add(createNotificationView(n, currentId));
-                            break;
+                            if (u.UserId == currentId)
+                            {
+                                notificationViews.Add(createNotificationView(n, currentId));
+                                break;
+                            }
                         }
                     }
                 }
@@ -67,6 +76,7 @@ namespace urednistvo.Controllers
         // GET: Notification/Create
         public ActionResult Create()
         {
+            // DODATI ZABRANU PRISTUPA
             return View();
         }
 
@@ -115,7 +125,7 @@ namespace urednistvo.Controllers
 
                 notification.Title = "Tekst \" " + text.Title + "\" je spreman za vase lektoriranje.";
                 notification.Content = message;
-                notification.Users.Add(db.Users.Single(u => u.Role == Role));
+                notification.Users = db.Users.Where(u => u.Role == Role).ToList();
                 notification.Time = DateTime.Now;
 
                 db.Notifications.Add(notification);

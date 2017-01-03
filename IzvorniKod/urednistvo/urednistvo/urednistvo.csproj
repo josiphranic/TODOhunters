@@ -353,6 +353,14 @@
     <Compile Include="Migrations\201701021710534_kokot6.Designer.cs">
       <DependentUpon>201701021710534_kokot6.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701030118212_kokos36.cs" />
+    <Compile Include="Migrations\201701030118212_kokos36.Designer.cs">
+      <DependentUpon>201701030118212_kokos36.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701030122389_kokos37.cs" />
+    <Compile Include="Migrations\201701030122389_kokos37.Designer.cs">
+      <DependentUpon>201701030122389_kokos37.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsView\Statistics\StatisticsView.cs" />
     <Compile Include="ModelsView\Statistics\AuthorView.cs" />
@@ -384,6 +392,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-cyborg.css" />
+    <Content Include="Content\bootstrap-darkly.css" />
     <Content Include="Content\bootstrap-sandstone.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -486,10 +496,17 @@
     <Content Include="Views\Statistics\Index.cshtml" />
     <Content Include="Views\Statistics\DataForRange.cshtml" />
     <Content Include="Views\Statistics\ByAuthors.cshtml" />
+    <Content Include="Views\Archive\Text.cshtml" />
+    <Content Include="Views\Archive\Author.cshtml" />
+    <Content Include="Views\Text\ForCorrection.cshtml" />
+    <Content Include="Views\Editions\EditionTexts.cshtml" />
+    <Content Include="Views\Text\AnnouncementTexts.cshtml" />
+    <Content Include="Views\Archive\Comment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\" />
+    <Folder Include="RTFs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -625,6 +642,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701021710534_kokot6.resx">
       <DependentUpon>201701021710534_kokot6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701030118212_kokos36.resx">
+      <DependentUpon>201701030118212_kokos36.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701030122389_kokos37.resx">
+      <DependentUpon>201701030122389_kokos37.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

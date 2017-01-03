@@ -18,6 +18,7 @@ namespace urednistvo.Models
         public virtual DbSet<Image> Images { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Rate> Rates { get; set; }
+        public virtual DbSet<Pdf> Pdfs { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
