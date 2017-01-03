@@ -22,39 +22,39 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><span class="glyphicon glyphicon-home icon" title="Početna" onclick="goHome()"></span></li>
+                    <li><span class="glyphicon glyphicon-home icon" title="Početna" onclick="go('Home','Index')"></span></li>
                     <li>
                         <div class="btn-group actions-div">
                             <button class="btn btn-lg dropdown-toggle actions-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="glyphicon glyphicon-list"></span><!--<span class="caret"></span>-->
                             </button>
                             <ul class="dropdown-menu">
-                                <li><span class="text-style" title="Izdanja" onclick="gotoTexts()">Svi tekstovi</span></li>
-                                <li><span class="text-style" title="Podlistci" onclick="gotoAs()">Najave</span></li>
+                                <li><span class="text-style" title="Izdanja" onclick="go('Text','Index')">Svi tekstovi</span></li>
+                                <li><span class="text-style" title="Podlistci" onclick="go('Text','AnnouncementTexts')">Najave</span></li>
                             </ul>
                         </div>
                     </li>
-                    <li><span class="glyphicon glyphicon-user icon" title="Korisnici" onclick="gotoUsers()"></span></li>
-                    <li><span class="glyphicon glyphicon-globe icon" title="Obavijesti" onclick="gotoNotifications()"></span></li>
+                    <li><span class="glyphicon glyphicon-user icon" title="Korisnici" onclick="go('User','Index')"></span></li>
+                    <li><span class="glyphicon glyphicon-globe icon" title="Obavijesti" onclick="go('Notification','Index')"></span></li>
                     <li>
                         <div class="btn-group actions-div">
                             <button class="btn btn-lg dropdown-toggle actions-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="glyphicon glyphicon-search"></span><!--<span class="caret"></span>-->
                             </button>
                             <ul class="dropdown-menu">
-                                <li><span class="text-style" title="Izdanja" onclick="gotoEditions()">Izdanja</span></li>
-                                <li><span class="text-style" title="Podlistci" onclick="gotoSections()">Podlisci</span></li>
+                                <li><span class="text-style" title="Izdanja" onclick="go('Editions','Index')">Izdanja</span></li>
+                                <li><span class="text-style" title="Podlistci" onclick="go('Sections','Index')">Podlisci</span></li>
                             </ul>
                         </div>
                     </li>
                     @if (Session["UserID"] != null)
                     {
-                        <li><span class="glyphicon glyphicon-upload icon" title="Upload" onclick="upload()"></span></li>
+                        <li><span class="glyphicon glyphicon-upload icon" title="Upload" onclick="go('Text','Create')"></span></li>
                     }
 
-                    <li><span class="glyphicon glyphicon-certificate icon" title="Uredničko vijeće" onclick="gotoEditorialCouncil()"></span></li>
-                    <li><span class="glyphicon glyphicon-phone-alt icon" title="Kontakt" onclick="gotoContact()"></span></li>
-                    <li><span class="glyphicon glyphicon-book icon" title="Arhiva" onclick="gotoArchive()"></span></li>
+                    <li><span class="glyphicon glyphicon-certificate icon" title="Uredničko vijeće" onclick="go('Home','EditorialCouncil')"></span></li>
+                    <li><span class="glyphicon glyphicon-phone-alt icon" title="Kontakt" onclick="go('Home','Contact')"></span></li>
+                    <li><span class="glyphicon glyphicon-book icon" title="Arhiva" onclick="go('Archive','Index')"></span></li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -96,54 +96,12 @@
             $("#info-bar").delay(3200).fadeOut(300);
         }
     }
-    function goHome() {
-        window.location.href = '@Url.Action("Index", "Home")';
-    }
-    function gotoNotifications() {
-        window.location.href = '@Url.Action("Index", "Notification")';
-    }
-    function gotoTexts() {
-        window.location.href = '@Url.Action("Index", "Text")';
-    }
-    function gotoAs() {
-        window.location.href = '@Url.Action("AnnouncementTexts", "Text")';
-    }
-    function gotoUsers() {
-        window.location.href = '@Url.Action("Index", "User")';
-    }
-    function upload() {
-        window.location.href = '@Url.Action("Create", "Text")';
+    function go(controller,view){
+        window.location.href = '../'+controller+'/'+view;
     }
     function hide() {
         $('#info-bar').fadeOut();
         document.getElementById('info-bar').style.visibility = 'hidden';
-    }
-    function gotoForLectoring() {
-        window.location.href = '@Url.Action("ForLectoring", "Text")';
-    }
-    function gotoForGraphEdit() {
-        window.location.href = '@Url.Action("ForGraphicEditing", "Text")';
-    }
-    function gotoContact() {
-        window.location.href = '@Url.Action("Contact", "Home")';
-    }
-    function gotoRatings() {
-        window.location.href = '@Url.Action("Index", "Ratings")';
-    }
-    function gotoEditorialCouncil() {
-        window.location.href = '@Url.Action("EditorialCouncil", "Home")';
-    }
-    function gotoForCorrection() {
-        window.location.href = '@Url.Action("ForCorrection", "Text")';
-    }
-    function gotoEditions() {
-        window.location.href = '@Url.Action("Index", "Editions")';
-    }
-    function gotoSections() {
-        window.location.href = '@Url.Action("Index", "Sections")';
-    }
-    function gotoArchive() {
-        window.location.href = '@Url.Action("Index", "Archive")';
     }
 </script>
 <style>
