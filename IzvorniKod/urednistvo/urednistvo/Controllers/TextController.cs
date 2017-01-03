@@ -55,16 +55,17 @@ namespace urednistvo.Controllers
         // GET: Text
         public ActionResult Index()
         {
+            DateTime dateArchive = DateTime.Today.AddDays(-14);
             List<Text> list; 
             if(Session["UserID"] == null || (String)Session["Role"] == "Registrirani korisnik")
             {
-                list = db.Texts.Where(t => t.WebPublishable == true).ToList();
+                list = db.Texts.Where(t => t.WebPublishable == true && t.Time.CompareTo(dateArchive) > 0).ToList();
             } else if((String)Session["Role"] == "Autor") {
                 int UserId = Int32.Parse((String)Session["UserID"]);
-                list = db.Texts.Where(t => t.UserId == UserId).ToList();
+                list = db.Texts.Where(t => t.UserId == UserId && t.Time.CompareTo(dateArchive) > 0).ToList();
             } else
             {
-                list = db.Texts.ToList();
+                list = db.Texts.Where(t => t.Time.CompareTo(dateArchive) > 0).ToList();
             }
             
             List<TextView> listView = new List<TextView>();

@@ -188,5 +188,29 @@ namespace urednistvo.Controllers
             }
         }
 
+        // GET: Archive/Comment/TextId
+        public ActionResult Comment(int id)
+        {
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
+            {
+                var query = from ord in db.Comments
+                            where ord.TextId == id
+                            select ord;
+
+                if (query.Count() == 0)
+                {
+                    TempData["Message"] = "Nema kometara za ovaj tekst.";
+                    return RedirectToAction("Index", "Archive");
+                }
+
+                List<CommentView> commentViews = new List<CommentView>();
+                foreach (Comment comment in query)
+                {
+                    commentViews.Add(CommentController.createCommentView(comment));
+                }
+                return View(commentViews);
+            }
+               
+        }
     }
 }
