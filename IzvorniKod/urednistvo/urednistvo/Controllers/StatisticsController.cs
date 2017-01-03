@@ -40,35 +40,40 @@ namespace urednistvo.Controllers
             }
 
             StatisticsView stat = new StatisticsView();
-            stat.to = to;
-            stat.from = from;
+            stat.to = to.Date;
+            stat.from = from.Date;
 
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
                 List<Text> texts = db.Texts.Where(x => x.Time.CompareTo(from) >= 0 && x.Time.CompareTo(to) <= 0).ToList();
                 stat.numTexts = texts.Count();
-                stat.texts = addTexts(texts);
+                stat.texts = texts;
             }
 
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
                 List<Edition> editions = db.Editions.Where(x => x.TimeOfRelease.CompareTo(from) >= 0 && x.TimeOfRelease.CompareTo(to) <= 0).ToList();
                 stat.numEditions = editions.Count();
-                stat.editions = addEditions(editions);
+                stat.editions = editions;
             }
 
-            List<Tuple<UserView, Int32>> authors = new List<Tuple<UserView, Int32>>();
+            List<AuthorView> authors = new List<AuthorView>();
             List<User> author = getAuthors();
             foreach(User a in author)
             {
-                using (UrednistvoDatabase db = new UrednistvoDatabase())
+                AuthorView aView = createAuthorView(a);
+                using
+                 (UrednistvoDatabase db = new UrednistvoDatabase())
                 {
-                    authors.Add(Tuple.Create(UserController.createUserView(a), db.Texts.Where(x => x.Author.UserId == a.UserId).ToList().Count()));
+                    aView.numPublishedTexts = db.Texts.Where(x => x.Author.UserId == a.UserId && x.TextStatus == 0x2).ToList().Count();
+                    aView.numDeclinedTexts = db.Texts.Where(x => x.Author.UserId == a.UserId && x.TextStatus == 0x16).ToList().Count();
+                    aView.numSentTexes = db.Texts.Where(x => x.Author.UserId == a.UserId && x.TextStatus != 0x2 && x.TextStatus != 0x16).ToList().Count();
                 }
+                authors.Add(aView);
             }
             stat.authors = authors;
             stat.numAuthors = authors.Count();
-            TempData["Message"] = "Editions " + stat.numEditions + " Autora " + stat.numAuthors + " Text " + stat.numTexts;
+
             return View(stat);
             
         }
@@ -83,7 +88,8 @@ namespace urednistvo.Controllers
             foreach(User a in author)
             {
                 AuthorView aView = createAuthorView(a);
-                using (UrednistvoDatabase db = new UrednistvoDatabase())
+                using
+                 (UrednistvoDatabase db = new UrednistvoDatabase())
                 {
                     aView.numPublishedTexts = db.Texts.Where(x => x.Author.UserId == a.UserId && x.TextStatus == 0x2).ToList().Count();
                     aView.numDeclinedTexts = db.Texts.Where(x => x.Author.UserId == a.UserId && x.TextStatus == 0x16).ToList().Count();
