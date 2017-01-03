@@ -14,6 +14,12 @@ namespace urednistvo.Controllers
         // GET: Notification
         public ActionResult Index()
         {
+            if ((String)Session["Role"] == null)
+            {
+                TempData["Message"] = "Nemate ovlasti pristupiti obavijestima.";
+                return RedirectToAction("Index", "Text");
+            }
+
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
                 int currentId = (Session["UserId"] == null) ? 0 : Int32.Parse((String)Session["UserId"]);
@@ -70,6 +76,7 @@ namespace urednistvo.Controllers
         // GET: Notification/Create
         public ActionResult Create()
         {
+            // DODATI ZABRANU PRISTUPA
             return View();
         }
 

@@ -60,6 +60,12 @@ namespace urednistvo.Controllers
         // GET: Ratings
         public ActionResult Index()
         {
+            if ((String)Session["Role"] != "Glavni urednik")
+            {
+                TempData["Message"] = "Nemate ovlati pristupiti ocjenama.";
+                return RedirectToAction("Index", "Text");
+            }
+
             var ratings = db.Ratings.ToList();
             List<RatingView> rViews = new List<RatingView>();
 
@@ -85,6 +91,11 @@ namespace urednistvo.Controllers
             }*/
 
             // DODATI OGRANICENJA PRISTUPA OCJENAMA
+            if ((String)Session["Role"] != "Glavni urednik")
+            {
+                TempData["Message"] = "Nemate ovlati pristupiti ocjenama.";
+                return RedirectToAction("Index", "Text");
+            }
 
             var ratings = db.Ratings.Where(r => r.TextId == id).ToList();
 

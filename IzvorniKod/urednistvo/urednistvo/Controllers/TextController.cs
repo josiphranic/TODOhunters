@@ -457,5 +457,28 @@ namespace urednistvo.Controllers
             byte[] fileBytes = System.IO.File.ReadAllBytes(path);
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, pdf.PdfName);
         }
+
+        public ActionResult AnnouncementTexts(int? id)
+        {
+            DateTime lastPublised = DateTime.MinValue;
+
+            List<Edition> editions = db.Editions.ToList();
+            foreach(Edition edition in editions) {
+                if(lastPublised < edition.TimeOfRelease)
+                {
+                    lastPublised = edition.TimeOfRelease;
+                }
+            }
+
+            List<Text> texts = db.Texts.Where(t => t.Time > lastPublised).ToList();
+            List<TextView> textViews = new List<TextView>();
+
+            foreach (Text text in texts)
+            {
+                textViews.Add(getTextView(text));
+            }
+
+            return View(textViews);
+        }
     }
 }
