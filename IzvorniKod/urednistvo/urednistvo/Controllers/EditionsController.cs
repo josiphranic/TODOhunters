@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using urednistvo.Models;
+using urednistvo.ModelsView;
 using urednistvo.ModelsView.Textual;
 
 namespace urednistvo.Controllers
@@ -127,8 +128,10 @@ namespace urednistvo.Controllers
             }
 
             EditionView eView = createEditionView(edition);
-            List<Text> texts = db.Texts.Where(t => t.Time < eView.TimeOfRelease &&
-                                                            t.Time > eView.StartTime).ToList();
+            List<Text> texts = db.Texts.Where(t => ((t.WebPublishable == true && t.TextStatus == (int)TextStatus.LECTORED) ||
+                                                    (t.EditionPublishable == true && t.TextStatus == (int)TextStatus.CORRECTED)) &&
+                                                        t.Time < eView.TimeOfRelease &&
+                                                        t.Time > eView.StartTime).ToList();
 
             List<TextView> textViews = new List<TextView>();
             foreach(Text t in texts)

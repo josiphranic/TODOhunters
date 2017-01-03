@@ -28,9 +28,6 @@
         }
         <th></th>
         <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
     </tr>
     @foreach (var text in Model)
     {
@@ -77,25 +74,13 @@
             </td>
 
             <td>
-                <a href='@Url.Action("Details/" + @text.TextId, "Ratings")'>
-                    <span class="glyphicon glyphicon-star" title="Ocjene"></span>
-                </a>
-            </td>
-            <td>
-                <a href='@Url.Action("Edit/" + @text.TextId, "Text")'>
-                    <span class="glyphicon glyphicon-pencil" title="Uređivanje"></span>
-                </a>
-            </td>
-            <td>
-                <a href='@Url.Action("Delete/" + @text.TextId, "Text")'>
-                    <span class="glyphicon glyphicon-trash" title="Obriši"></span>
-                </a>
-            </td>
-            <td>
-                <a href='@Url.Action("Download/" + @text.TextId, "Text")'>
-                    <span class="glyphicon glyphicon-download" title="Preuzmi"></span>
-                </a>
-            </td>
+                @if (text.EditionPublishable == "True")
+                {
+                    <a href='@Url.Action("DownloadRTF/" + @text.TextId, "Text")'>
+                        <span class="glyphicon glyphicon-download" title="Preuzmi"></span>
+                    </a>
+                }
+        </td>
         </tr>
     }
 </table>
