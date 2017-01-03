@@ -473,8 +473,7 @@ namespace urednistvo.Controllers
                     }
                 }
 
-                //ISPRAVIIT REDAK ISPOD
-                List<Text> texts = db.Texts.Where(t => DateTime.Compare(t.Time, lastPublised) < 0).ToList();
+                List<Text> texts = db.Texts.Where(t => DateTime.Compare(t.Time, lastPublised) > 0).ToList();
                 List<TextView> textViews = new List<TextView>();
 
                 foreach (Text text in texts)
