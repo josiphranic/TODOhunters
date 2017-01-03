@@ -1,0 +1,50 @@
+﻿@model IEnumerable<urednistvo.ModelsView.Textual.NotificationView>
+
+@{
+    ViewBag.Title = "Obavijesti";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            <label>Naslov</label>
+        </th>
+        <th>
+            <label>Ažurirano</label>
+        </th>
+        <th>
+            <label>Za</label>
+        </th>
+    </tr>
+
+    @foreach (var n in Model)
+    {
+        <tr>
+            <td>
+                <a href='@Url.Action("Details/" + @n.NotificationId, "Notification")'>
+                    <h5> <span class="glyphicon glyphicon-globe" title=@n.Content></span> @n.Title </h5>
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => n.Time)
+            </td>
+            <td>
+                @if (n.ForUser == "Javno")
+                {
+                    @Html.DisplayFor(modelItem => n.ForUser)
+                }
+                else
+                {
+                    @Html.ActionLink(@n.ForUser, "Details/" + @n.UserId, "User")
+                }  
+            </td>
+        </tr>
+    }
+
+</table>
+
+<p>
+    <font size="3">@Html.ActionLink("Dodaj novu", "Create")</font>
+</p>

@@ -1,0 +1,45 @@
+﻿@model List<urednistvo.Models.Image>
+
+@{
+    ViewBag.Title = "ByText";
+}
+
+<h2>ByText</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Text.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().ImageName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Type)
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Text.Title, "Details/" + item.TextId, "Text")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageName)
+            </td>
+            <td>
+                .@Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.ActionLink("Pogledaj", "Details/" + item.ImageId)
+            </td>
+            <td>
+                @Html.ActionLink("Preuzmi sliku", "Download/" + item.ImageId)
+            </td>
+        </tr>
+    }
+
+</table>

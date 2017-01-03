@@ -1,0 +1,51 @@
+﻿@model IEnumerable<urednistvo.Models.Comment>
+
+@{
+    ViewBag.Title = "Komentari";
+}
+
+<h2>Komentari</h2>
+
+<p>
+    @Html.ActionLink("Dodaj novi", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Text.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Content)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Time)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Text.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Content)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Time)
+        </td>
+        <td>
+            @Html.ActionLink("Uredi", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Detalji", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Obriši", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

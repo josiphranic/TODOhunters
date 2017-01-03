@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using urednistvo.Models;
+using urednistvo.ModelsView;
+using urednistvo.ModelsView.Utilities;
 
 namespace urednistvo.Controllers
 {
@@ -10,7 +13,35 @@ namespace urednistvo.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
+            {
+                // ovdje u svemu sto se salje na pocetni view filtrirati sto se tice logiranog korisnika
+                // prenijeti i popis tekstova!
+                int currentId = (Session["UserId"] == null) ? 0 : Int32.Parse((String)Session["UserId"]);
+                var notifs = new List<Notification>();
+                foreach(var notif in db.Notifications.ToList())
+                {
+                    if (notif.Users == null || notif.Users.Count == 0)
+                    {
+                        notifs.Add(notif);
+                        continue;
+                    }
+                    foreach (User u in notif.Users)
+                    {
+                        if (u.UserId == currentId)
+                        {
+                            notifs.Add(notif);
+                        }
+                    }
+                }
+                var texts = db.Texts.Where(x => x.WebPublishable).ToList();
+                if (currentId != 0)
+                {
+                    texts.Concat(db.Texts.Where(x => x.EditionPublishable).ToList());
+                }
+                Tuple<IEnumerable<Text>, IEnumerable<Notification>> tuple = new Tuple<IEnumerable<Text>, IEnumerable<Notification>>(texts,notifs);
+                return View(tuple);
+            }
         }
 
         public ActionResult About()
@@ -22,9 +53,25 @@ namespace urednistvo.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
+        }
+
+        public ActionResult EditorialCouncil()
+        {
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
+            {
+                int RoleEditor = db.Roles.Single(r => r.RoleName == RoleNames.EDITOR).Value;
+                int RoleMember = db.Roles.Single(r => r.RoleName == RoleNames.EDITORIAL_COUNCIL_MEMBER).Value;
+
+                List<UserView> uViews = new List<UserView>();
+
+                foreach (User user in db.Users.Where(u => u.Role == RoleEditor || u.Role == RoleMember))
+                {
+                    uViews.Add(UserController.createUserView(user));
+                }
+
+                return View(uViews);
+            }
         }
     }
 }

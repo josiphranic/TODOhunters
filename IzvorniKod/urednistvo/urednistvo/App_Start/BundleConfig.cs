@@ -24,8 +24,12 @@ namespace urednistvo
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                      "~/Content/bootstrap-sandstone.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/datetimepicker").Include(
+                    "~/Scripts/jquery.datetimepicker.js"
+                ));
         }
     }
 }

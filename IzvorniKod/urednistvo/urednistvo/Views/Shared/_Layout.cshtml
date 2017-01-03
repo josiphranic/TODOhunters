@@ -3,9 +3,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Naš list</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" type="text/css" href="../../Content/jquery.datetimepicker.css" />
 
 </head>
 <body>
@@ -17,28 +18,135 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Naš list", "Index", "Home", new { area = "" }, new { @class = "navbar-brand"})
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li><span class="glyphicon glyphicon-home icon" title="Početna" onclick="go('Home','Index')"></span></li>
+                    <li>
+                        <div class="btn-group actions-div">
+                            <button class="btn btn-lg dropdown-toggle actions-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-list"></span><!--<span class="caret"></span>-->
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><span class="text-style" title="Izdanja" onclick="go('Text','Index')">Svi tekstovi</span></li>
+                                <li><span class="text-style" title="Podlistci" onclick="go('Text','AnnouncementTexts')">Najave</span></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><span class="glyphicon glyphicon-user icon" title="Korisnici" onclick="go('User','Index')"></span></li>
+                    <li><span class="glyphicon glyphicon-globe icon" title="Obavijesti" onclick="go('Notification','Index')"></span></li>
+                    <li>
+                        <div class="btn-group actions-div">
+                            <button class="btn btn-lg dropdown-toggle actions-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-search"></span><!--<span class="caret"></span>-->
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><span class="text-style" title="Izdanja" onclick="go('Editions','Index')">Izdanja</span></li>
+                                <li><span class="text-style" title="Podlistci" onclick="go('Sections','Index')">Podlisci</span></li>
+                            </ul>
+                        </div>
+                    </li>
+                    @if (Session["UserID"] != null)
+                    {
+                        <li><span class="glyphicon glyphicon-upload icon" title="Upload" onclick="go('Text','Create')"></span></li>
+                    }
+
+                    <li><span class="glyphicon glyphicon-certificate icon" title="Uredničko vijeće" onclick="go('Home','EditorialCouncil')"></span></li>
+                    <li><span class="glyphicon glyphicon-phone-alt icon" title="Kontakt" onclick="go('Home','Contact')"></span></li>
+                    <li><span class="glyphicon glyphicon-book icon" title="Arhiva" onclick="go('Archive','Index')"></span></li>
+                    <li><span class="glyphicon glyphicon-signal icon" title="Statistika" onclick="go('Statistics','Index')"></span></li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
+    <div id="info-bar" class="info-bar">
+        <span class="life-meaning"></span>
+        <span class="glyphicon glyphicon-info-sign"></span>
+        <font color="black">@TempData["Message"]</font>
+        <span class="glyphicon glyphicon-remove" onclick="hide()"></span>
+    </div>
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>
+                &copy; @DateTime.Now.Year - Naš list
+                <span class="glyphicon glyphicon-asterisk"></span>
+                <a href='@Url.Action("About","Home")'>TODOHunters</a>
+                <span class="glyphicon glyphicon-asterisk"></span>
+                <a href='@Url.Action("Contact","Home")'>Kontakt</a>
+            </p>
         </footer>
     </div>
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/datetimepicker")
+    
     @RenderSection("scripts", required: false)
+   
 </body>
 </html>
+<script type="text/javascript">
+    window.onload = checkInfos;
+    function checkInfos() {
+        var success = @((TempData["Message"] != null).ToString().ToLower());
+        if(success){
+            document.getElementById('info-bar').style.visibility = 'visible';
+            $("#info-bar").delay(3200).fadeOut(300);
+        }
+    }
+    function go(controller,view){
+        window.location.href = '../'+controller+'/'+view;
+    }
+    function hide() {
+        $('#info-bar').fadeOut();
+        document.getElementById('info-bar').style.visibility = 'hidden';
+    }
+</script>
+<style>
+    .dropdown-menu{
+        top:130%;
+    }
+    .text-style:hover{
+        color: grey;
+        cursor: pointer;
+    }
+    .life-meaning{
+        width:50px;
+        display: inline-block;
+    }
+    .actions-dropdown{
+        padding: 0;
+        top: 12px;
+        background-color: transparent;
+        color: white;
+        font-size: 20px;
+    }
+    .actions-dropdown:hover {
+        color: black;
+        cursor: pointer;
+    }
+    .actions-div{
+        top: 5px;
+        padding-left: 22px;
+    }
+    .info-bar{
+        position: relative;
+        top: 12px;
+        color: #00529B;
+        background-color:#BDE5F8;
+        visibility: hidden;
+    }
+    .icon {
+        top: 18px;
+        color: white;
+        font-size: 20px;
+        padding-left: 22px;
+    }
+    .icon:hover {
+        color: black;
+        cursor: pointer;
+    }
+</style>

@@ -1,0 +1,78 @@
+﻿@model List<urednistvo.ModelsView.Textual.TextView>
+
+@{
+    ViewBag.Title = "Tekstovi";
+}
+
+<h2>Tekstovi autora <a href='@Url.Action("Details/" + Model.First().UserId, "User")'>
+    <span class="glyphicon glyphicon-user"></span> @Model.First().Username
+</a></h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Naslov
+        </th>
+        <th>
+            Autor
+        </th>
+        <th>
+            Podlistak
+        </th>
+        <th>
+            Ažurirano
+        </th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th>Status teksta</th>
+    </tr>
+    @foreach (var text in Model)
+    {
+        <tr>
+            <td>
+                <a href='@Url.Action("Details/" + @text.TextId, "Text")'>
+                    <span class="glyphicon glyphicon-list"></span> @text.Title (@text.Subtitle)
+                </a>
+            </td>
+            <td>
+                <a href='@Url.Action("Details/" + @text.UserId, "User")'>
+                    <span class="glyphicon glyphicon-user"></span> @text.Username
+                </a>
+            </td>
+            <td>
+                (popraviti adresu za podlistak)
+                <a href='@Url.Action("Details/" + @text.FinalSection, "Section")'>
+                    <span class="glyphicon glyphicon-file"></span> @text.FinalSection
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => text.Time)
+            </td>
+            <td>
+                <a href='@Url.Action("ByText/" + @text.TextId, "Comment")'>
+                    <span class="glyphicon glyphicon-comment" title="Komentari"></span>
+                </a>
+            </td>
+            <td>
+                <a href='@Url.Action("Details/" + @text.TextId, "Ratings")'>
+                    <span class="glyphicon glyphicon-star" title="Ocjene"></span>
+                </a>
+            </td>
+            <td>
+                <a href='@Url.Action("Edit/" + @text.TextId, "Text")'>
+                    <span class="glyphicon glyphicon-pencil" title="Uređivanje"></span>
+                </a>
+            </td>
+            <td>
+                <a href='@Url.Action("Delete/" + @text.TextId, "Text")'>
+                    <span class="glyphicon glyphicon-trash" title="Obriši"></span>
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => text.TextStatus)
+            </td>
+        </tr>
+    }
+</table>

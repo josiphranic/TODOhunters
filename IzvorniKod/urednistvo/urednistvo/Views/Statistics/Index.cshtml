@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Statistika";
+}
+
+<script src="../../Scripts/jquery-1.10.2.min.js" type="text/javascript"></script>
+<html>
+<body>
+    <a href='@Url.Action("Index", "Editions")'> Pregled tiskanih izdanja<a/> <label> |</label>
+    <a href='@Url.Action("ByAuthors", "Statistics")'> Pregled autora <a/>
+    <br/> <br/>
+            
+        <h3>Odaberi razdoblje za prikaz statistike:</h3>
+            <form id='your-range-form' action='@Url.Action("DataForRange","Statistics")' method='post'>
+                <input id='datetimepickerFrom' name='from' value="Od" />
+                <input id='datetimepickerTo' name='to' value="Do" />
+                <input type='submit' value='Set Range' />
+            </form>
+</body>
+</html>
+<script>
+    $(document).ready(function () {
+        $('#datetimepickerFrom').datetimepicker();
+    });
+    $(document).ready(function () {
+        $('#datetimepickerTo').datetimepicker();
+    });
+</script>
+

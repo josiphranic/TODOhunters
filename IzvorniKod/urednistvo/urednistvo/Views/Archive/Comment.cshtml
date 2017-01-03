@@ -1,0 +1,47 @@
+﻿@model List<urednistvo.ModelsView.Textual.CommentView>
+
+@{
+    ViewBag.Title = "Komentari po tekstu";
+}
+
+<h2>Po tekstu</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Autor
+        </th>
+        <th>
+            Sadržaj
+        </th>
+        <th>
+            Ažurirano
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    @foreach (var comment in Model)
+    {
+        <tr>
+            <td>
+                <a href='@Url.Action("Details/" + @comment.UserId, "User")'>
+                    <span class="glyphicon glyphicon-user"></span> @comment.Username
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => comment.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => comment.Time)
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<p>
+    @Html.ActionLink("Uređivanje (nedefinirano)", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Povratak u arhivu tekstova", "Index", "Archive")
+</p>

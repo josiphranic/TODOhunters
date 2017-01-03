@@ -1,0 +1,44 @@
+﻿@model List<urednistvo.ModelsView.Textual.TextView>
+@{
+    ViewBag.Title = "Tekstovi";
+}
+<h2>Tekstovi za lektoriranje</h2>
+<br />
+<table class="table">
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            Author
+        </th>
+        <th>
+            Section
+        </th>
+        <th>
+            Time
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var text in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(@text.Title + "(" + @text.Subtitle + ")", "Details/" + @text.TextId, "Text")
+            </td>
+            <td>
+                @Html.ActionLink(@text.Username + " ", "Details/" + @text.UserId, "User")
+            </td>
+            <td>
+                @Html.ActionLink(@text.FinalSection + " ", "Index" + @text.FinalSection, "Section")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => text.Time)
+            </td>
+            <td>
+                @Html.ActionLink("Lektoriraj", "Edit/" + @text.TextId, "Text")
+            </td>
+        </tr>
+    }
+</table>
+

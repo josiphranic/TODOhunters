@@ -1,31 +1,71 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model Tuple<IEnumerable<urednistvo.Models.Text>, IEnumerable<urednistvo.Models.Notification>>
+@{
+    ViewBag.Title = "Početna";
 }
+<br /> 
 
 <div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    @{var index = 1; var dbText = Model.Item1.ElementAt(index);}
+        <a href='@Url.Action("Details/" + dbText.TextId, "Text")'>
+            <h2>@dbText.Title</h2>
+        </a>
+        <div id="fos" class="text-containment">
+            <p>@dbText.Content</p>
+        </div>
 </div>
+    <h3>Istaknute obavijesti</h3>
+    <div class="row">
+    @foreach (var n in Model.Item2)
+    {
+        <div class="col-md-3">
+          
+            <p>
+                <a href='@Url.Action("Details/" + @n.NotificationId, "Notification")'>
+                    <h4> <span class="glyphicon glyphicon-globe"></span> @n.Title </h4>
+                </a>
+            </p>
+            <p>
+                @Html.DisplayFor(modelItem => n.Time)
+            </p>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+        </div>
+    }
 </div>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript">
+    this.index = 0;
+    $(document).ready(function(){
+        $("right").click(function(){
+            this.index++;
+            @dbText = Model.Item1.ElementAt(this.index);
+        });
+        $("left").click(function(){
+            if(this.index>0){
+                this.index--;
+                @dbText = Model.Item1.ElementAt(this.index);
+            }
+        });
+    });
+
+    // jquery za prelamanje teksta: http://jsfiddle.net/k5VET/
+    var p = $('#fos p');
+    var divh = $('#fos').height();
+    while ($(p).outerHeight() > divh) {
+        $(p).text(function (index, text) {
+            return text.replace(/\W*\s(\S)*$/, '...');
+        });
+    }
+</script>
+<style>
+    .text-change:hover{
+        cursor: pointer;
+        color: black;
+    }
+    .under-text{
+        margin-top:10px;
+    }
+    .text-containment{
+        max-height: 206px;
+        overflow: hidden;
+    }
+</style>

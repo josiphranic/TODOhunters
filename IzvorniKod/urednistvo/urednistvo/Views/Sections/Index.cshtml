@@ -1,0 +1,33 @@
+﻿@model IEnumerable<urednistvo.ModelsView.Textual.SectionView>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Svi podlistci</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumberOfTexts)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(item.Title, "Details/" + item.SectionId, "Sections")
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumberOfTexts)
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,40 @@
+﻿@model List<urednistvo.ModelsView.Textual.EditionView>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            Time of release
+        </th>
+        <th>
+            Number of texts
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(item.Title, "Details/" + item.EditionId, "Editions")
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeOfRelease)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumberOfTexts)
+        </td>
+        <td>
+            @Html.ActionLink("Svi tekstovi", "EditionTexts/" + item.EditionId, "Editions")
+        </td>
+    </tr>
+}
+
+</table>

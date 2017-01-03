@@ -1,0 +1,123 @@
+﻿@model urednistvo.ModelsView.Textual.TextView
+
+@{
+    ViewBag.Title = "Detalji o tekstu";
+}
+
+<h2>
+    Detalji teksta "@Model.Title"
+</h2>
+<br />
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Naslov
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            Podnaslov
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subtitle)
+        </dd>
+
+        <dt>
+            Sadržaj
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Content)
+        </dd>
+
+        <dt>
+            Ažurirano
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Time)
+        </dd>
+
+    </dl>
+</div>
+
+@if ((String)Session["UserID"] == Model.UserId.ToString())
+{
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+
+            <dt>
+                Status teksta
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TextStatus)
+            </dd>
+
+            <dt>
+                Objavljeno na webu
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.WebPublishable)
+            </dd>
+
+            <dt>
+                Poslano na uređivanje
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EditionPublishable)
+            </dd>
+
+            <dt>
+                Prijedlozi
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Suggestions)
+            </dd>
+
+            <dt>
+                Željeni podlistak
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.WantedSectionByAuthor)
+            </dd>
+
+            <dt>
+                Konačni podlistak
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FinalSection)
+            </dd>
+
+        </dl>
+    </div>
+}
+
+<p>
+    @if ((String)Session["Role"] == "Glavni urednik" && Model.TextStatus == "Poslan")
+    {
+        @Html.ActionLink("Konačna ocjena", "EditEditor", new { id = Model.TextId });
+        <label> |</label>
+    }
+    @if (((String)Session["Role"] == "Glavni urednik" || (String)Session["Role"] == "Član uredničkog vijeća") && Model.TextStatus == "Poslan")
+
+    {
+        @Html.ActionLink("Ocjeni", "EditMember", new { id = Model.TextId });
+        <label> |</label>
+    }
+    @Html.ActionLink("Povratak na listu tekstova ", "Index")<label>  | </label>
+    @Html.ActionLink("Komentari na tekst", "ByText/" + Model.TextId, "Comment" ) <label> | </label>
+    @Html.ActionLink("Komentiraj", "Create/" + Model.TextId, "Comment")
+</p>

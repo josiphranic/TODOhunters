@@ -1,30 +1,69 @@
 ﻿@using Microsoft.AspNet.Identity
-@if (Request.IsAuthenticated)
+@if (Session["UserID"] != null)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
     @Html.AntiForgeryToken()
 
     <ul class="nav navbar-nav navbar-right">
-        <li><span class="glyphicon glyphicon-user icon"></span></li>
         <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            <div class="btn-group actions-div">
+                <button class="btn btn-lg dropdown-toggle actions-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="glyphicon glyphicon-globe"></span><!--<span class="caret"></span>-->
+                </button>
+                <ul class="dropdown-menu">
+                    @if (Session["UserID"] == null)
+                    {
+                        <li>Nema dostupnih akcija</li>
+                    }
+                    @if ((string)Session["Role"] == "Lektor")
+                    {
+                        <li><span class="glyphicon glyphicon-pencil icon" title="Lektoriraj" onclick="go('Text','ForLectoring')"></span></li>
+                    }
+                    @if ((string)Session["Role"] == "Grafički urednik")
+                    {
+                        <li><span class="glyphicon glyphicon-film icon" title="Grafički uredi" onclick="go('Text', 'ForGraphicEditing')"></span></li>
+                    }
+                    @if ((string)Session["Role"] == "Glavni urednik")
+                    {
+                        <li><span class="glyphicon glyphicon-star icon" title="Ocjene" onclick="go('Ratings','Index')"></span></li>
+                    }
+                    @if ((string)Session["Role"] == "Korektor")
+                    {
+                        <li><span class="glyphicon glyphicon-check icon" title="Ispravi" onclick="go('Text','ForCorrection')"></span></li>
+                    }
+                </ul>
+            </div>
         </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+
+        <li>
+            @Html.ActionLink("Pozdrav " + (String)Session["Username"] + "!", "Details/" + (String)Session["UserID"], "User")
+        </li>
+        <li>@Html.ActionLink("Odjava", "Logoff", "User")</li>
     </ul>
     }
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li><span class="glyphicon glyphicon-globe icon"></span></li>
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li><span class="glyphicon glyphicon-globe noclick-icon" title="Javni korisnik"></span></li>
+        <li>@Html.ActionLink("Registracija", "Register", "User", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Prijava", "Login", "User", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }
 <style>
-    .icon{
+    .noclick-icon{
         top: 18px;
-        color: white;
+        color: lightgrey;
+        font-size: 20px;
+        padding-left: 22px;
+    }
+    .noclick-icon:hover{
+        color: grey;
     }
 </style>
+<script>
+    function go(controller, view) {
+        window.location.href = '../' + controller + '/' + view;
+    }
+</script>
