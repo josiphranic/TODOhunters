@@ -48,11 +48,11 @@
                 </a>
             </td>
             <td>
-                @using (Html.BeginForm("UploadPDF/" + @text.TextId, "Text", FormMethod.Post, new { id = "attachment", enctype = "multipart/form-data", encoding = "multipart/form-data" }))
+                @using (Html.BeginForm("UploadRTF/" + @text.TextId, "Text", FormMethod.Post, new { id = "attachment", enctype = "multipart/form-data", encoding = "multipart/form-data" }))
                 {
 
                     <input type="file" name="uploadFile" id="uploadFile" />
-                    <input type="submit" value="Predaj PDF" />
+                    <input type="submit" value="Predaj RTF" />
 
                 }
             </td>

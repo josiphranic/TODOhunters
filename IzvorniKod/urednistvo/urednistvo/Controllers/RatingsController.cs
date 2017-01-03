@@ -143,7 +143,7 @@ namespace urednistvo.Controllers
 
                 db.Ratings.Add(rating);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Text");
             }
 
             return View();

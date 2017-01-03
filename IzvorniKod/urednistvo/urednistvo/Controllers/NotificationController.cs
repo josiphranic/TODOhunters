@@ -118,7 +118,7 @@ namespace urednistvo.Controllers
 
                 notification.Title = "Tekst \" " + text.Title + "\" je spreman za vase lektoriranje.";
                 notification.Content = message;
-                notification.Users.Add(db.Users.Single(u => u.Role == Role));
+                notification.Users = db.Users.Where(u => u.Role == Role).ToList();
                 notification.Time = DateTime.Now;
 
                 db.Notifications.Add(notification);

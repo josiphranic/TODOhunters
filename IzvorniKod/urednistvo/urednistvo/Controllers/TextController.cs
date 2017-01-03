@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -298,42 +299,34 @@ namespace urednistvo.Controllers
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
-                var query = from ord in db.Texts
-                            where ord.TextId == id
-                            select ord;
+                Text t = db.Texts.Find(id);
 
-                foreach(Text t in query)
+                t.EditionPublishable = text.EditionPublishable;
+                t.WebPublishable = text.WebPublishable;
+                t.Suggestions = text.Suggestions;
+                t.FinalSectionId = text.FinalSectionId;
+                t.FinalSection = text.FinalSection;
+
+                if (submit == "Vrati na doradu")
                 {
-                    t.EditionPublishable = text.EditionPublishable;
-                    t.WebPublishable = text.WebPublishable;
-                    t.Suggestions = text.Suggestions;
-                    t.FinalSectionId = text.FinalSectionId;
-                    t.FinalSection = text.FinalSection;
-
-                    if (submit == "Vrati na doradu")
-                    {
-                        NotificationController.createNotification(t, "Vas tekst mora biti doraden po uputama.");
-                        t.TextStatus = (int)TextStatus.RETURNED;
-                    }
-                    else if (submit == "Prihvati")
-                    {
-                        NotificationController.createNotification(t, "Vas tekst je prihvacen. Ostatak informacija nalazi se u detaljima teksta.");
-                        NotificationController.createNotification(db.Roles.Single(r => r.RoleName == "Lektor").RoleId, t, "Tekst \"" + t.Title + "\" ceka vase lektoriranje.");
-                        t.TextStatus = (int)TextStatus.ACCEPTED;
-                    } else if (submit == "Odbij")
-                    {
-                        NotificationController.createNotification(t, "Vas tekst je odbijen. Detaljnije objasnjenje u obavijesti.");
-                        t.TextStatus = (int)TextStatus.DECLINED;
-                    }
+                    NotificationController.createNotification(t, "Vas tekst mora biti doraden po uputama.");
+                    t.TextStatus = (int)TextStatus.RETURNED;
+                }
+                else if (submit == "Prihvati")
+                {
+                    NotificationController.createNotification(t, "Vas tekst je prihvacen. Ostatak informacija nalazi se u detaljima teksta.");
+                    NotificationController.createNotification(db.Roles.Single(r => r.RoleName == "Lektor").Value,
+                        db.Texts.Find(id), "Tekst \"" + db.Texts.Find(id).Title + "\"je spreman za vase lektoriranje.");
+                    t.TextStatus = (int)TextStatus.ACCEPTED;
+                } else if (submit == "Odbij")
+                {
+                    NotificationController.createNotification(t, "Vas tekst je odbijen. Detaljnije objasnjenje u obavijesti.");
+                    t.TextStatus = (int)TextStatus.DECLINED;
                 }
 
                 db.SaveChanges();
                 ViewBag.DropDownListSections = new SelectList(db.Sections, "SectionId", "Title");
                 TempData["Message"] = "Obavijest o odluci je poslana autoru teksta.";
-
-                NotificationController.createNotification(text, "Vaš tekst \"" + text.Title + "\"je ocijenjen od strane urednika.");
-                NotificationController.createNotification(db.Roles.Single(r => r.RoleName == "Lektor").Value,
-                   db.Texts.Find(id), "Tekst \"" + db.Texts.Find(id).Title + "\"je spreman za vase lektoriranje.");
 
                 return RedirectToAction("Index");
             }
@@ -385,7 +378,7 @@ namespace urednistvo.Controllers
         }
 
         [HttpPost]
-        public ActionResult UploadPDF(int? id, HttpPostedFileBase uploadFile)
+        public ActionResult UploadRTF(int? id, HttpPostedFileBase uploadFile)
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
@@ -394,48 +387,75 @@ namespace urednistvo.Controllers
                     string name = System.IO.Path.GetFileName(uploadFile.FileName);
                     string type = name.Substring(name.LastIndexOf(".") + 1);
 
-                    if (type != "pdf")
+                    if (type != "rtf")
                     {
                         TempData["Message"] = "Krivi oblik datoteke.";
                         return RedirectToAction("Index");
                     }
 
+                    List<Pdf> pdfs = db.Pdfs.Where(p => p.TextId == (int)id).ToList();
+                    foreach(Pdf p in pdfs)
+                    {
+                        System.IO.File.Delete(System.IO.Path.Combine(
+                                           Server.MapPath("~/RTFs"), p.PdfName));
+                        db.Pdfs.Remove(p);
+                        db.SaveChanges();
+                    }
+
                     string path = System.IO.Path.Combine(
-                                           Server.MapPath("~/PDFs"), name);
+                                           Server.MapPath("~/RTFs"), name);
 
                     uploadFile.SaveAs(path);
 
-                    //DODATAK ZA BAZU
-                    /*
-                     * Pdf pdf = new Pdf();
-                     * pdf.PdfName = name;
-                     * pdf.TextId = id;
-                     * pdf.Text = db.Texts.Find(id);
-                     * db.Pdfs.Add(pdf);
-                     * db.SaveChanges();              
-                     */
 
-                    if ((string)Session["Role"] == "Graficki urednik")
+                    Pdf pdf = new Pdf();
+                    pdf.PdfName = name;
+                    pdf.TextId = (int)id;
+                    pdf.Text = db.Texts.Find(id);
+                    db.Pdfs.Add(pdf);
+                    db.SaveChanges();              
+                    
+                    if ((string)Session["Role"] == "Grafički urednik")
                     {
                         NotificationController.createNotification(db.Roles.Single(r => r.RoleName == "Korektor").Value,
                             db.Texts.Find(id), "Tekst \"" + db.Texts.Find(id).Title + "\"je spreman za vasu korekciju.");
 
-                        db.Texts.Find(id).TextStatus = (int)TextStatus.GRAPHIC;
+                        Text t = db.Texts.Find(id);
+                        t.TextStatus = (int)TextStatus.GRAPHIC;
                         db.SaveChanges();
 
                         return RedirectToAction("ForGraphicEditing/" + id);
                     }
                     else if ((string)Session["Role"] == "Korektor")
                     {
-                            db.Texts.Find(id).TextStatus = (int)TextStatus.CORRECTED;
-                            db.SaveChanges();
+                        Text t = db.Texts.Find(id);
+                        t.TextStatus = (int)TextStatus.CORRECTED;
+                        db.SaveChanges();
 
-                            return RedirectToAction("ForCorrection/" + id);
+                        return RedirectToAction("ForCorrection/" + id);
                     }
                 }
 
                 return RedirectToAction("Index");
             }
+        }
+
+        public ActionResult DownloadRTF(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Pdf pdf = db.Pdfs.Single(p => p.TextId == (int)id);
+            if (pdf == null)
+            {
+                return HttpNotFound();
+            }
+
+            string path = Server.MapPath("~/RTFs/" + pdf.PdfName);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(path);
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, pdf.PdfName);
         }
     }
 }

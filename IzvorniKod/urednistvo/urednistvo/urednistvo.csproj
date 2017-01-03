@@ -353,6 +353,14 @@
     <Compile Include="Migrations\201701021710534_kokot6.Designer.cs">
       <DependentUpon>201701021710534_kokot6.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701030118212_kokos36.cs" />
+    <Compile Include="Migrations\201701030118212_kokos36.Designer.cs">
+      <DependentUpon>201701030118212_kokos36.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701030122389_kokos37.cs" />
+    <Compile Include="Migrations\201701030122389_kokos37.Designer.cs">
+      <DependentUpon>201701030122389_kokos37.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsView\Statistics\StatisticsView.cs" />
     <Compile Include="ModelsView\Statistics\AuthorView.cs" />
@@ -493,6 +501,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\" />
+    <Folder Include="RTFs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -628,6 +637,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701021710534_kokot6.resx">
       <DependentUpon>201701021710534_kokot6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701030118212_kokos36.resx">
+      <DependentUpon>201701030118212_kokos36.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701030122389_kokos37.resx">
+      <DependentUpon>201701030122389_kokos37.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
