@@ -15,7 +15,7 @@ namespace urednistvo.Controllers
     {
         private UrednistvoDatabase db = new UrednistvoDatabase();
 
-        public CommentView createCommentView(Comment comment)
+        public static CommentView createCommentView(Comment comment)
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {

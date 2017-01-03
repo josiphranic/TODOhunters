@@ -75,7 +75,6 @@ namespace urednistvo.Controllers
             stat.numAuthors = authors.Count();
 
             return View(stat);
-            
         }
 
         //GET: Statistics/ByAuthors
