@@ -16,7 +16,30 @@ namespace urednistvo.Controllers
             {
                 // ovdje u svemu sto se salje na pocetni view filtrirati sto se tice logiranog korisnika
                 // prenijeti i popis tekstova!
-                return View(db.Notifications.ToList());
+                int currentId = (Session["UserId"] == null) ? 0 : Int32.Parse((String)Session["UserId"]);
+                var notifs = new List<Notification>();
+                foreach(var notif in db.Notifications.ToList())
+                {
+                    if (notif.Users == null || notif.Users.Count == 0)
+                    {
+                        notifs.Add(notif);
+                        continue;
+                    }
+                    foreach (User u in notif.Users)
+                    {
+                        if (u.UserId == currentId)
+                        {
+                            notifs.Add(notif);
+                        }
+                    }
+                }
+                var texts = db.Texts.Where(x => x.WebPublishable).ToList();
+                if (currentId != 0)
+                {
+                    texts.Concat(db.Texts.Where(x => x.EditionPublishable).ToList());
+                }
+                Tuple<IEnumerable<Text>, IEnumerable<Notification>> tuple = new Tuple<IEnumerable<Text>, IEnumerable<Notification>>(texts,notifs);
+                return View(tuple);
             }
         }
 

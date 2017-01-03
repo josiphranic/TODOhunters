@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -127,7 +126,6 @@ namespace urednistvo.Controllers
 
         public ActionResult ForGraphicEditing()
         {
-
             List<Text> list = db.Texts.Where(t => t.TextStatus == (int)TextStatus.LECTORED).ToList();
             if (list.Count == 0)
             {
@@ -145,10 +143,10 @@ namespace urednistvo.Controllers
 
         public ActionResult ForCorrection()
         {
-            List<Text> list = db.Texts.Where(t => t.TextStatus == (int)TextStatus.GRAPH_EDITED).ToList();
+            List<Text> list = db.Texts.Where(t => t.TextStatus == (int)TextStatus.GRAPHIC).ToList();
             if (list.Count == 0)
             {
-                TempData["Message"] = "Nema tekstova za korekciju.";
+                TempData["Message"] = "Nema tekstova za korekturu.";
                 return RedirectToAction("Index", "User");
             }
             List<TextView> listView = new List<TextView>();
@@ -224,7 +222,7 @@ namespace urednistvo.Controllers
             }
 
             if((String)Session["Role"] == "Lektor" &&
-                db.Texts.Find(id).TextStatus != (int)TextStatus.ACCEPTED)
+                db.Texts.Find(id).TextStatus == (int)TextStatus.ACCEPTED)
             {
                 return View(db.Texts.Single(t => t.TextId == id));
             }
@@ -389,66 +387,55 @@ namespace urednistvo.Controllers
         [HttpPost]
         public ActionResult UploadPDF(int? id, HttpPostedFileBase uploadFile)
         {
-            if (uploadFile != null && uploadFile.ContentLength > 0)
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
-                string name = System.IO.Path.GetFileName(uploadFile.FileName);
-                string type = name.Substring(name.LastIndexOf(".") + 1);
-
-                if(type != "pdf")
+                if (uploadFile != null && uploadFile.ContentLength > 0)
                 {
-                    TempData["Message"] = "Krivi oblik datoteke.";
-                    return RedirectToAction("Index");
+                    string name = System.IO.Path.GetFileName(uploadFile.FileName);
+                    string type = name.Substring(name.LastIndexOf(".") + 1);
+
+                    if (type != "pdf")
+                    {
+                        TempData["Message"] = "Krivi oblik datoteke.";
+                        return RedirectToAction("Index");
+                    }
+
+                    string path = System.IO.Path.Combine(
+                                           Server.MapPath("~/PDFs"), name);
+
+                    uploadFile.SaveAs(path);
+
+                    //DODATAK ZA BAZU
+                    /*
+                     * Pdf pdf = new Pdf();
+                     * pdf.PdfName = name;
+                     * pdf.TextId = id;
+                     * pdf.Text = db.Texts.Find(id);
+                     * db.Pdfs.Add(pdf);
+                     * db.SaveChanges();              
+                     */
+
+                    if ((string)Session["Role"] == "Graficki urednik")
+                    {
+                        NotificationController.createNotification(db.Roles.Single(r => r.RoleName == "Korektor").Value,
+                            db.Texts.Find(id), "Tekst \"" + db.Texts.Find(id).Title + "\"je spreman za vasu korekciju.");
+
+                        db.Texts.Find(id).TextStatus = (int)TextStatus.GRAPHIC;
+                        db.SaveChanges();
+
+                        return RedirectToAction("ForGraphicEditing/" + id);
+                    }
+                    else if ((string)Session["Role"] == "Korektor")
+                    {
+                            db.Texts.Find(id).TextStatus = (int)TextStatus.CORRECTED;
+                            db.SaveChanges();
+
+                            return RedirectToAction("ForCorrection/" + id);
+                    }
                 }
 
-                string path = System.IO.Path.Combine(
-                                       Server.MapPath("~/PDFs"), name);
-
-                uploadFile.SaveAs(path);
-
-                Pdf pdf = new Pdf();
-                pdf.PdfName = name;
-                pdf.TextId = (int)id;
-                pdf.Text = db.Texts.Find(id);
-                db.Pdfs.Add(pdf);
-                db.SaveChanges();
-
-                NotificationController.createNotification(db.Roles.Single(r => r.RoleName == "Korektor").Value,
-                   db.Texts.Find(id), "Tekst \"" + db.Texts.Find(id).Title + "\"je spreman za vasu korekciju.");
-
-                Text text = db.Texts.Find(id);
-                text.TextStatus = (int)TextStatus.GRAPH_EDITED;
-                db.SaveChanges();
-
-                return RedirectToAction("ForGraphicEditing/" + id);
+                return RedirectToAction("Index");
             }
-
-            return RedirectToAction("Index");
-        }
-
-        public ActionResult DownloadPDF(int? id)
-        {
-            if ((String)Session["Role"] != "Glavni urednik" && (String)Session["Role"] != "Korektor")
-            {
-                TempData["Message"] = "Nemate ovlati pristupiti ovoj stranici.";
-                return RedirectToAction("Index", "Text");
-            }
-
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            Pdf pdf = db.Pdfs.Single(p => p.TextId == (int)id);
-
-            if (pdf == null)
-            {
-                return HttpNotFound();
-            }
-
-            string path = Server.MapPath("~/PDFs/" + pdf.PdfName);
-            byte[] fileBytes = System.IO.File.ReadAllBytes(path);
-            string fileName = pdf.PdfName;
-            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
     }
 }

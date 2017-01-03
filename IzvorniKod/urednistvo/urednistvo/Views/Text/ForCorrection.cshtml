@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Tekstovi";
 }
-<h2>Tekstovi za korekciju</h2>
+<h2>Tekstovi za korektora</h2>
 <br />
 <table class="table">
     <tr>
@@ -37,16 +37,17 @@
                 @Html.DisplayFor(modelItem => text.Time)
             </td>
             <td>
-                <a href='@Url.Action("DownloadPDF/" + @text.TextId, "Text")'>
-                    <span class="glyphicon glyphicon-download" title="Preuzmi PDF za korekciju"></span>
+                <a href='@Url.Action("Download/" + @text.TextId, "Text")'>
+                    <span class="glyphicon glyphicon-download" title="Preuzmi tekst"></span>
                 </a>
             </td>
+           
             <td>
-                @using (Html.BeginForm("UploadPDFCorrected/" + @text.TextId, "Text", FormMethod.Post, new { id = "attachment", enctype = "multipart/form-data", encoding = "multipart/form-data" }))
+                @using (Html.BeginForm("UploadPDF", "Text", FormMethod.Post, new { id = "attachment", enctype = "multipart/form-data", encoding = "multipart/form-data" }))
                 {
 
                     <input type="file" name="uploadFile" id="uploadFile" />
-                    <input type="submit" value="Predaj zavrsni PDF" />
+                    <input type="submit" value="Predaj PDF" />
 
                 }
             </td>

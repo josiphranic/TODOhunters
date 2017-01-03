@@ -14,6 +14,7 @@ namespace urednistvo.ModelsView
         RETURNED = 0x4,
         LECTORED = 0x8,
         DECLINED = 0x16,
-        GRAPH_EDITED = 0x32
+        GRAPHIC = 0x32,
+        CORRECTED = 0x64
     } 
 }

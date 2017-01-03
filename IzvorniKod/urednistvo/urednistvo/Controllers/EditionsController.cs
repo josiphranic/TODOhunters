@@ -15,7 +15,7 @@ namespace urednistvo.Controllers
     {
         private UrednistvoDatabase db = new UrednistvoDatabase();
 
-        private EditionView createEditionView(Edition edition)
+        public static EditionView createEditionView(Edition edition)
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
