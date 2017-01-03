@@ -52,6 +52,10 @@
                                 {
                                     <li><span class="glyphicon glyphicon-star icon" title="Ocjene" onclick="gotoRatings()"></span></li>
                                 }
+                                @if ((string)Session["Role"] == "Korektor")
+                                {
+                                    <li><span class="glyphicon glyphicon-check icon" title="Ispravi" onclick="gotoForCorrection()"></span></li>
+                                }
                             </ul>
                         </div>
                     </li>
@@ -133,6 +137,9 @@
     }
     function gotoEditorialCouncil() {
         window.location.href = '@Url.Action("EditorialCouncil", "Home")';
+    }
+    function gotoForCorrection() {
+        window.location.href = '@Url.Action("ForCorrection", "Text")';
     }
 </script>
 <style>
