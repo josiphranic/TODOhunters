@@ -22,40 +22,40 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><span class="glyphicon glyphicon-home icon" title="Početna" onclick="go('Home','Index')"></span></li>
+                    <li><span class="glyphicon glyphicon-home icon" title="Početna" onclick="location.href='@Url.Action("Index", "Home")'"></span></li>
                     <li>
                         <div class="btn-group actions-div">
                             <button class="btn btn-lg dropdown-toggle actions-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="glyphicon glyphicon-list"></span><!--<span class="caret"></span>-->
                             </button>
                             <ul class="dropdown-menu">
-                                <li><span class="text-style" title="Izdanja" onclick="go('Text','Index')">Svi tekstovi</span></li>
-                                <li><span class="text-style" title="Podlistci" onclick="go('Text','AnnouncementTexts')">Najave</span></li>
+                                <li><span class="text-style" title="Izdanja" onclick="location.href='@Url.Action("Index", "Text")'">Svi tekstovi</span></li>
+                                <li><span class="text-style" title="Najave" onclick="location.href='@Url.Action("AnnouncementTexts", "Text")'">Najave</span></li>
                             </ul>
                         </div>
                     </li>
-                    <li><span class="glyphicon glyphicon-user icon" title="Korisnici" onclick="go('User','Index')"></span></li>
-                    <li><span class="glyphicon glyphicon-globe icon" title="Obavijesti" onclick="go('Notification','Index')"></span></li>
+                    <li><span class="glyphicon glyphicon-user icon" title="Korisnici" onclick="location.href='@Url.Action("Index", "User")'"></span></li>
+                    <li><span class="glyphicon glyphicon-bullhorn icon" title="Obavijesti" onclick="location.href='@Url.Action("Index", "Notification")'"></span></li>
                     <li>
                         <div class="btn-group actions-div">
                             <button class="btn btn-lg dropdown-toggle actions-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="glyphicon glyphicon-search"></span><!--<span class="caret"></span>-->
                             </button>
                             <ul class="dropdown-menu">
-                                <li><span class="text-style" title="Izdanja" onclick="go('Editions','Index')">Izdanja</span></li>
-                                <li><span class="text-style" title="Podlistci" onclick="go('Sections','Index')">Podlisci</span></li>
+                                <li><span class="text-style" title="Izdanja" onclick="location.href='@Url.Action("Index", "Editions")'">Izdanja</span></li>
+                                <li><span class="text-style" title="Podlistci" onclick="location.href='@Url.Action("Index", "Sections")'">Podlisci</span></li>
                             </ul>
                         </div>
                     </li>
                     @if (Session["UserID"] != null)
                     {
-                        <li><span class="glyphicon glyphicon-upload icon" title="Upload" onclick="go('Text','Create')"></span></li>
+                        <li><span class="glyphicon glyphicon-upload icon" title="Upload" onclick="location.href='@Url.Action("Create", "Text")'"></span></li>
                     }
 
-                    <li><span class="glyphicon glyphicon-certificate icon" title="Uredničko vijeće" onclick="go('Home','EditorialCouncil')"></span></li>
-                    <li><span class="glyphicon glyphicon-phone-alt icon" title="Kontakt" onclick="go('Home','Contact')"></span></li>
-                    <li><span class="glyphicon glyphicon-book icon" title="Arhiva" onclick="go('Archive','Index')"></span></li>
-                    <li><span class="glyphicon glyphicon-signal icon" title="Statistika" onclick="go('Statistics','Index')"></span></li>
+                    <li><span class="glyphicon glyphicon-certificate icon" title="Uredničko vijeće" onclick="location.href='@Url.Action("EditorialCouncil", "Home")'"></span></li>
+                    <li><span class="glyphicon glyphicon-phone-alt icon" title="Kontakt" onclick="location.href='@Url.Action("Contact", "Home")'"></span></li>
+                    <li><span class="glyphicon glyphicon-book icon" title="Arhiva" onclick="location.href='@Url.Action("Index", "Archive")'"></span></li>
+                    <li><span class="glyphicon glyphicon-signal icon" title="Statistika" onclick="location.href='@Url.Action("Index", "Statistics")'"></span></li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -96,9 +96,6 @@
             document.getElementById('info-bar').style.visibility = 'visible';
             $("#info-bar").delay(3200).fadeOut(300);
         }
-    }
-    function go(controller,view){
-        window.location.href = '../'+controller+'/'+view;
     }
     function hide() {
         $('#info-bar').fadeOut();

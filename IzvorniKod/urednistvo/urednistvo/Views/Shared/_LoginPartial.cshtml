@@ -18,19 +18,19 @@
                     }
                     @if ((string)Session["Role"] == "Lektor")
                     {
-                        <li><span class="glyphicon glyphicon-pencil icon" title="Lektoriraj" onclick="go('Text','ForLectoring')"></span></li>
+                        <li><span class="glyphicon glyphicon-pencil icon" title="Lektoriraj" onclick="location.href='@Url.Action("ForLectoring", "Text")'"></span></li>
                     }
                     @if ((string)Session["Role"] == "Grafički urednik")
                     {
-                        <li><span class="glyphicon glyphicon-film icon" title="Grafički uredi" onclick="go('Text', 'ForGraphicEditing')"></span></li>
+                        <li><span class="glyphicon glyphicon-film icon" title="Grafički uredi" onclick="location.href='@Url.Action("ForGraphicEditing", "Text")'"></span></li>
                     }
                     @if ((string)Session["Role"] == "Glavni urednik")
                     {
-                        <li><span class="glyphicon glyphicon-star icon" title="Ocjene" onclick="go('Ratings','Index')"></span></li>
+                        <li><span class="glyphicon glyphicon-star icon" title="Ocjene" onclick="location.href='@Url.Action("Index", "Ratings")'"></span></li>
                     }
                     @if ((string)Session["Role"] == "Korektor")
                     {
-                        <li><span class="glyphicon glyphicon-check icon" title="Ispravi" onclick="go('Text','ForCorrection')"></span></li>
+                        <li><span class="glyphicon glyphicon-check icon" title="Ispravi" onclick="location.href='@Url.Action("ForCorrection", "Text")'"></span></li>
                     }
                 </ul>
             </div>
