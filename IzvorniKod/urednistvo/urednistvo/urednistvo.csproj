@@ -486,6 +486,8 @@
     <Content Include="Views\Statistics\Index.cshtml" />
     <Content Include="Views\Statistics\DataForRange.cshtml" />
     <Content Include="Views\Statistics\ByAuthors.cshtml" />
+    <Content Include="Views\Archive\Text.cshtml" />
+    <Content Include="Views\Archive\Author.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

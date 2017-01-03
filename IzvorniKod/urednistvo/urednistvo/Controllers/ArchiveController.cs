@@ -159,6 +159,34 @@ namespace urednistvo.Controllers
             return newText;
         }
 
-       
+        // GET: Archive/Text/5
+        public ActionResult Text(int id)
+        {
+            using(UrednistvoDatabase db =  new UrednistvoDatabase())
+            {
+                if (db.Texts.Find(id).WebPublishable)
+                {
+                    return View(TextController.getTextView(db.Texts.Single(u => u.TextId == id)));
+                }
+                if (Session["UserID"] != null && (String)Session["Role"] != "Registrirani korisnik")
+                {
+                    return View(TextController.getTextView(db.Texts.Single(u => u.TextId == id)));
+                }
+            }
+            
+            TempData["Message"] = "Ne možete vidjeti ovaj tekst.";
+            return RedirectToAction("Index", "Archive");
+        }
+
+        //GET: Archive/Author/id
+        public ActionResult Author(int id)
+        {
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
+            {
+                var user = db.Users.Single(d => d.UserId == id);
+                return View(UserController.createUserView(user));
+            }
+        }
+
     }
 }

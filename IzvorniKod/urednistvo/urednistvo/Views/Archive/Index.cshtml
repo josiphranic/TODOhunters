@@ -32,13 +32,13 @@
     {
         <tr>
             <td>
-                <a href='@Url.Action("Details/" + @text.TextId, "Text")'>
+                <a href='@Url.Action("Text/" + @text.TextId, "Archive")'>
                     <span class="glyphicon glyphicon-list"></span> @text.Title (@text.Subtitle)
                 </a>
             </td>
 
             <td>
-                <a href='@Url.Action("Details/" + @text.UserId, "User")'>
+                <a href='@Url.Action("Author/" + @text.UserId, "Archive")'>
                     <span class="glyphicon glyphicon-user"></span> @text.Username
                 </a>
 

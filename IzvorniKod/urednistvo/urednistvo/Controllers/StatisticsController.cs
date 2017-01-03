@@ -33,7 +33,7 @@ namespace urednistvo.Controllers
         [HttpPost]
         public ActionResult DataForRange(DateTime from, DateTime to)
         {
-            if (from.CompareTo(to) >= 0 || to.CompareTo(DateTime.Today) > 0)
+            if (from.CompareTo(to) >= 0 || to.CompareTo(DateTime.Today.AddDays(1)) > 0)
             {
                 TempData["Message"] = "Odabrani su neispravni datumi";
                 return RedirectToAction("Index", "Statistics");
@@ -57,17 +57,20 @@ namespace urednistvo.Controllers
                 stat.editions = addEditions(editions);
             }
 
-            SortedDictionary<UserView, Int32> authors = new SortedDictionary<UserView, int>();
+            List<Tuple<UserView, Int32>> authors = new List<Tuple<UserView, Int32>>();
             List<User> author = getAuthors();
             foreach(User a in author)
             {
                 using (UrednistvoDatabase db = new UrednistvoDatabase())
                 {
-                    authors.Add(UserController.createUserView(a), db.Texts.Where(x => x.Author.UserId == a.UserId).ToList().Count());
+                    authors.Add(Tuple.Create(UserController.createUserView(a), db.Texts.Where(x => x.Author.UserId == a.UserId).ToList().Count()));
                 }
             }
-
+            stat.authors = authors;
+            stat.numAuthors = authors.Count();
+            TempData["Message"] = "Editions " + stat.numEditions + " Autora " + stat.numAuthors + " Text " + stat.numTexts;
             return View(stat);
+            
         }
 
         //GET: Statistics/ByAuthors
