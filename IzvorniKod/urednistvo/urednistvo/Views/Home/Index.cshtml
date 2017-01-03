@@ -5,7 +5,7 @@
 <br /> 
 
 <div class="jumbotron">
-    @{var index = 0; var dbText = Model.Item1.ElementAt(index);}
+    @{var index = 1; var dbText = Model.Item1.ElementAt(index);}
         <a href='@Url.Action("Details/" + dbText.TextId, "Text")'>
             <h2>@dbText.Title</h2>
         </a>
