@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using urednistvo.Models;
 using urednistvo.ModelsView;
 using urednistvo.ModelsView.Textual;
+using urednistvo.ModelsView.Utilities;
 
 namespace urednistvo.Controllers
 {
@@ -18,15 +19,15 @@ namespace urednistvo.Controllers
         public ActionResult Index()
         {
             List<Text> list;
-
+     
             DateTime dateArchive = DateTime.Today.AddDays(-14);
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
-                if (Session["UserID"] == null || (String)Session["Role"] == "Registrirani korisnik")
+                if (Session["UserID"] == null || (String)Session["Role"] == RoleNames.REGISTERED_USER)
                 {
                     list = db.Texts.Where(t => t.WebPublishable == true && t.Time.CompareTo(dateArchive) <= 0).ToList();
                 }
-                else if ((String)Session["Role"] == "Autor")
+                else if ((String)Session["Role"] == RoleNames.AUTHOR)
                 {
                     int UserId = Int32.Parse((String)Session["UserID"]);
                     list = db.Texts.Where(t => t.UserId == UserId && t.Time.CompareTo(dateArchive) <= 0).ToList();
@@ -48,7 +49,7 @@ namespace urednistvo.Controllers
         //GET: Archive/Upload
         public ActionResult Upload()
         {
-            if (!((String)Session["Role"] == "Glavni urednik"))
+            if (!((String)Session["Role"] == RoleNames.EDITOR))
             {
                 TempData["Message"] = "Only editor can add text to archive";
                 return RedirectToAction("Index", "Archive");
@@ -168,7 +169,7 @@ namespace urednistvo.Controllers
                 {
                     return View(TextController.getTextView(db.Texts.Single(u => u.TextId == id)));
                 }
-                if (Session["UserID"] != null && (String)Session["Role"] != "Registrirani korisnik")
+                if (Session["UserID"] != null && (String)Session["Role"] != RoleNames.REGISTERED_USER)
                 {
                     return View(TextController.getTextView(db.Texts.Single(u => u.TextId == id)));
                 }

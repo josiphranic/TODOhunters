@@ -15,7 +15,7 @@ namespace urednistvo.Controllers
         // GET: Statistics
         public ActionResult Index()
         {
-            if ((String)Session["Role"] == "Glavni urednik" || (String)Session["Role"] == "Član uredničkog vijeća")
+            if ((String)Session["Role"] == RoleNames.EDITOR || (String)Session["Role"] == RoleNames.EDITORIAL_COUNCIL_MEMBER)
             {
                 TempData["Message"] = "Samo glavni urednik i članovi uredničko vijeća imaju pristup statistikama.";
                 return RedirectToAction("Index", "Statistics");
