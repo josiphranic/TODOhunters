@@ -460,25 +460,30 @@ namespace urednistvo.Controllers
 
         public ActionResult AnnouncementTexts(int? id)
         {
-            DateTime lastPublised = DateTime.MinValue;
-
-            List<Edition> editions = db.Editions.ToList();
-            foreach(Edition edition in editions) {
-                if(lastPublised < edition.TimeOfRelease)
-                {
-                    lastPublised = edition.TimeOfRelease;
-                }
-            }
-
-            List<Text> texts = db.Texts.Where(t => t.Time > lastPublised).ToList();
-            List<TextView> textViews = new List<TextView>();
-
-            foreach (Text text in texts)
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
-                textViews.Add(getTextView(text));
-            }
+                DateTime lastPublised = DateTime.Now.AddYears(-100);
 
-            return View(textViews);
+                List<Edition> editions = db.Editions.ToList();
+                foreach (Edition edition in editions)
+                {
+                    if (DateTime.Compare(edition.TimeOfRelease, lastPublised) > 0)
+                    {
+                        lastPublised = edition.TimeOfRelease;
+                    }
+                }
+
+                //ISPRAVIIT REDAK ISPOD
+                List<Text> texts = db.Texts.Where(t => DateTime.Compare(t.Time, lastPublised) < 0).ToList();
+                List<TextView> textViews = new List<TextView>();
+
+                foreach (Text text in texts)
+                {
+                    textViews.Add(getTextView(text));
+                }
+
+                return View(textViews);
+            }
         }
     }
 }
