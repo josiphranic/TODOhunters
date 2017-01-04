@@ -16,21 +16,25 @@
                     {
                         <li>Nema dostupnih akcija</li>
                     }
+                    @if (Session["UserID"] != null)
+                    {
+                        <li><span class="text-style" onclick="location.href='@Url.Action("Create", "Text")'">Upload</span></li>
+                    }
                     @if ((string)Session["Role"] == "Lektor")
                     {
-                        <li><span class="glyphicon glyphicon-pencil icon" title="Lektoriraj" onclick="location.href='@Url.Action("ForLectoring", "Text")'"></span></li>
+                        <li><span class="text-style" onclick="location.href='@Url.Action("ForLectoring", "Text")'">Lektoriraj</span></li>
                     }
                     @if ((string)Session["Role"] == "Grafički urednik")
                     {
-                        <li><span class="glyphicon glyphicon-film icon" title="Grafički uredi" onclick="location.href='@Url.Action("ForGraphicEditing", "Text")'"></span></li>
+                        <li><span class="text-style" onclick="location.href='@Url.Action("ForGraphicEditing", "Text")'">Grafički uredi</span></li>
                     }
                     @if ((string)Session["Role"] == "Glavni urednik")
                     {
-                        <li><span class="glyphicon glyphicon-star icon" title="Ocjene" onclick="location.href='@Url.Action("Index", "Ratings")'"></span></li>
+                        <li><span class="text-style" onclick="location.href='@Url.Action("Index", "Ratings")'">Ocjene</span></li>
                     }
                     @if ((string)Session["Role"] == "Korektor")
                     {
-                        <li><span class="glyphicon glyphicon-check icon" title="Ispravi" onclick="location.href='@Url.Action("ForCorrection", "Text")'"></span></li>
+                        <li><span class="text-style" onclick="location.href='@Url.Action("ForCorrection", "Text")'">Ispravi</span></li>
                     }
                 </ul>
             </div>
