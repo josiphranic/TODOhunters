@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = "Dodaj tekst";
 }
-//Dodati da se ne dodaje text ako si neregistriran
 <h2>Dodaj tekst</h2>
 
 @using (Html.BeginForm()) 
@@ -40,7 +39,7 @@
         <div class="form-group">
             <label class="control-label col-md-2">Željeni podlistak</label>
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.WantedSectionByAuthorId, (IEnumerable<SelectListItem>)ViewBag.DropDownList, "Select wanted section", new { @class = "dropdown" })
+                @Html.DropDownListFor(model => model.WantedSectionByAuthorId, (IEnumerable<SelectListItem>)ViewBag.DropDownList, "Odaberi podlistak", new { @class = "dropdown" })
             </div>
         </div>
 
