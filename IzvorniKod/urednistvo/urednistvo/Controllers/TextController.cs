@@ -59,13 +59,13 @@ namespace urednistvo.Controllers
             List<Text> list; 
             if(Session["UserID"] == null || (String)Session["Role"] == RoleNames.REGISTERED_USER)
             {
-                list = db.Texts.Where(t => t.WebPublishable == true && t.Time.CompareTo(dateArchive) > 0).ToList();
+                list = db.Texts.Where(t => t.WebPublishable == true).ToList();
             } else if((String)Session["Role"] == RoleNames.AUTHOR) {
                 int UserId = Int32.Parse((String)Session["UserID"]);
-                list = db.Texts.Where(t => t.UserId == UserId && t.Time.CompareTo(dateArchive) > 0).ToList();
+                list = db.Texts.Where(t => t.UserId == UserId || t.WebPublishable).ToList();
             } else
             {
-                list = db.Texts.Where(t => t.Time.CompareTo(dateArchive) > 0).ToList();
+                list = db.Texts.ToList();
             }
             
             List<TextView> listView = new List<TextView>();
@@ -263,6 +263,7 @@ namespace urednistvo.Controllers
                     {
                         t.TextStatus = (int)TextStatus.LECTORED;
                         TempData["Message"] = "Tekst je lektoriran.";
+                        NotificationController.createNotification(text, "Text je spreman za graficko uredivanje.");
                     }
                     else
                     {
