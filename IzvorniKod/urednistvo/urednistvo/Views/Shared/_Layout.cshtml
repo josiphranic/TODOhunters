@@ -81,16 +81,15 @@
         <font color="black">@TempData["Message"]</font>
         <span class="glyphicon glyphicon-remove" onclick="hide()"></span>
     </div>
-    <div class="container body-content">
+    <div class="container body-content" style="padding: 0 !important">
         @RenderBody()
-        <hr />
-        <footer>
+        <footer class="cool-footer">
             <p>
                 &copy; @DateTime.Now.Year - Naš list
                 <span class="glyphicon glyphicon-asterisk"></span>
                 <a href='@Url.Action("About","Home")'>TODOHunters</a>
                 <span class="glyphicon glyphicon-asterisk"></span>
-                <a href='@Url.Action("Contact","Home")'>Kontakt</a>
+                <a href='@Url.Action("Contact","Home")'><span class="glyphicon glyphicon-phone-alt"></span></a>
             </p>
         </footer>
     </div>
@@ -117,6 +116,11 @@
     }
 </script>
 <style>
+    .cool-footer{
+        position: relative;
+        top: 22px;
+        left: 15px;
+    }
     .dropdown-menu{
         top:130%;
     }

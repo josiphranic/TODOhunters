@@ -1,51 +1,40 @@
-﻿@model Tuple<IEnumerable<urednistvo.Models.Text>, IEnumerable<urednistvo.Models.Notification>>
+﻿@model Tuple<IEnumerable<urednistvo.ModelsView.Textual.TextView>, IEnumerable<urednistvo.Models.Notification>>
 @{
     ViewBag.Title = "Početna";
 }
-<br /> 
-
-<div class="jumbotron">
-    @{var index = 1; var dbText = Model.Item1.ElementAt(index);}
-        <a href='@Url.Action("Details/" + dbText.TextId, "Text")'>
-            <h2>@dbText.Title</h2>
+<br />
+<div class="col-md-2">
+    @{Html.RenderAction("PartialAnnouncements", "Text");}
+</div>
+<div class="jumbotron col-md-8">
+    @foreach (var txt in Model.Item1)
+    {
+        <a href='@Url.Action("Details/" + txt.TextId, "Text")'>
+            <h2>@txt.Title</h2>
         </a>
         <div id="fos" class="text-containment">
-            <p>@dbText.Content</p>
-        </div>
-</div>
-    <h3>Istaknute obavijesti</h3>
-    <div class="row">
-    @foreach (var n in Model.Item2)
-    {
-        <div class="col-md-3">
-          
-            <p>
-                <a href='@Url.Action("Details/" + @n.NotificationId, "Notification")'>
-                    <h4> <span class="glyphicon glyphicon-globe"></span> @n.Title </h4>
-                </a>
-            </p>
-            <p>
-                @Html.DisplayFor(modelItem => n.Time)
-            </p>
-
+            <p>@txt.Content</p>
         </div>
     }
 </div>
+<div class="col-md-2">
+    <span class="side-title"><span class="glyphicon glyphicon-bullhorn"></span> Obavijesti</span>
+    <div class="col">
+        @foreach (var n in Model.Item2)
+        {
+                <p>
+                    <a href='@Url.Action("Details/" + @n.NotificationId, "Notification")'>
+                        <h4> <span class="glyphicon glyphicon-globe"></span> @n.Title </h4>
+                    </a>
+                </p>
+                <p>
+                    @Html.DisplayFor(modelItem => n.Time)
+                </p>
+        }
+    </div>
+</div>
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript">
-    this.index = 0;
-    $(document).ready(function(){
-        $("right").click(function(){
-            this.index++;
-            @dbText = Model.Item1.ElementAt(this.index);
-        });
-        $("left").click(function(){
-            if(this.index>0){
-                this.index--;
-                @dbText = Model.Item1.ElementAt(this.index);
-            }
-        });
-    });
 
     // jquery za prelamanje teksta: http://jsfiddle.net/k5VET/
     var p = $('#fos p');
@@ -57,6 +46,9 @@
     }
 </script>
 <style>
+    .top-line{
+        display:inline-block;
+    }
     .text-change:hover{
         cursor: pointer;
         color: black;
@@ -67,5 +59,9 @@
     .text-containment{
         max-height: 206px;
         overflow: hidden;
+    }
+    .side-title{
+        font-size:20px;
+        font-weight:700;
     }
 </style>

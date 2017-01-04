@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using urednistvo.Models;
 using urednistvo.ModelsView;
+using urednistvo.ModelsView.Textual;
 using urednistvo.ModelsView.Utilities;
 
 namespace urednistvo.Controllers
@@ -39,7 +40,12 @@ namespace urednistvo.Controllers
                 {
                     texts.Concat(db.Texts.Where(x => x.EditionPublishable).ToList());
                 }
-                Tuple<IEnumerable<Text>, IEnumerable<Notification>> tuple = new Tuple<IEnumerable<Text>, IEnumerable<Notification>>(texts,notifs);
+                // zbog toga sto linq ne prepoznaje metodu toTextView, idemo rucno...
+                var textViews = new List<TextView>();
+                foreach(var text in texts) {
+                    textViews.Add(TextController.getTextView(text));
+                }
+                Tuple<IEnumerable<TextView>, IEnumerable<Notification>> tuple = new Tuple<IEnumerable<TextView>, IEnumerable<Notification>>(textViews,notifs);
                 return View(tuple);
             }
         }

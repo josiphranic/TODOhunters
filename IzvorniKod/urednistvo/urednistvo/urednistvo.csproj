@@ -503,6 +503,7 @@
     <Content Include="Views\Editions\EditionTexts.cshtml" />
     <Content Include="Views\Text\AnnouncementTexts.cshtml" />
     <Content Include="Views\Archive\Comment.cshtml" />
+    <Content Include="Views\Shared\_Announcements.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

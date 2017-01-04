@@ -486,5 +486,34 @@ namespace urednistvo.Controllers
                 return View(textViews);
             }
         }
+
+        [ChildActionOnly]
+        public ActionResult PartialAnnouncements()
+        {
+            // OVO TREBA POSLOZITI PO NACELIMA OOPA!!!!!! KOPIRAN KOD OD GORE
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
+            {
+                DateTime lastPublised = DateTime.Now.AddYears(-100);
+
+                List<Edition> editions = db.Editions.ToList();
+                foreach (Edition edition in editions)
+                {
+                    if (DateTime.Compare(edition.TimeOfRelease, lastPublised) > 0)
+                    {
+                        lastPublised = edition.TimeOfRelease;
+                    }
+                }
+
+                List<Text> texts = db.Texts.Where(t => DateTime.Compare(t.Time, lastPublised) > 0).ToList();
+                List<TextView> textViews = new List<TextView>();
+
+                foreach (Text text in texts)
+                {
+                    textViews.Add(getTextView(text));
+                }
+
+                return PartialView("_Announcements", textViews);
+            }
+        }
     }
 }
