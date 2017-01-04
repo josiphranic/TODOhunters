@@ -8,16 +8,16 @@ namespace urednistvo.ModelsView.Textual
 {
     public class StatisticsView
     {
-        public DateTime to { get; set; }
-        public DateTime from { get; set; }
+        public DateTime To { get; set; }
+        public DateTime From { get; set; }
 
-        public Int32 numEditions { get; set; }
-        public Int32 numAuthors { get; set; }
-        public Int32 numTexts { get; set; }
+        public Int32 NumEditions { get; set; }
+        public Int32 NumAuthors { get; set; }
+        public Int32 NumTexts { get; set; }
 
-        public List<Edition> editions { get; set; }
-        public List<AuthorView> authors { get; set; }
-        public List<Text> texts { get; set; }
+        public List<EditionView> Editions { get; set; }
+        public List<AuthorView> Authors { get; set; }
+        public List<TextView> Texts { get; set; }
 
     }
 }
