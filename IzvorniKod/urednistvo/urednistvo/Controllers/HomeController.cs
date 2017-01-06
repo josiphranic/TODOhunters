@@ -20,7 +20,7 @@ namespace urednistvo.Controllers
                 // prenijeti i popis tekstova!
                 int currentId = (Session["UserId"] == null) ? 0 : Int32.Parse((String)Session["UserId"]);
                 var notifs = new List<Notification>();
-                foreach(var notif in db.Notifications.ToList())
+                foreach(var notif in db.Notifications.OrderByDescending(x => x.Time).ToList())
                 {
                     if (notif.Users == null || notif.Users.Count == 0)
                     {
@@ -35,7 +35,7 @@ namespace urednistvo.Controllers
                         }
                     }
                 }
-                var texts = db.Texts.Where(x => x.WebPublishable).ToList();
+                var texts = db.Texts.Where(x => x.WebPublishable).OrderByDescending(x => x.Time).ToList();
                 if (currentId != 0)
                 {
                     texts.Concat(db.Texts.Where(x => x.EditionPublishable).ToList());
