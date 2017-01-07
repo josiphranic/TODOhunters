@@ -33,6 +33,11 @@ namespace urednistvo.Controllers
         // GET: User
         public ActionResult Index()
         {
+            if(Session["UserID"] == null)
+            {
+                TempData["Message"] = "Samo registrirani korisnici mogu vidjeti popis korisnika.";
+                RedirectToAction("Index", "Home");
+            } 
             using(UrednistvoDatabase db = new UrednistvoDatabase())
             {
                 List<UserView> userViews = new List<UserView>();
