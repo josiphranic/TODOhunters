@@ -466,9 +466,7 @@
     <Content Include="Views\Text\EditEditor.cshtml" />
     <Content Include="Views\Text\EditMember.cshtml" />
     <Content Include="Views\Comment\Create.cshtml" />
-    <Content Include="Views\Comment\Delete.cshtml" />
     <Content Include="Views\Comment\Details.cshtml" />
-    <Content Include="Views\Comment\Edit.cshtml" />
     <Content Include="Views\Comment\Index.cshtml" />
     <Content Include="Views\Comment\ByText.cshtml" />
     <Content Include="Views\Comment\ByUser.cshtml" />
