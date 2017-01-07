@@ -85,7 +85,7 @@
     <div class="container body-content" style="padding: 0 !important">
         @RenderBody()
         <footer class="cool-footer">
-            <p>
+            <p style="height:5px">
                 &copy; @DateTime.Now.Year - Naš list
                 <span class="glyphicon glyphicon-asterisk"></span>
                 <a href='@Url.Action("About","Home")'>TODOHunters</a>
@@ -119,6 +119,7 @@
 <style>
     .cool-footer{
         position: relative;
+        height: 5px;
         top: 22px;
         left: 15px;
     }
