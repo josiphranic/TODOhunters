@@ -15,7 +15,7 @@ namespace urednistvo.Controllers
     {
         private UrednistvoDatabase db = new UrednistvoDatabase();
 
-        public static CommentView createCommentView(Comment comment)
+        public CommentView createCommentView(Comment comment)
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
@@ -49,7 +49,7 @@ namespace urednistvo.Controllers
 
             if(query.Count() == 0)
             {
-                TempData["Message"] = "Nema kometara za ovaj tekst.";
+                TempData["Message"] = "No comments for this text.";
                 return RedirectToAction("Index", "Text");
             }
 
@@ -65,7 +65,7 @@ namespace urednistvo.Controllers
         {
             if (db.Ratings.Count(r => r.UserId == id) == 0)
             {
-                TempData["Message"] = "Nema komentara ovog korisnika.";
+                TempData["Message"] = "No comments for this user.";
                 return RedirectToAction("Index", "Text");
             }
 
@@ -131,6 +131,76 @@ namespace urednistvo.Controllers
                 return RedirectToAction("ByText/" + comment.TextId);
             }
             return View();
+        }
+
+        // GET: Comments/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Comment comment = db.Comments.Find(id);
+            if (comment == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.TextId = new SelectList(db.Texts, "TextId", "Title", comment.TextId);
+            ViewBag.UserId = new SelectList(db.Users, "UserId", "FirstName", comment.UserId);
+            return View(comment);
+        }
+
+        // POST: Comments/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "UserId,TextId,Content,Time")] Comment comment)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(comment).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.TextId = new SelectList(db.Texts, "TextId", "Title", comment.TextId);
+            ViewBag.UserId = new SelectList(db.Users, "UserId", "FirstName", comment.UserId);
+            return View(comment);
+        }
+
+        // GET: Comments/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Comment comment = db.Comments.Find(id);
+            if (comment == null)
+            {
+                return HttpNotFound();
+            }
+            return View(comment);
+        }
+
+        // POST: Comments/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Comment comment = db.Comments.Find(id);
+            db.Comments.Remove(comment);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

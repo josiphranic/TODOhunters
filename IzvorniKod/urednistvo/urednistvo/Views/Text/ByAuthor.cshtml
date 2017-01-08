@@ -1,12 +1,10 @@
 ﻿@model List<urednistvo.ModelsView.Textual.TextView>
 
 @{
-    ViewBag.Title = "Tekstovi";
+    ViewBag.Title = "ByAuthor";
 }
 
-<h2>Tekstovi autora <a href='@Url.Action("Details/" + Model.First().UserId, "User")'>
-    <span class="glyphicon glyphicon-user"></span> @Model.First().Username
-</a></h2>
+<h2>Po autoru</h2>
 
 <table class="table">
     <tr>
@@ -32,59 +30,31 @@
     {
         <tr>
             <td>
-                <a href='@Url.Action("Details/" + @text.TextId, "Text")'>
-                    <span class="glyphicon glyphicon-list"></span> @text.Title (@text.Subtitle)
-                </a>
+                @Html.ActionLink(@text.Title + "(" + @text.Subtitle + ")", "Details/" + @text.TextId, "Text")
             </td>
             <td>
-                <a href='@Url.Action("Details/" + @text.UserId, "User")'>
-                    <span class="glyphicon glyphicon-user"></span> @text.Username
-                </a>
+                @Html.ActionLink(@text.Username + " ", "Details/" + @text.UserId, "User")
             </td>
             <td>
-                @if (text.FinalSectionId != -1)
-                {
-                    <a href='@Url.Action("Details/" + @text.FinalSectionId, "Sections")'>
-                        <span class="glyphicon glyphicon-file"></span> @text.FinalSection
-                    </a>
-                }
-                else
-                {
-                    <label><span class="glyphicon glyphicon-file"></span> @text.FinalSection </label>
-                }
+                @Html.ActionLink(@text.FinalSection + " ", "Index" + @text.FinalSection, "Section")
             </td>
             <td>
                 @Html.DisplayFor(modelItem => text.Time)
             </td>
             <td>
-                <a href='@Url.Action("ByText/" + @text.TextId, "Comment")'>
-                    <span class="glyphicon glyphicon-comment" title="Komentari"></span>
-                </a>
+                @Html.ActionLink("Komentari", "ByText/" + @text.TextId, "Comment")
             </td>
             <td>
-                <a href='@Url.Action("Details/" + @text.TextId, "Ratings")'>
-                    <span class="glyphicon glyphicon-star" title="Ocjene"></span>
-                </a>
+                @Html.ActionLink("Ocjene", "Details/" + @text.TextId, "Ratings")
             </td>
             <td>
-                <a href='@Url.Action("Edit/" + @text.TextId, "Text")'>
-                    <span class="glyphicon glyphicon-pencil" title="Uređivanje"></span>
-                </a>
+                @Html.ActionLink("Uređivanje", "Edit/" + @text.TextId, "Text")
             </td>
             <td>
-                <a href='@Url.Action("Delete/" + @text.TextId, "Text")'>
-                    <span class="glyphicon glyphicon-trash" title="Obriši"></span>
-                </a>
+                @Html.ActionLink("Obriši", "Delete/" + @text.TextId, "Text")
             </td>
             <td>
-                @if (text.UserId == Int32.Parse((String)Session["UserID"]))
-                {
-                    @Html.DisplayFor(modelItem => text.TextStatus)
-                }
-                else
-                {
-                    <label>-</label>
-                }
+                @Html.DisplayFor(modelItem => text.TextStatus)
             </td>
         </tr>
     }

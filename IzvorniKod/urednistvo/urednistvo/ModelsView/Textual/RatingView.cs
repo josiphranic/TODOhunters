@@ -16,9 +16,8 @@ namespace urednistvo.ModelsView.Textual
         public string Content { get; set; }
         public DateTime Time { get; set; }
 
-        public string Rate { get; set; }
-        public bool? WebPublishable { get; set; }
-        public int SectionId { get; set; }
+        public int Rate { get; set; }
+        public bool WebPublishable { get; set; }
         public string SectionTitle { get; set; }
     }
 }

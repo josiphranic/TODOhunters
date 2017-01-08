@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<urednistvo.Models.Comment>
 
 @{
-    ViewBag.Title = "Komentari";
+    ViewBag.Title = "Index";
 }
 
-<h2>Komentari</h2>
+<h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Dodaj novi", "Create")
+    @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
     <tr>
@@ -41,9 +41,9 @@
             @Html.DisplayFor(modelItem => item.Time)
         </td>
         <td>
-            @Html.ActionLink("Uredi", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Detalji", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Obriši", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
         </td>
     </tr>
 }

@@ -1,7 +1,7 @@
 ﻿@model List<urednistvo.ModelsView.Textual.CommentView>
 
 @{
-    ViewBag.Title = "Komentari po korisniku";
+    ViewBag.Title = "ByText";
 }
 
 <h2>Po kirisniku</h2>
@@ -40,6 +40,6 @@
 
 
 <p>
-    @Html.ActionLink("Uređivanje (nedefinirano)", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Povratak na listu korisnika", "Index", "User")
+    @Html.ActionLink("Uređivanje", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Povratak na listu korisnika", "Index")
 </p>

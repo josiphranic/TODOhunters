@@ -1,10 +1,10 @@
 ﻿@model List<urednistvo.ModelsView.Textual.TextView>
 
 @{
-    ViewBag.Title = "Arhiva";
+    ViewBag.Title = "Index";
 }
 
-<h2>Svi tekstovi</h2>
+<h2>Tekst</h2>
 <br /> 
 
 <table class="table">
@@ -21,13 +21,6 @@
         <th>
             Ažurirano
         </th>
-        @if ((String)Session["Role"] == "Glavni urednik")
-        {
-            <th>
-                Text status
-            </th>
-        }     
-        <th></th>
         <th></th>
         <th></th>
         <th></th>
@@ -38,65 +31,28 @@
     {
         <tr>
             <td>
-                    <a href='@Url.Action("Details/" + @text.TextId, "Text")'>
-                        <span class="glyphicon glyphicon-list"></span> @text.Title (@text.Subtitle)
-                    </a>
+                @Html.ActionLink(@text.Title + "(" + @text.Subtitle + ")", "Details/" + @text.TextId, "Text")
             </td>
-            
             <td>
-                <a href='@Url.Action("Details/" + @text.UserId, "User")'>
-                    <span class="glyphicon glyphicon-user"></span> @text.Username
-                </a>
-            
-            <td>
-                @if (text.FinalSectionId != -1)
-                {
-                    <a href='@Url.Action("Details/" + @text.FinalSectionId, "Sections")'>
-                        <span class="glyphicon glyphicon-file"></span> @text.FinalSection
-                    </a>
-                }
-                else
-                {
-                    <label><span class="glyphicon glyphicon-file"></span> @text.FinalSection </label>
-                }
+                @Html.ActionLink(@text.Username + " ", "Details/" + @text.UserId, "User")
             </td>
-            
+            <td>
+                @Html.ActionLink(@text.FinalSection + " ", "Index" + @text.FinalSection, "Section")
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => text.Time)
             </td>
-            
-            @if ((String)Session["Role"] == "Glavni urednik")
-            {
-                <th>
-                    @Html.DisplayFor(modelItem => text.TextStatus)
-                </th>
-            } 
-            
             <td>
-                <a href='@Url.Action("ByText/" + @text.TextId, "Comment")'>
-                    <span class="glyphicon glyphicon-comment" title="Komentari"></span> 
-                </a>
-            </td>
-            
-            <td>
-                <a href='@Url.Action("Details/" + @text.TextId, "Ratings")'>
-                    <span class="glyphicon glyphicon-star" title="Ocjene"></span>
-                </a>
+                @Html.ActionLink("Komentari", "ByText/" + @text.TextId, "Comment")
             </td>
             <td>
-                <a href='@Url.Action("Edit/" + @text.TextId, "Text")'>
-                    <span class="glyphicon glyphicon-pencil" title="Uređivanje"></span>
-                </a>
+                @Html.ActionLink("Ocjene", "Details/" + @text.TextId, "Ratings")
             </td>
             <td>
-                <a href='@Url.Action("Delete/" + @text.TextId, "Text")'>
-                    <span class="glyphicon glyphicon-trash" title="Obriši"></span>
-                </a>
+                @Html.ActionLink("Uređivanje", "Edit/" + @text.TextId, "Text")
             </td>
             <td>
-                <a href='@Url.Action("DownloadRTF/" + @text.TextId, "Text")'>
-                    <span class="glyphicon glyphicon-download" title="Preuzmi"></span>
-                </a>
+                @Html.ActionLink("Obriši", "Delete/" + @text.TextId, "Text")
             </td>
         </tr>
     }

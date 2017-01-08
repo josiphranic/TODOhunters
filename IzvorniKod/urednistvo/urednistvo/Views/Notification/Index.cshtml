@@ -17,21 +17,21 @@
         <th>
             <label>Za</label>
         </th>
+        <th></th>
+        <th></th>
     </tr>
 
     @foreach (var n in Model)
     {
         <tr>
             <td>
-                <a href='@Url.Action("Details/" + @n.NotificationId, "Notification")'>
-                    <h5> <span class="glyphicon glyphicon-globe" title=@n.Content></span> @n.Title </h5>
-                </a>
+                @Html.ActionLink(@n.Title, "Details/" + @n.NotificationId, "Notification")
             </td>
             <td>
                 @Html.DisplayFor(modelItem => n.Time)
             </td>
             <td>
-                @if (n.ForUser == "Javno")
+                @if (n.ForUser == "Public")
                 {
                     @Html.DisplayFor(modelItem => n.ForUser)
                 }
@@ -39,6 +39,12 @@
                 {
                     @Html.ActionLink(@n.ForUser, "Details/" + @n.UserId, "User")
                 }  
+            </td>
+            <td>
+                <a class="glyphicon glyphicon-pencil" href='@Url.Action("Edit/" + @n.NotificationId, "Notification")'></a>
+            </td>
+            <td>
+                <a class="glyphicon glyphicon-trash" href='@Url.Action("Delete/" + @n.NotificationId, "Notification")'></a>
             </td>
         </tr>
     }

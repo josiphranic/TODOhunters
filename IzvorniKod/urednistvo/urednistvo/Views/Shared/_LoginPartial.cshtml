@@ -6,44 +6,11 @@
     @Html.AntiForgeryToken()
 
     <ul class="nav navbar-nav navbar-right">
+        <li><span class="glyphicon glyphicon-user noclick-icon"></span></li>
         <li>
-            <div class="btn-group actions-div">
-                <button class="btn btn-lg dropdown-toggle actions-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="glyphicon glyphicon-globe"></span><!--<span class="caret"></span>-->
-                </button>
-                <ul class="dropdown-menu">
-                    @if (Session["UserID"] == null)
-                    {
-                        <li>Nema dostupnih akcija</li>
-                    }
-                    @if (Session["UserID"] != null)
-                    {
-                        <li><span class="text-style" onclick="location.href='@Url.Action("Create", "Text")'">Upload</span></li>
-                    }
-                    @if ((string)Session["Role"] == "Lektor")
-                    {
-                        <li><span class="text-style" onclick="location.href='@Url.Action("ForLectoring", "Text")'">Lektoriraj</span></li>
-                    }
-                    @if ((string)Session["Role"] == "Grafički urednik")
-                    {
-                        <li><span class="text-style" onclick="location.href='@Url.Action("ForGraphicEditing", "Text")'">Grafički uredi</span></li>
-                    }
-                    @if ((string)Session["Role"] == "Glavni urednik")
-                    {
-                        <li><span class="text-style" onclick="location.href='@Url.Action("Index", "Ratings")'">Ocjene</span></li>
-                    }
-                    @if ((string)Session["Role"] == "Korektor")
-                    {
-                        <li><span class="text-style" onclick="location.href='@Url.Action("ForCorrection", "Text")'">Ispravi</span></li>
-                    }
-                </ul>
-            </div>
+            @Html.ActionLink("Hello " + (String)Session["Username"] + "!", "Details/" + (String)Session["UserID"], "User")
         </li>
-
-        <li>
-            @Html.ActionLink("Pozdrav " + (String)Session["Username"] + "!", "Details/" + (String)Session["UserID"], "User")
-        </li>
-        <li>@Html.ActionLink("Odjava", "Logoff", "User")</li>
+        <li>@Html.ActionLink("Logoff", "Logoff", "User")</li>
     </ul>
     }
 }
@@ -51,8 +18,8 @@ else
 {
     <ul class="nav navbar-nav navbar-right">
         <li><span class="glyphicon glyphicon-globe noclick-icon" title="Javni korisnik"></span></li>
-        <li>@Html.ActionLink("Registracija", "Register", "User", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Prijava", "Login", "User", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li>@Html.ActionLink("Register", "Register", "User", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "User", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }
 <style>
@@ -66,8 +33,3 @@ else
         color: grey;
     }
 </style>
-<script>
-    function go(controller, view) {
-        window.location.href = '../' + controller + '/' + view;
-    }
-</script>

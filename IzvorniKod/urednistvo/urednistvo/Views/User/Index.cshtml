@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<urednistvo.ModelsView.UserView>
 
 @{
-    ViewBag.Title = "Korisnici";
+    ViewBag.Title = "Index";
 }
 
-<h2>Svi korisnici</h2>
+<h2>@ViewBag.Message</h2>
 
 <table class="table">
     <tr>
@@ -35,21 +35,16 @@
             @Html.DisplayFor(modelItem => user.LastName)
         </td>
         <td>
-            <a href='@Url.Action("Details/" + @user.UserId, "User")'>
-                <span class="glyphicon glyphicon-user"></span> @user.UserName
-            </a>
+            @Html.ActionLink(@user.UserName + " ", "Details/" + @user.UserId, "User")
         </td>
         <td>
-                <span class="glyphicon glyphicon-envelope">
-                @Html.DisplayFor(modelItem => user.Email) </span>
+            @Html.DisplayFor(modelItem => user.Email)
         </td>
         <td>
             @Html.DisplayFor(modelItem => user.Role)
         </td>
         <td>
-            <a href='@Url.Action("ByAuthor/" + @user.UserId, "Text")'>
-                <span class="glyphicon glyphicon-list" title="Tekstovi autora @user.UserName"></span>
-            </a>
+            @Html.ActionLink("Tekstovi", "ByAuthor/" + @user.UserId, "Text")
         </td>
     </tr>
 }

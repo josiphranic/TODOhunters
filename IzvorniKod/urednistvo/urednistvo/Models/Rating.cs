@@ -12,7 +12,7 @@ namespace urednistvo.Models
 
         public bool? WebPublishable { get; set; }
         public int Rate { get; set; }
-        public int SectionId { get; set; }
+        public string SectionTitle { get; set; }
 
         public virtual User User { get; set; }
         public virtual Text Text { get; set; }

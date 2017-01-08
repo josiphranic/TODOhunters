@@ -6,8 +6,9 @@ namespace urednistvo.Models
 {
     public class Comment
     {
-        public int CommentId { get; set; }
+        [Key, ForeignKey("User"), Column(Order = 0)]
         public int UserId { get; set; }
+        [Key, ForeignKey("Text"), Column(Order = 1)]
         public int TextId { get; set; }    
 
         public string Content { get; set; }

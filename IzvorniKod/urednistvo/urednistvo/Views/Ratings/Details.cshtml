@@ -1,10 +1,10 @@
-﻿@model List<urednistvo.ModelsView.Textual.RatingView>
+﻿@model List<urednistvo.Models.Rating>
 
 @{
-    ViewBag.Title = "Detalji ocjena";
+    ViewBag.Title = "Details";
 }
 
-<h2>Detalji o @Model.First().Title</h2>
+<h2>Detalji o @Model.First().Text.Title</h2>
 
 <table class="table">
     <tr>
@@ -26,32 +26,25 @@
     {
         <tr>
             <td>
-                @Html.ActionLink(item.Username, "Details/" + item.UserId, "User")
+                @Html.ActionLink(item.User.UserName, "Details/" + item.User.UserId, "User")
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Rate)
             </td>
             <td>
-                @if (item.WebPublishable == true)
-                {
-                    <label>Da</label>
-                }
-                else
-                {
-                    <label>Ne</label>
-                }
+                @Html.DisplayFor(modelItem => item.WebPublishable)
             </td>
             <td>
-                @Html.ActionLink(item.SectionTitle, "Details/" + item.SectionId, "Sections")
+                @Html.DisplayFor(modelItem => item.SectionTitle)
             </td>
         </tr>
     }
 </table>
 
 <p>
-    @if ((String)Session["Role"] == "Glavni urednik")
+    @if ((String)Session["Role"] == "Editor")
     {
-        @Html.ActionLink("Konačna ocjena", "EditEditor/" + @Model.First().TextId, "Text")
+        @Html.ActionLink("Final rate (editor)", "EditEditor/" + @Model.First().Text.TextId, "Text")
         <label>|</label>
     }
     @Html.ActionLink("Povratak na listu tekstova", "Index")

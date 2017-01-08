@@ -14,12 +14,6 @@ namespace urednistvo.Controllers
         // GET: Notification
         public ActionResult Index()
         {
-            if ((String)Session["Role"] == null)
-            {
-                TempData["Message"] = "Nemate ovlasti pristupiti obavijestima.";
-                return RedirectToAction("Index", "Text");
-            }
-
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
                 int currentId = (Session["UserId"] == null) ? 0 : Int32.Parse((String)Session["UserId"]);
@@ -27,20 +21,17 @@ namespace urednistvo.Controllers
 
                 foreach(Notification n in db.Notifications.ToList())
                 {
-                    if (n.Users == null || n.Users.Count == 0)
+                    if(n.Users == null || n.Users.Count == 0)
                     {
                         notificationViews.Add(createNotificationView(n, 0));
                         continue;
                     }
-                    else if(currentId != 0)
+                    foreach(User u in n.Users)
                     {
-                        foreach (User u in n.Users)
+                        if(u.UserId == currentId)
                         {
-                            if (u.UserId == currentId)
-                            {
-                                notificationViews.Add(createNotificationView(n, currentId));
-                                break;
-                            }
+                            notificationViews.Add(createNotificationView(n, currentId));
+                            break;
                         }
                     }
                 }
@@ -58,7 +49,7 @@ namespace urednistvo.Controllers
             nView.Time = n.Time;
             nView.Content = n.Content;
             nView.UserId = UserId;
-            nView.ForUser = n.Users.Count == 0 ? "Javno" : n.Users.ElementAt(0).UserName;
+            nView.ForUser = n.Users.Count == 0 ? "Public" : n.Users.ElementAt(0).UserName;
 
             return nView;
         }
@@ -76,7 +67,6 @@ namespace urednistvo.Controllers
         // GET: Notification/Create
         public ActionResult Create()
         {
-            // DODATI ZABRANU PRISTUPA
             return View();
         }
 
@@ -100,6 +90,52 @@ namespace urednistvo.Controllers
             return View();
         }
 
+        // GET: Notification/Edit/5
+        public ActionResult Edit(int id)
+        {
+            return View();
+        }
+
+        // POST: Notification/Edit/5
+        [HttpPost]
+        public ActionResult Edit(int id, Notification notification)
+        {
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
+            {
+                Notification n = db.Notifications.Find(id);
+                notification.Title = n.Title;
+                notification.Time = DateTime.Now;
+
+                db.Notifications.Remove(n);
+                db.Notifications.Add(notification);
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+        }
+
+        // GET: Notification/Delete/5
+        public ActionResult Delete(int id)
+        {
+            return View();
+        }
+
+        // POST: Notification/Delete/5
+        [HttpPost]
+        public ActionResult Delete(int id, FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add delete logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
         public static void createNotification(Text text, string message)
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
@@ -117,7 +153,7 @@ namespace urednistvo.Controllers
             }
         }
 
-        public static void createNotification(int Role, Text text, string message)
+        public static void createNotification(Role Role, Text text, string message)
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
@@ -125,7 +161,7 @@ namespace urednistvo.Controllers
 
                 notification.Title = "Tekst \" " + text.Title + "\" je spreman za vase lektoriranje.";
                 notification.Content = message;
-                notification.Users = db.Users.Where(u => u.Role == Role).ToList();
+                notification.Users.Add(db.Users.Single(u => u.Role == (int)Role));
                 notification.Time = DateTime.Now;
 
                 db.Notifications.Add(notification);
