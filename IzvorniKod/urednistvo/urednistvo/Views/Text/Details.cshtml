@@ -1,10 +1,12 @@
 ﻿@model urednistvo.ModelsView.Textual.TextView
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalji o tekstu";
 }
 
-<h2>Detaljno o tekstu</h2>
+<h2>
+    Detalji teksta "@Model.Title"
+</h2>
 <br />
 
 <div>
@@ -104,16 +106,20 @@
 }
 
 <p>
-    @if ((String)Session["Role"] == "Editor")
+    @if ((String)Session["Role"] == "Glavni urednik" && Model.TextStatus == "Poslan")
     {
-        @Html.ActionLink("Uredi (editor)", "EditEditor", new { id = Model.TextId });
+        @Html.ActionLink("Konačna ocjena", "EditEditor", new { id = Model.TextId });
         <label> |</label>
     }
-    @if ((String)Session["Role"] == "Editor" || (String)Session["Role"] == "Editorial Council Member")
+    @if (((String)Session["Role"] == "Glavni urednik" || (String)Session["Role"] == "Član uredničkog vijeća") && Model.TextStatus == "Poslan")
+
     {
         @Html.ActionLink("Ocjeni", "EditMember", new { id = Model.TextId });
         <label> |</label>
     }
     @Html.ActionLink("Povratak na listu tekstova ", "Index")<label>  | </label>
+    <a href='@Url.Action("ByText/" + @Model.TextId, "Comment")'>
+        <span class="glyphicon glyphicon-comment" title="Komentari"></span>
+    </a> <label> | </label>
     @Html.ActionLink("Komentiraj", "Create/" + Model.TextId, "Comment")
 </p>

@@ -1,8 +1,8 @@
 ﻿@model List<urednistvo.ModelsView.Textual.TextView>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Tekstovi";
 }
-<h2>Index</h2>
+<h2>Tekstovi za lektoriranje</h2>
 <br />
 <table class="table">
     <tr>
@@ -36,7 +36,7 @@
                 @Html.DisplayFor(modelItem => text.Time)
             </td>
             <td>
-                @Html.ActionLink("Lector text", "Edit/" + @text.TextId, "Text")
+                @Html.ActionLink("Lektoriraj", "Edit/" + @text.TextId, "Text")
             </td>
         </tr>
     }

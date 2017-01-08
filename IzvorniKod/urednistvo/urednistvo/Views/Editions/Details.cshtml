@@ -1,0 +1,31 @@
+﻿@model List<urednistvo.ModelsView.Textual.SectionView>
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Section title
+        </th>
+        <th>
+            Number of texts
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Title, "Details/" + item.SectionId, "Sections")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfTexts)
+            </td>
+        </tr>
+    }
+
+</table>

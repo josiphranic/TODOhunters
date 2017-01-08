@@ -6,6 +6,7 @@
     <title>@ViewBag.Title - Naš list</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" type="text/css" href="../../Content/jquery.datetimepicker.css" />
 
 </head>
 <body>
@@ -21,50 +22,88 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><span class="glyphicon glyphicon-home icon" title="Početna" onclick="goHome()"></span></li>
-                    <li><span class="glyphicon glyphicon-list icon" title="Tekstovi" onclick="gotoTexts()"></span></li>
-                    <li><span class="glyphicon glyphicon-user icon" title="Korisnici" onclick="gotoUsers()"></span></li>
-                    @if (Session["UserID"] != null)
+                    <li>
+                        <div class="btn-group actions-div">
+                            <button class="btn btn-lg dropdown-toggle actions-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-list" title="Tekstovi"></span><!--<span class="caret"></span>-->
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><span class="text-style" title="Izdanja" onclick="location.href='@Url.Action("Index", "Text")'">Svi tekstovi</span></li>
+                                <li><span class="text-style" title="Najave" onclick="location.href='@Url.Action("AnnouncementTexts", "Text")'">Najave</span></li>
+                                <li><span class="text-style" title="Arhiva" onclick="location.href='@Url.Action("Index", "Archive")'">Arhiva</span></li>
+                            </ul>
+                        </div>
+                    </li>
+                    @if ((string)Session["Role"] == "Lektor")
                     {
-                        <li><span class="glyphicon glyphicon-envelope icon" title="Obavijesti" onclick="gotoNotifications()"></span></li>
-                        <li><span class="glyphicon glyphicon-upload icon" title="Upload" onclick="upload()"></span></li>
+                        <li><span class="glyphicon glyphicon-pencil icon" title="Lektoriraj" onclick="location.href='@Url.Action("ForLectoring", "Text")'"></span></li>
                     }
-                    @if ((string)Session["Role"] == "Lector")
+                    @if ((string)Session["Role"] == "Grafički urednik")
                     {
-                        <li><span class="glyphicon glyphicon-pencil icon" title="Lektoriraj" onclick="gotoForLectoring()"></span></li>
+                        <li><span class="glyphicon glyphicon-film icon" title="Grafički uredi" onclick="location.href='@Url.Action("ForGraphicEditing", "Text")'"></span></li>
                     }
-                    @if ((string)Session["Role"] == "Graphic editor")
+                    @if ((string)Session["Role"] == "Korektor")
                     {
-                        <li><span class="glyphicon glyphicon-film icon" title="Graficki uredi" onclick="gotoForGraphEdit()"></span></li>
+                        <li><span class="glyphicon glyphicon-erase icon" title="Korigiraj" onclick="location.href='@Url.Action("ForCorrection", "Text")'"></span></li>
                     }
-
-                    <li><span class="glyphicon glyphicon-book icon" title="Arhiva" onclick="gotoArchive()"></span></li>
+                    @if ((string)Session["Role"] == "Autor")
+                    {
+                        <li><span class="glyphicon glyphicon-send icon" title="Napiši tekst" onclick="location.href='@Url.Action("Create", "Text")'"></span></li>
+                    }
+                    <li>
+                        <div class="btn-group actions-div">
+                            <button class="btn btn-lg dropdown-toggle actions-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-user" title="Korisnici"></span><!--<span class="caret"></span>-->
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><span class="text-style" onclick="location.href='@Url.Action("Index", "User")'">Svi korisnici</span></li>
+                                <li><span class="text-style" onclick="location.href='@Url.Action("EditorialCouncil", "Home")'">Uredničko vijeće</span></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><span class="glyphicon glyphicon-bullhorn icon" title="Obavijesti" onclick="location.href='@Url.Action("Index", "Notification")'"></span></li>
+                    <li>
+                        <div class="btn-group actions-div">
+                            <button class="btn btn-lg dropdown-toggle actions-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-search" title="Pretraži"></span><!--<span class="caret"></span>-->
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><span class="text-style" onclick="location.href='@Url.Action("Index", "Editions")'">Izdanja</span></li>
+                                <li><span class="text-style" onclick="location.href='@Url.Action("Index", "Sections")'">Podlistci</span></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><span class="glyphicon glyphicon-signal icon" title="Statistika" onclick="location.href='@Url.Action("Index", "Statistics")'"></span></li>
+                    <li><span class="glyphicon glyphicon-phone-alt icon" title="Kontakt" onclick="location.href='@Url.Action("Contact", "Home")'"></span></li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
     <div id="info-bar" class="info-bar">
+        <span class="life-meaning"></span>
         <span class="glyphicon glyphicon-info-sign"></span>
         <font color="black">@TempData["Message"]</font>
         <span class="glyphicon glyphicon-remove" onclick="hide()"></span>
     </div>
-    <div class="container body-content">
+    <div class="container body-content" style="padding: 0 !important">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>
+        <footer class="cool-footer">
+            <p style="height:5px">
                 &copy; @DateTime.Now.Year - Naš list
                 <span class="glyphicon glyphicon-asterisk"></span>
                 <a href='@Url.Action("About","Home")'>TODOHunters</a>
                 <span class="glyphicon glyphicon-asterisk"></span>
-                <a href='@Url.Action("Contact","Home")'>Kontakt</a>
+                <a href='@Url.Action("Contact","Home")'><span class="glyphicon glyphicon-phone-alt"></span></a>
             </p>
         </footer>
     </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/datetimepicker")
+    
     @RenderSection("scripts", required: false)
+   
 </body>
 </html>
 <script type="text/javascript">
@@ -76,37 +115,52 @@
             $("#info-bar").delay(3200).fadeOut(300);
         }
     }
-    function goHome() {
-        window.location.href = '@Url.Action("Index", "Home")';
-    }
-    function gotoNotifications() {
-        window.location.href = '@Url.Action("Index", "Notification")';
-    }
-    function gotoTexts() {
-        window.location.href = '@Url.Action("Index", "Text")';
-    }
-    function gotoUsers() {
-        window.location.href = '@Url.Action("Index", "User")';
-    }
-    function upload() {
-        window.location.href = '@Url.Action("Create", "Text")';
-    }
     function hide() {
         $('#info-bar').fadeOut();
         document.getElementById('info-bar').style.visibility = 'hidden';
     }
-    function gotoForLectoring() {
-        window.location.href = '@Url.Action("ForLectoring", "Text")';
-    }
-    function gotoForGraphEdit() {
-        window.location.href = '@Url.Action("ForGraphicEditing", "Text")';
-    }
 </script>
 <style>
+    .cool-footer{
+        position: relative;
+        height: 5px;
+        top: 22px;
+        left: 15px;
+    }
+    .dropdown-menu{
+        top:130%;
+    }
+    .dropdown-menu :hover{
+        background-color: #93c54b;
+    }
+    .text-style:hover{
+        color: black;
+        cursor: pointer;
+    }
+    .life-meaning{
+        width:50px;
+        display: inline-block;
+    }
+    .actions-dropdown{
+        padding: 0;
+        top: 12px;
+        background-color: transparent;
+        color: white;
+        font-size: 20px;
+    }
+    .actions-dropdown:hover {
+        color: black;
+        cursor: pointer;
+    }
+    .actions-div{
+        top: 5px;
+        padding-left: 22px;
+    }
     .info-bar{
         position: relative;
         top: 12px;
-        background-color:lightsalmon;
+        color: #00529B;
+        background-color:#BDE5F8;
         visibility: hidden;
     }
     .icon {

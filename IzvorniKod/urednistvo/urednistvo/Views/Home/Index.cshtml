@@ -1,43 +1,41 @@
-﻿@model IEnumerable<urednistvo.Models.Notification>
+﻿@model Tuple<IEnumerable<urednistvo.ModelsView.Textual.TextView>, IEnumerable<urednistvo.Models.Notification>>
 @{
     ViewBag.Title = "Početna";
 }
-<br /> 
-
-<div class="jumbotron">
-    <h2>Tko ne leti, nisko pada (Aka probni naslov)</h2>
-    <div id="fos" class="text-containment">
-    <p>
-        Kokoš. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla fringilla commodo posuere. Suspendisse scelerisque interdum ligula vel maximus. Cras scelerisque mauris dapibus nisi tristique malesuada. In faucibus, lectus vel pulvinar vehicula, dolor diam condimentum felis, aliquet congue tellus leo eu massa. Suspendisse feugiat vitae nibh ut consectetur. Donec scelerisque sed lectus ac lobortis. Curabitur placerat, tellus ac ultricies malesuada, lacus erat sodales diam, quis auctor ex turpis ut nulla. Nulla finibus felis id purus placerat, quis congue erat lacinia.
-
-        Curabitur et nisi a massa pellentesque suscipit. Kokoši su najbolje. Fusce malesuada maximus sapien at accumsan. Proin magna elit, egestas ac tincidunt vestibulum, feugiat id nisi. Nulla a fringilla risus, pretium porta sapien. In tincidunt vulputate lacus vel tincidunt. Etiam interdum justo a vehicula lobortis. Curabitur ligula neque, rutrum eget purus eget, faucibus convallis lorem. Ut accumsan elit eros. Quisque egestas vehicula euismod. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed maximus molestie est, eget ultricies sapien elementum et. Donec malesuada non tortor ut bibendum. Fusce vulputate, odio eget sodales malesuada, orci nisi interdum nisi, quis sollicitudin mi odio eu diam.
-
-        Praesent ut est nec augue volutpat eleifend quis et lacus. Aenean quis ultricies ligula. Aliquam justo massa, ornare vel enim non, malesuada posuere elit. Aliquam sit amet felis velit. Aenean pulvinar rutrum imperdiet. Donec fringilla vehicula fermentum. Curabitur pulvinar nisl at arcu sodales feugiat. Ut ante lacus, molestie ut ipsum sit amet, blandit imperdiet est. Suspendisse ut mollis lacus. Cras porta felis fringilla imperdiet cursus. Fusce condimentum magna ut eleifend finibus. Suspendisse dui leo, vestibulum a feugiat eu, pretium eu tortor. Sed eget ultrices nisi, eget sagittis quam. Nulla sagittis nunc diam, et finibus lacus faucibus at.
-
-        Nullam congue eget lectus in tristique. Sed placerat eu nibh finibus fermentum. Volim gledati kokoši. Nulla eget turpis fermentum, semper tellus et, eleifend ante. Donec tempus neque faucibus felis interdum vulputate. Nunc eu condimentum nulla. Ut convallis ornare sapien at accumsan. Phasellus nec egestas mi.
-
-        Curabitur neque nisl, interdum at odio non, molestie viverra elit. Kokoši imaju najbolje perje. Sed blandit sagittis quam, quis auctor augue faucibus sed. Morbi eu eros sapien. Vivamus aliquam aliquet leo. Curabitur placerat elit a ligula tempor, a lacinia diam egestas. Duis bibendum efficitur orci, vel lacinia tellus accumsan sit amet. Nam vestibulum ac lectus vel commodo. Proin imperdiet dui ante, nec malesuada mi faucibus non. Nulla id nisl sed augue malesuada suscipit vitae et nulla. Curabitur quis laoreet tortor. Vestibulum interdum tortor nisi, quis molestie lorem mollis suscipit. In consectetur, diam at tristique viverra, sapien purus egestas erat, eu interdum urna odio id augue. Ut eget nisi vel purus commodo porta.
-    </p>
-    </div>
-    <a class="btn btn-default under-text" href="http://agrodaily.com/wp-content/uploads/2015/11/chicken.jpg">Nastavi čitanje &raquo;</a>
+<br />
+<div class="col-md-2">
+    @{Html.RenderAction("PartialAnnouncements", "Text");}
 </div>
-@if (Session["UserID"] != null) // ovo je tu tak dugo dok se ne odradi provjera i filtriranje u kontroleru, tad maknuti
-{
-    <h3>Istaknute obavijesti</h3>
-    <div class="row">
-    @foreach (var n in Model)
+<div class="jumbotron col-md-8">
+    @foreach (var txt in Model.Item1)
     {
-        <div class="col-md-3">
-            <h4>@n.Title</h4>
-            <p>
-                @Html.DisplayFor(modelItem => n.Time)
-            </p>
-            <p><a class="btn btn-default" href='@Url.Action("Details/" + @n.NotificationId, "Notification")'>Pročitaj &raquo;</a></p>
+        <a href='@Url.Action("Details/" + txt.TextId, "Text")'>
+            <h2>@txt.Title</h2>
+        </a>
+        <div id="fos" class="text-containment">
+            <p>@txt.Content</p>
         </div>
     }
 </div>
-}
-<script>
+<div class="col-md-2">
+    <span class="side-title"><span class="glyphicon glyphicon-bullhorn"></span> Obavijesti</span>
+    <div class="col">
+        @foreach (var n in Model.Item2)
+        {
+                <p>
+                    <a href='@Url.Action("Details/" + @n.NotificationId, "Notification")'>
+                        <h4> <span class="glyphicon glyphicon-globe"></span> @n.Title </h4>
+                    </a>
+                </p>
+                <p>
+                    @Html.DisplayFor(modelItem => n.Time)
+                </p>
+        }
+    </div>
+</div>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript">
+
     // jquery za prelamanje teksta: http://jsfiddle.net/k5VET/
     var p = $('#fos p');
     var divh = $('#fos').height();
@@ -48,11 +46,22 @@
     }
 </script>
 <style>
+    .top-line{
+        display:inline-block;
+    }
+    .text-change:hover{
+        cursor: pointer;
+        color: black;
+    }
     .under-text{
         margin-top:10px;
     }
     .text-containment{
         max-height: 206px;
         overflow: hidden;
+    }
+    .side-title{
+        font-size:20px;
+        font-weight:700;
     }
 </style>

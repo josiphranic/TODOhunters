@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using urednistvo.Models;
 using urednistvo.ModelsView.Textual;
+using urednistvo.ModelsView.Utilities;
 
 namespace urednistvo.Controllers
 {
@@ -21,8 +22,12 @@ namespace urednistvo.Controllers
             {
                 RatingView rView = new RatingView();
 
-                rView.Rate = rating.Rate;
-                rView.SectionTitle = rating.SectionTitle;
+                Rate rate = db.Rates.Single(r => r.Value == rating.Rate);
+                if (rate == null) rView.Rate = "-";
+                else rView.Rate = rate.Name;
+
+                rView.SectionId = rating.SectionId;
+                rView.SectionTitle = db.Sections.Find(rView.SectionId).Title;
                 rView.TextId = rating.TextId;
                 rView.UserId = rating.UserId;
                 rView.Title = db.Texts.Find(rView.TextId).Title;
@@ -31,6 +36,7 @@ namespace urednistvo.Controllers
                 rView.Subtitle = db.Texts.Find(rView.TextId).Subtitle;
                 rView.Content = db.Texts.Find(rView.TextId).Content;
                 rView.Time = db.Texts.Find(rView.TextId).Time;
+                rView.WebPublishable = rating.WebPublishable;
 
                 return rView;
             }
@@ -55,12 +61,24 @@ namespace urednistvo.Controllers
         // GET: Ratings
         public ActionResult Index()
         {
-            var ratings = db.Ratings.Include(r => r.Text).Include(r => r.User);
-            return View(ratings.ToList());
+            if ((String)Session["Role"] != RoleNames.EDITOR)
+            {
+                TempData["Message"] = "Nemate ovlati pristupiti ocjenama.";
+                return RedirectToAction("Index", "Text");
+            }
+
+            var ratings = db.Ratings.ToList();
+            List<RatingView> rViews = new List<RatingView>();
+
+            foreach (Rating rating in ratings)
+            {
+                rViews.Add(createRatingView(rating));
+            }
+            return View(rViews);
         }
 
         // GET: Ratings/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
             /*if (Session["Role"] == null)
             {
@@ -74,14 +92,27 @@ namespace urednistvo.Controllers
             }*/
 
             // DODATI OGRANICENJA PRISTUPA OCJENAMA
-
-            if (db.Ratings.Count(r => r.TextId == id) == 0)
+            if ((String)Session["Role"] != RoleNames.EDITOR)
             {
-                TempData["Message"] = "No ratings for this text.";
+                TempData["Message"] = "Nemate ovlati pristupiti ocjenama.";
                 return RedirectToAction("Index", "Text");
             }
-            var ratings = db.Ratings.Where(r => r.TextId == id);
-            return View(ratings.ToList());
+
+            var ratings = db.Ratings.Where(r => r.TextId == id).ToList();
+
+            if (ratings.Count == 0)
+            {
+                TempData["Message"] = "Nema ocjena ovog teksta.";
+                return RedirectToAction("Index", "Text");
+            }
+
+            List<RatingView> rViews = new List<RatingView>();
+
+            foreach (Rating rating in ratings)
+            {
+                rViews.Add(createRatingView(rating));
+            }
+            return View(rViews);
         }
 
         // GET: Ratings/Create/5
@@ -89,17 +120,25 @@ namespace urednistvo.Controllers
         {
             if (Session["UserID"] == null)
             {
-                TempData["Message"] = "Must be logged in to rate.";
+                TempData["Message"] = "Morate biti logirani za ovu akciju.";
                 return RedirectToAction("Details/" + id, "Text");
             }
 
             int userId = Int32.Parse((String)Session["UserID"]);
             if (db.Ratings.Count(r => r.UserId == userId && r.TextId == id) != 0)
             {
-                TempData["Message"] = "You have already rated.";
+                TempData["Message"] = "Već ste ocijenili ovaj tekst.";
                 return RedirectToAction("Index", "Text");
             }
 
+            ViewBag.DropDownListRates = new SelectList(db.Rates, "Value", "Name");
+            ViewBag.DropDownListSections = new SelectList(db.Sections, "SectionId", "Title");
+
+            if (db.Ratings.Count(r => r.UserId == userId && r.TextId == id) > 5)
+            {
+                NotificationController.createNotification(db.Roles.Single(r => r.RoleName == "Glavni urednik").Value, 
+                    db.Texts.Find(id), "Tekst \"" + db.Texts.Find(id).Title + "\"je ocijenjen od svih clanova urednickog vijeca.");
+            }
             return View();
         }
 
@@ -116,7 +155,7 @@ namespace urednistvo.Controllers
 
                 db.Ratings.Add(rating);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Text");
             }
 
             return View();

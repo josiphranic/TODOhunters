@@ -1,7 +1,7 @@
 ﻿@model List<urednistvo.ModelsView.Textual.CommentView>
 
 @{
-    ViewBag.Title = "ByText";
+    ViewBag.Title = "Komentari po tekstu";
 }
 
 <h2>Po tekstu</h2>
@@ -25,7 +25,9 @@
     {
         <tr>
             <td>
-                @Html.ActionLink(@comment.Username + " ", "Details/" + @comment.UserId, "User")
+                <a href='@Url.Action("Details/" + @comment.UserId, "User")'>
+                    <span class="glyphicon glyphicon-user"></span> @comment.Username
+                </a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => comment.Content)
@@ -40,6 +42,6 @@
 
 
 <p>
-    @Html.ActionLink("Uređivanje", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Povratak na listu korisnika", "Index")
+    @Html.ActionLink("Uređivanje (nedefinirano)", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Povratak na listu korisnika", "Index", "User")
 </p>

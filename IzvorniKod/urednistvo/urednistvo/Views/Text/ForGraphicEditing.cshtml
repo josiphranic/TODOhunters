@@ -1,8 +1,8 @@
 ﻿@model List<urednistvo.ModelsView.Textual.TextView>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Tekstovi";
 }
-<h2>Graphic editing</h2>
+<h2>Tekstovi za grafičko uređivanje</h2>
 <br />
 <table class="table">
     <tr>
@@ -19,6 +19,8 @@
             Time
         </th>
         <th></th>
+        <th></th>
+        <th></th>
     </tr>
     @foreach (var text in Model)
     {
@@ -30,15 +32,32 @@
                 @Html.ActionLink(@text.Username + " ", "Details/" + @text.UserId, "User")
             </td>
             <td>
-                @Html.ActionLink(@text.FinalSection + " ", "Index" + @text.FinalSection, "Section")
+                @Html.ActionLink(@text.FinalSection + " ", "Details/" + @text.FinalSectionId, "Sections")
             </td>
             <td>
                 @Html.DisplayFor(modelItem => text.Time)
             </td>
             <td>
-                @Html.ActionLink("Edit (graphic)", "AddPics/" + @text.TextId, "Text")
+                <a href='@Url.Action("Download/" + @text.TextId, "Text")'>
+                    <span class="glyphicon glyphicon-download" title="Preuzmi tekst"></span>
+                </a>
+            </td>
+            <td>
+                <a href='@Url.Action("ByText/" + @text.TextId, "Image")'>
+                    <span class="glyphicon glyphicon-picture" title="Pregledaj slike"></span>
+                </a>
+            </td>
+            <td>
+                @using (Html.BeginForm("UploadRTF/" + @text.TextId, "Text", FormMethod.Post, new { id = "attachment", enctype = "multipart/form-data", encoding = "multipart/form-data" }))
+                {
+
+                    <input type="file" name="uploadFile" id="uploadFile" />
+                    <input type="submit" value="Predaj RTF" />
+
+                }
             </td>
         </tr>
     }
 </table>
+
 

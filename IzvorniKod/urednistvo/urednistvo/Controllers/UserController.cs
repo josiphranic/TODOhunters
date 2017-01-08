@@ -11,23 +11,33 @@ namespace urednistvo.Controllers
 {
     public class UserController : Controller
     {
-        public UserView createUserView(User user)
+        private UrednistvoDatabase db = new UrednistvoDatabase();
+
+        public static UserView createUserView(User user)
         {
-            UserView uView = new UserView();
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
+            {
+                UserView uView = new UserView();
 
-            uView.UserId = user.UserId;
-            uView.Email = user.Email;
-            uView.FirstName = user.FirstName;
-            uView.LastName = user.LastName;
-            uView.Role = RoleNameGetter.getName(user.Role);
-            uView.UserName = user.UserName;
+                uView.UserId = user.UserId;
+                uView.Email = user.Email;
+                uView.FirstName = user.FirstName;
+                uView.LastName = user.LastName;
+                uView.Role = db.Roles.Find(user.Role).RoleName;
+                uView.UserName = user.UserName;
 
-            return uView;
+                return uView;
+            }
         }
 
         // GET: User
         public ActionResult Index()
         {
+            if(Session["UserID"] == null)
+            {
+                TempData["Message"] = "Samo registrirani korisnici mogu vidjeti popis korisnika.";
+                RedirectToAction("Index", "Home");
+            } 
             using(UrednistvoDatabase db = new UrednistvoDatabase())
             {
                 List<UserView> userViews = new List<UserView>();
@@ -42,6 +52,7 @@ namespace urednistvo.Controllers
 
         public ActionResult Register()
         {
+            ViewBag.DropDownList = new SelectList(db.Roles, "RoleId", "RoleName");
             return View();
         }
 
@@ -58,9 +69,9 @@ namespace urednistvo.Controllers
                 ModelState.Clear();
                 Session["UserID"] = account.UserId.ToString();
                 Session["Username"] = account.UserName.ToString();
-                Session["Role"] = RoleNameGetter.getName(account.Role);
+                Session["Role"] = db.Roles.Find(account.Role).RoleName;
 
-                TempData["Message"] = account.FirstName + " " + account.LastName + " succesfully registered.";
+                TempData["Message"] = account.FirstName + " " + account.LastName + " uspješno registiran.";
             }
             return RedirectToAction("Index", "Home");
         }
@@ -84,14 +95,14 @@ namespace urednistvo.Controllers
                 {
                     Session["UserID"] = user.UserId.ToString();
                     Session["Username"] = user.UserName.ToString();
-                    Session["Role"] = RoleNameGetter.getName(user.Role);
+                    Session["Role"] = db.Roles.Find(user.Role).RoleName;
 
-                    TempData["Message"] = "Successful login";
+                    TempData["Message"] = "Uspješna prijava.";
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Username or password wrong");
+                    ModelState.AddModelError("", "Korisničko ime ili lozinka pogrešni.");
                 }
             }
             return View();
@@ -103,7 +114,7 @@ namespace urednistvo.Controllers
             Session["Username"] = null;
             Session["Role"] = null;
 
-            TempData["Message"] = "Successfully logged off";
+            TempData["Message"] = "Uspješno ste odjavljeni.";
             return RedirectToAction("Index", "Home");
         }
 

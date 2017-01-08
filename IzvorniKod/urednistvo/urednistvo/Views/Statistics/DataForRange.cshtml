@@ -1,0 +1,158 @@
+﻿@model urednistvo.ModelsView.Textual.StatisticsView
+@{
+    ViewBag.Title = "DataForRange";
+}
+
+<h2>Statistika za razdoblje od @Model.From.ToShortDateString() do @Model.To.ToShortDateString():</h2>
+<br /> <br />
+
+<p>U razdoblju od @Model.From.ToShortDateString() do @Model.To.ToShortDateString() @Model.NumAuthors autora objavilo je ukupno @Model.NumTexts tekstova koji su objavljeni u @Model.NumEditions tiskovina te na webmjestu. </p>
+<br />
+<p>Prikaz po tiskovinama:</p>
+<br />
+
+<table class="table">
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            Time of release
+        </th>
+        <th>
+            Number of texts
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.Editions)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Title, "Details/" + item.EditionId, "Editions")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeOfRelease)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfTexts)
+            </td>
+            <td>
+                @Html.ActionLink("Svi tekstovi", "EditionTexts/" + item.EditionId, "Editions")
+            </td>
+        </tr>
+    }
+</table>
+<br />
+<br />
+<p>Prikaz po Autorima:</p>
+<br />
+<table class="table">
+    <tr>
+        <th>
+            Ime
+        </th>
+        <th>
+            Prezime
+        </th>
+        <th>
+            Korisničko ime
+        </th>
+        <th>
+            Broj objavljenih tekstova
+        </th>
+        <th>
+            Broj odbijenih tekstova
+        </th>
+        <th>
+            Broj tekstova u procesu ocjenjivanja
+        </th>
+    </tr>
+
+    @foreach (var user in Model.Authors)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => user.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => user.LastName)
+            </td>
+            <td>
+                <a href='@Url.Action("Details/" + @user.UserId, "User")'>
+                    <span class="glyphicon glyphicon-user"></span> @user.UserName
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => user.NumPublishedTexts)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => user.NumDeclinedTexts)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => user.NumSentTexes)
+            </td>
+        </tr>
+    }
+
+</table>
+<br />
+<br />
+<p>Prikaz po tekstovima:</p>
+<br />
+<table class="table">
+    <tr>
+        <th>
+            Naslov
+        </th>
+        <th>
+            Autor
+        </th>
+        <th>
+            Podlistak
+        </th>
+        <th>
+            Text status
+        </th>
+    </tr>
+
+    @foreach (var text in Model.Texts)
+    {
+        <tr>
+            <td>
+                <a href='@Url.Action("Details/" + @text.TextId, "Text")'>
+                    <span class="glyphicon glyphicon-list"></span> @text.Title (@text.Subtitle)
+                </a>
+            </td>
+
+            <td>
+                <a href='@Url.Action("Details/" + @text.UserId, "User")'>
+                    <span class="glyphicon glyphicon-user"></span> @text.Username
+                </a>
+
+            <td>
+                @if (text.FinalSectionId != -1)
+                {
+                    <a href='@Url.Action("Details/" + @text.FinalSectionId, "Sections")'>
+                        <span class="glyphicon glyphicon-file"></span> @text.FinalSection
+                    </a>
+                }
+                else
+                {
+                    <label><span class="glyphicon glyphicon-file"></span> @text.FinalSection </label>
+                }
+            </td>
+            <th>
+                @Html.DisplayFor(modelItem => text.TextStatus)
+            </th>
+        </tr>
+    }
+
+</table>
+
+
+
+
+
+
+
+
