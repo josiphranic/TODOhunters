@@ -42,10 +42,16 @@
                 </a>
             </td>
             <td>
-                (popraviti adresu za podlistak)
-                <a href='@Url.Action("Details/" + @text.FinalSection, "Section")'>
-                    <span class="glyphicon glyphicon-file"></span> @text.FinalSection
-                </a>
+                @if (text.FinalSectionId != -1)
+                {
+                    <a href='@Url.Action("Details/" + @text.FinalSectionId, "Sections")'>
+                        <span class="glyphicon glyphicon-file"></span> @text.FinalSection
+                    </a>
+                }
+                else
+                {
+                    <label><span class="glyphicon glyphicon-file"></span> @text.FinalSection </label>
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => text.Time)
@@ -71,7 +77,14 @@
                 </a>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => text.TextStatus)
+                @if (text.UserId == Int32.Parse((String)Session["UserID"]))
+                {
+                    @Html.DisplayFor(modelItem => text.TextStatus)
+                }
+                else
+                {
+                    <label>-</label>
+                }
             </td>
         </tr>
     }

@@ -36,15 +36,19 @@
                     </li>
                     @if ((string)Session["Role"] == "Lektor")
                     {
-                        <li><span class="glyphicon glyphicon-flash icon" title="Lektoriraj" onclick="location.href='@Url.Action("ForLectoring", "Text")'"></span></li>
+                        <li><span class="glyphicon glyphicon-pencil icon" title="Lektoriraj" onclick="location.href='@Url.Action("ForLectoring", "Text")'"></span></li>
                     }
                     @if ((string)Session["Role"] == "Grafički urednik")
                     {
-                        <li><span class="glyphicon glyphicon-flash icon" title="Grafički uredi" onclick="location.href='@Url.Action("ForGraphicEditing", "Text")'"></span></li>
+                        <li><span class="glyphicon glyphicon-film icon" title="Grafički uredi" onclick="location.href='@Url.Action("ForGraphicEditing", "Text")'"></span></li>
                     }
                     @if ((string)Session["Role"] == "Korektor")
                     {
-                        <li><span class="glyphicon glyphicon-flash icon" title="Korigiraj" onclick="location.href='@Url.Action("ForCorrection", "Text")'"></span></li>
+                        <li><span class="glyphicon glyphicon-erase icon" title="Korigiraj" onclick="location.href='@Url.Action("ForCorrection", "Text")'"></span></li>
+                    }
+                    @if ((string)Session["Role"] == "Autor")
+                    {
+                        <li><span class="glyphicon glyphicon-send icon" title="Napiši tekst" onclick="location.href='@Url.Action("Create", "Text")'"></span></li>
                     }
                     <li>
                         <div class="btn-group actions-div">
