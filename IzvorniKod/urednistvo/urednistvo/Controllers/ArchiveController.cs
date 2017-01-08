@@ -51,7 +51,7 @@ namespace urednistvo.Controllers
         {
             if (!((String)Session["Role"] == RoleNames.EDITOR))
             {
-                TempData["Message"] = "Only editor can add text to archive";
+                TempData["Message"] = "Samo glavni urednik može dodati tekst u arhivu";
                 return RedirectToAction("Index", "Archive");
             }
             return View();

@@ -14,8 +14,8 @@ namespace urednistvo.ModelsView
         public string UserName { get; set; }
         public string Email { get; set; }
         public string Role { get; set; }
-        public Int32 numPublishedTexts { get; set; }
-        public Int32 numDeclinedTexts { get; set; }
-        public Int32 numSentTexes { get; set; }
+        public Int32 NumPublishedTexts { get; set; }
+        public Int32 NumDeclinedTexts { get; set; }
+        public Int32 NumSentTexes { get; set; }
     }
 }

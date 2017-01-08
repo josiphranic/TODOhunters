@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using urednistvo.Models;
 using urednistvo.ModelsView;
+using urednistvo.ModelsView.Textual;
 using urednistvo.ModelsView.Utilities;
 
 namespace urednistvo.Controllers
@@ -19,7 +20,7 @@ namespace urednistvo.Controllers
                 // prenijeti i popis tekstova!
                 int currentId = (Session["UserId"] == null) ? 0 : Int32.Parse((String)Session["UserId"]);
                 var notifs = new List<Notification>();
-                foreach(var notif in db.Notifications.ToList())
+                foreach(var notif in db.Notifications.OrderByDescending(x => x.Time).ToList())
                 {
                     if (notif.Users == null || notif.Users.Count == 0)
                     {
@@ -34,12 +35,17 @@ namespace urednistvo.Controllers
                         }
                     }
                 }
-                var texts = db.Texts.Where(x => x.WebPublishable).ToList();
+                var texts = db.Texts.Where(x => x.WebPublishable).OrderByDescending(x => x.Time).ToList();
                 if (currentId != 0)
                 {
                     texts.Concat(db.Texts.Where(x => x.EditionPublishable).ToList());
                 }
-                Tuple<IEnumerable<Text>, IEnumerable<Notification>> tuple = new Tuple<IEnumerable<Text>, IEnumerable<Notification>>(texts,notifs);
+                // zbog toga sto linq ne prepoznaje metodu toTextView, idemo rucno...
+                var textViews = new List<TextView>();
+                foreach(var text in texts) {
+                    textViews.Add(TextController.getTextView(text));
+                }
+                Tuple<IEnumerable<TextView>, IEnumerable<Notification>> tuple = new Tuple<IEnumerable<TextView>, IEnumerable<Notification>>(textViews,notifs);
                 return View(tuple);
             }
         }

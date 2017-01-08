@@ -466,9 +466,7 @@
     <Content Include="Views\Text\EditEditor.cshtml" />
     <Content Include="Views\Text\EditMember.cshtml" />
     <Content Include="Views\Comment\Create.cshtml" />
-    <Content Include="Views\Comment\Delete.cshtml" />
     <Content Include="Views\Comment\Details.cshtml" />
-    <Content Include="Views\Comment\Edit.cshtml" />
     <Content Include="Views\Comment\Index.cshtml" />
     <Content Include="Views\Comment\ByText.cshtml" />
     <Content Include="Views\Comment\ByUser.cshtml" />
@@ -503,6 +501,7 @@
     <Content Include="Views\Editions\EditionTexts.cshtml" />
     <Content Include="Views\Text\AnnouncementTexts.cshtml" />
     <Content Include="Views\Archive\Comment.cshtml" />
+    <Content Include="Views\Shared\_Announcements.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
