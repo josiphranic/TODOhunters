@@ -136,8 +136,7 @@ namespace urednistvo.Controllers
 
             if (db.Ratings.Count(r => r.UserId == userId && r.TextId == id) > 5)
             {
-                NotificationController.createNotification(db.Roles.Single(r => r.RoleName == "Glavni urednik").Value, 
-                    db.Texts.Find(id), "Tekst \"" + db.Texts.Find(id).Title + "\"je ocijenjen od svih clanova urednickog vijeca.");
+                NotificationController.createNotificationForEditor(db.Texts.Find(id), "Tekst \"" + db.Texts.Find(id).Title + "\"je ocijenjen od svih članova uredničkog vijeća.");
             }
             return View();
         }

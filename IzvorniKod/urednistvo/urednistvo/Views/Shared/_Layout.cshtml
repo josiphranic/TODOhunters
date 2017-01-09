@@ -29,6 +29,10 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li><span class="text-style" title="Izdanja" onclick="location.href='@Url.Action("Index", "Text")'">Svi tekstovi</span></li>
+                                @if ((string)Session["Role"] == "Autor")
+                                {
+                                    <li><span class="text-style" title="Moji tekstovi" onclick="location.href='@Url.Action("ByAuthor/" + (string)Session["UserID"], "Text")'">Moji tekstovi</span></li>
+                                }
                                 <li><span class="text-style" title="Najave" onclick="location.href='@Url.Action("AnnouncementTexts", "Text")'">Najave</span></li>
                                 <li><span class="text-style" title="Arhiva" onclick="location.href='@Url.Action("Index", "Archive")'">Arhiva</span></li>
                             </ul>

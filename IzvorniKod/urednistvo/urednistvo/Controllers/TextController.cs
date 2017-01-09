@@ -48,6 +48,14 @@ namespace urednistvo.Controllers
                     textView.WantedSectionByAuthor = "-";
                 }
 
+                if(text.Suggestions == null)
+                {
+                    textView.Suggestions = "-";
+                } else
+                {
+                    textView.Suggestions = text.Suggestions;
+                }
+
                 return textView;
             }
         } 
@@ -263,12 +271,13 @@ namespace urednistvo.Controllers
                     {
                         t.TextStatus = (int)TextStatus.LECTORED;
                         TempData["Message"] = "Tekst je lektoriran.";
-                        NotificationController.createNotification(text, "Text je spreman za graficko uredivanje.");
+                        NotificationController.createNotificationForGraphicEditor(t);
                     }
                     else
                     {
                         t.TextStatus = (int)TextStatus.SENT;
                         TempData["Message"] = "Tekst je ispravljen i ponovno poslan.";
+                        NotificationController.createNotificationForEditor(t, "Tekst \" " + t.Title + "\" je ponovo poslan");
                     }
                 }
 
@@ -311,18 +320,17 @@ namespace urednistvo.Controllers
 
                 if (submit == "Vrati na doradu")
                 {
-                    NotificationController.createNotification(t, "Vas tekst mora biti doraden po uputama.");
+                    NotificationController.createNotificationForAuthor(t, "Vaš tekst mora biti dorađen po uputama. Više informacija nalazi se u detaljnijem pregledu teksta.");
                     t.TextStatus = (int)TextStatus.RETURNED;
                 }
                 else if (submit == "Prihvati")
                 {
-                    NotificationController.createNotification(t, "Vas tekst je prihvacen. Ostatak informacija nalazi se u detaljima teksta.");
-                    NotificationController.createNotification(db.Roles.Single(r => r.RoleName == "Lektor").Value,
-                        db.Texts.Find(id), "Tekst \"" + db.Texts.Find(id).Title + "\"je spreman za vase lektoriranje.");
+                    NotificationController.createNotificationForAuthor(t, "Vas tekst je prihvaćen. Više informacija nalazi se u detaljižnijem pregledu teksta.");
+                    NotificationController.createNotificationForLector(t);
                     t.TextStatus = (int)TextStatus.ACCEPTED;
                 } else if (submit == "Odbij")
                 {
-                    NotificationController.createNotification(t, "Vas tekst je odbijen. Detaljnije objasnjenje u obavijesti.");
+                    NotificationController.createNotificationForAuthor(t, "Vas tekst je odbijen. Više informacija nalazi se u detaljižnijem pregledu teksta.");
                     t.TextStatus = (int)TextStatus.DECLINED;
                 }
 
@@ -419,8 +427,7 @@ namespace urednistvo.Controllers
                     
                     if ((string)Session["Role"] == RoleNames.GRAPHIC_EDITOR)
                     {
-                        NotificationController.createNotification(db.Roles.Single(r => r.RoleName == RoleNames.CORRECTOR).Value,
-                            db.Texts.Find(id), "Tekst \"" + db.Texts.Find(id).Title + "\"je spreman za vasu korekciju.");
+                        NotificationController.createNotificationForCorrector(db.Texts.Find(id));
 
                         Text t = db.Texts.Find(id);
                         t.TextStatus = (int)TextStatus.GRAPHIC;

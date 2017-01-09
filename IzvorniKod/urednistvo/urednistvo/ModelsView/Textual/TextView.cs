@@ -28,7 +28,7 @@ namespace urednistvo.ModelsView.Textual
 
         public bool Returned { get; set; }
 
-        public ICollection<string> Suggestions { get; set; }
+        public string Suggestions { get; set; }
         public ICollection<string> Comments { get; set; }
         public ICollection<RatingView> Ratings { get; set; }
         public string TextStatus { get; set; }
