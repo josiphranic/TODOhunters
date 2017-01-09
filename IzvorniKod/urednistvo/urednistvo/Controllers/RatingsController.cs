@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -77,37 +78,27 @@ namespace urednistvo.Controllers
             return View(rViews);
         }
 
-        // GET: Ratings/Details/5
-        public ActionResult Details(int id)
+        public ActionResult ByText(int? id)
         {
-            /*if (Session["Role"] == null)
-            {
-                TempData["Message"] = "You must be logged in to rate.";
-                return RedirectToAction("Details/" + id, "Text");
-            }
-            if((String)Session["Role"] != "Editor" && (String)Session["Role"] != "Editoral council member")
-            {
-                TempData["Message"] = "You must have priviledges to rate.";
-                return RedirectToAction("Details/" + id, "Text");
-            }*/
-
-            // DODATI OGRANICENJA PRISTUPA OCJENAMA
             if ((String)Session["Role"] != RoleNames.EDITOR)
             {
                 TempData["Message"] = "Nemate ovlati pristupiti ocjenama.";
                 return RedirectToAction("Index", "Text");
             }
 
-            var ratings = db.Ratings.Where(r => r.TextId == id).ToList();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
+            List<Rating> ratings = db.Ratings.Where(r => r.TextId == (int)id).ToList();
             if (ratings.Count == 0)
             {
-                TempData["Message"] = "Nema ocjena ovog teksta.";
-                return RedirectToAction("Index", "Text");
+                TempData["Message"] = "Tekst nema ni jednu ocjenu.";
+                return RedirectToAction("Index", "Ratings");
             }
 
             List<RatingView> rViews = new List<RatingView>();
-
             foreach (Rating rating in ratings)
             {
                 rViews.Add(createRatingView(rating));
@@ -154,7 +145,7 @@ namespace urednistvo.Controllers
 
                 db.Ratings.Add(rating);
                 db.SaveChanges();
-                return RedirectToAction("Index", "Text");
+                return RedirectToAction("Index", "Ratings");
             }
 
             return View();
