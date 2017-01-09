@@ -364,11 +364,7 @@ namespace urednistvo.Controllers
             {
                 Text t = db.Texts.Find(id);
 
-                t.EditionPublishable = text.EditionPublishable;
-                t.WebPublishable = text.WebPublishable;
                 t.Suggestions = text.Suggestions;
-                t.FinalSectionId = text.FinalSectionId;
-                t.FinalSection = text.FinalSection;
 
                 if (submit == "Vrati na doradu")
                 {
@@ -377,11 +373,20 @@ namespace urednistvo.Controllers
                 }
                 else if (submit == "Prihvati")
                 {
+                    t.EditionPublishable = text.EditionPublishable;
+                    t.WebPublishable = text.WebPublishable;
+                    t.FinalSectionId = text.FinalSectionId;
+                    t.FinalSection = text.FinalSection;
+
                     NotificationController.createNotificationForAuthor(t, "Vas tekst je prihvaćen. Više informacija nalazi se u detaljižnijem pregledu teksta.");
                     NotificationController.createNotificationForLector(t);
                     t.TextStatus = (int)TextStatus.ACCEPTED;
                 } else if (submit == "Odbij")
                 {
+                    t.EditionPublishable = false;
+                    t.WebPublishable = false;
+                    t.FinalSectionId = -1;
+                    t.FinalSection = null;
                     NotificationController.createNotificationForAuthor(t, "Vas tekst je odbijen. Više informacija nalazi se u detaljižnijem pregledu teksta.");
                     t.TextStatus = (int)TextStatus.DECLINED;
                 }

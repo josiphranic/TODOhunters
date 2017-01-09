@@ -49,22 +49,25 @@
                             </ul>
                         </div>
                     </li>
-                    <li><span class="glyphicon glyphicon-phone-alt icon" title="Kontakt" onclick="location.href='@Url.Action("Contact", "Home")'"></span></li>
-                    <li>
-                        <div class="btn-group actions-div">
-                            <button class="btn btn-lg dropdown-toggle actions-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="glyphicon glyphicon-user" title="Korisnici"></span><!--<span class="caret"></span>-->
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><span class="text-style" onclick="location.href='@Url.Action("Index", "User")'">Svi korisnici</span></li>
-                                <li><span class="text-style" onclick="location.href='@Url.Action("EditorialCouncil", "Home")'">Uredničko vijeće</span></li>
-                            </ul>
-                        </div>
-                    </li>
                     @if (Session["UserID"] != null)
                     {
+                        <li>
+                            <div class="btn-group actions-div">
+                                <button class="btn btn-lg dropdown-toggle actions-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="glyphicon glyphicon-user" title="Korisnici"></span><!--<span class="caret"></span>-->
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><span class="text-style" onclick="location.href='@Url.Action("Index", "User")'">Svi korisnici</span></li>
+                                    <li><span class="text-style" onclick="location.href='@Url.Action("EditorialCouncil", "Home")'">Uredničko vijeće</span></li>
+                                </ul>
+                            </div>
+                        </li>
+                    }
+                    <li><span class="glyphicon glyphicon-bullhorn icon" title="Obavijesti" onclick="location.href='@Url.Action("Index", "Notification")'"></span></li>
+                    <li><span class="glyphicon glyphicon-phone-alt icon" title="Kontakt" onclick="location.href='@Url.Action("Contact", "Home")'"></span></li>
+                    @if (Session["UserID"] != null && (string)Session["Role"] != "Registrirani korisnik")
+                    {
                         <li><div class="divider"></div></li>
-                        <li><span class="glyphicon glyphicon-bullhorn icon" title="Obavijesti" onclick="location.href='@Url.Action("Index", "Notification")'"></span></li>
                     }
                     @if ((string)Session["Role"] == "Lektor")
                     {

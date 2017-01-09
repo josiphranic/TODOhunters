@@ -471,7 +471,6 @@
     <Content Include="Views\Comment\ByText.cshtml" />
     <Content Include="Views\Comment\ByUser.cshtml" />
     <Content Include="Views\Ratings\Create.cshtml" />
-    <Content Include="Views\Ratings\Details.cshtml" />
     <Content Include="Views\Ratings\Index.cshtml" />
     <Content Include="Views\Text\ByAuthor.cshtml" />
     <Content Include="Views\Text\Edit.cshtml" />
@@ -504,6 +503,7 @@
     <Content Include="Views\Shared\_Announcements.cshtml" />
     <Content Include="Views\Text\ForAddingImages.cshtml" />
     <Content Include="Views\Text\ForRate.cshtml" />
+    <Content Include="Views\Ratings\ByText.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

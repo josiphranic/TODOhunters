@@ -5,7 +5,7 @@
     @foreach (var n in Model)
     {
         <p>
-            <a href='@Url.Action("Details/" + @n.TextId, "Notification")'>
+            <a href='@Url.Action("Details/" + @n.TextId, "Text")'>
                 <h4> <span class="glyphicon glyphicon-flag"></span> @n.Title </h4>
             </a>
         </p>
