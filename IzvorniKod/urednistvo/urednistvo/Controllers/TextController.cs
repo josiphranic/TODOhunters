@@ -64,7 +64,7 @@ namespace urednistvo.Controllers
         // GET: Text
         public ActionResult Index()
         {
-            DateTime dateArchive = DateTime.Today.AddDays(-14);
+            DateTime dateArchive = DateTime.Today.AddDays(-7);
             List<Text> list;
             if (Session["UserID"] == null || (String)Session["Role"] == RoleNames.REGISTERED_USER)
             {

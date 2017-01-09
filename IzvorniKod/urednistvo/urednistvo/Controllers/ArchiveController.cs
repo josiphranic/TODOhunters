@@ -20,7 +20,7 @@ namespace urednistvo.Controllers
         {
             List<Text> list;
      
-            DateTime dateArchive = DateTime.Today.AddDays(-14);
+            DateTime dateArchive = DateTime.Today.AddDays(-7);
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
                 if (Session["UserID"] == null || (String)Session["Role"] == RoleNames.REGISTERED_USER)
