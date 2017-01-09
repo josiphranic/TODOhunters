@@ -48,7 +48,7 @@
                     }
                     @if ((string)Session["Role"] == "Korektor")
                     {
-                        <li><span class="glyphicon glyphicon-erase icon" title="Korigiraj" onclick="location.href='@Url.Action("ForCorrection", "Text")'"></span></li>
+                        <li><span class="glyphicon glyphicon-edit icon" title="Korigiraj" onclick="location.href='@Url.Action("ForCorrection", "Text")'"></span></li>
                     }
                     @if ((string)Session["Role"] == "Autor")
                     {

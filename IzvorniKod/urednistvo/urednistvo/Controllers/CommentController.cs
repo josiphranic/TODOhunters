@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using urednistvo.Models;
 using urednistvo.ModelsView.Textual;
+using urednistvo.ModelsView.Utilities;
 
 namespace urednistvo.Controllers
 {
@@ -104,6 +105,13 @@ namespace urednistvo.Controllers
                 TempData["Message"] = "Registrirajte se ili logirajte da bi komentirali.";
                 return RedirectToAction("Details/" + id, "Text");
             }
+            string Role = ((string)Session["Role"]);
+            if(Role != RoleNames.REGISTERED_USER && Role != RoleNames.AUTHOR)
+            {
+                TempData["Message"] = "Autori i registrirani korisnici imaju pravo komentirati.";
+                return RedirectToAction("Details/" + id, "Text");
+            }
+
             return View();
         }
 
