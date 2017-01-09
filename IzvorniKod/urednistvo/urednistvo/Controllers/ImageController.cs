@@ -78,15 +78,25 @@ namespace urednistvo.Controllers
         }
 
         // GET: Image/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            if ((String)Session["Role"] != RoleNames.EDITOR && (String)Session["Role"] != RoleNames.GRAPHIC_EDITOR)
+            if ((String)Session["Role"] != RoleNames.EDITOR)
             {
                 TempData["Message"] = "Nemate ovlati pristupiti ovoj stranici.";
                 return RedirectToAction("Index", "Text");
             }
 
-            ViewBag.TextId = new SelectList(db.Texts, "TextId", "Title");
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Text text = db.Texts.Find(id);
+            if (text == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag["Data"] = text;
             return View();
         }
 

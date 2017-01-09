@@ -20,6 +20,7 @@ namespace urednistvo.ModelsView.Textual
         public string FinalSection { get; set; }
         public int? WantedSectionByAuthorId { get; set; }
         public int FinalSectionId { get; set; }
+        public int RatingsCount { get; set; }
 
         public DateTime Time { get; set; }
 

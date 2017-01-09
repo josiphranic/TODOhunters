@@ -54,6 +54,15 @@
                     {
                         <li><span class="glyphicon glyphicon-send icon" title="Napiši tekst" onclick="location.href='@Url.Action("Create", "Text")'"></span></li>
                     }
+                    @if ((string)Session["Role"] == "Glavni urednik")
+                    {
+                        <li><span class="glyphicon glyphicon-picture icon" title="Dodaj slike" onclick="location.href='@Url.Action("ForAddingImages", "Text")'"></span></li>
+                    }
+                    @if ((string)Session["Role"] == "Glavni urednik" || (string)Session["Role"] == "Član uredničkog vijeća")
+                    {
+                        <li><span class="glyphicon glyphicon-star icon" title="Ocijeni" onclick="location.href='@Url.Action("ForRate", "Text")'"></span></li>
+                    }
+                    
                     <li>
                         <div class="btn-group actions-div">
                             <button class="btn btn-lg dropdown-toggle actions-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
