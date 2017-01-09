@@ -589,6 +589,7 @@ namespace urednistvo.Controllers
             }
 
             text.TextStatus = (int)TextStatus.ADDED_PICS;
+            db.SaveChanges();
             return RedirectToAction("Index", "Image");
         }
     }

@@ -57,9 +57,7 @@
                 </a>
             </td>
             <td>
-                <a href='@Url.Action("EndAddingPics/" + @text.TextId, "Text")'>
-                    <span title="Završi"></span>
-                </a>
+                @Html.ActionLink("Zaključaj", "EndAddingPic/" + @text.TextId, "Text")
             </td>
         </tr>
     }

@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using urednistvo.Models;
 using urednistvo.ModelsView.Utilities;
+using urednistvo.ModelsView;
 
 namespace urednistvo.Controllers
 {
@@ -78,7 +79,7 @@ namespace urednistvo.Controllers
         }
 
         // GET: Image/Create
-        public ActionResult Create(int? id)
+        public ActionResult Create(int id)
         {
             if ((String)Session["Role"] != RoleNames.EDITOR)
             {
@@ -86,17 +87,7 @@ namespace urednistvo.Controllers
                 return RedirectToAction("Index", "Text");
             }
 
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Text text = db.Texts.Find(id);
-            if (text == null)
-            {
-                return HttpNotFound();
-            }
-
-            ViewBag["Data"] = text;
+            ViewBag.TextId = new SelectList(db.Texts.Where(t => t.TextStatus == (int)TextStatus.LECTORED), "TextId", "Title");
             return View();
         }
 
@@ -122,7 +113,7 @@ namespace urednistvo.Controllers
                 db.SaveChanges();
 
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("ForAddingImages", "Text");
         }
 
         public ActionResult Download(int? id)
