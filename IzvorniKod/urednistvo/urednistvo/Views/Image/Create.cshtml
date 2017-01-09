@@ -1,10 +1,10 @@
 ﻿@model urednistvo.Models.Image
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Dodavanje";
 }
 
-<h2>Create</h2>
+<h2>Dodaj sliku</h2>
 
 @using (Html.BeginForm("Create", "Image", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
@@ -21,9 +21,10 @@
                 @Html.ValidationMessageFor(model => model.ImageName, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <label for="file">Upload Image:</label>
-        <input type="file" name="file" id="file" style="width: 100%;" />
+        <div class="form-group">
+            <label class="control-label col-md-2" for="file">Upload Image:</label>
+            <input class="col-md-10" type="file" name="file" id="file" style="padding-top: 9px;" />
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.TextId, "TextId", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -45,5 +46,5 @@
 }
 
         <div>
-            @Html.ActionLink("Back to List", "Index")
+            @Html.ActionLink("Povratak na slike", "Index")
         </div>
