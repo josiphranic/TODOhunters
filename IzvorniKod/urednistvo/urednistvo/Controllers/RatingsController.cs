@@ -16,6 +16,8 @@ namespace urednistvo.Controllers
     public class RatingsController : Controller
     {
         private UrednistvoDatabase db = new UrednistvoDatabase();
+        private int DEFAULT_VALUE_RATE = 3;
+        private int DEFAULT_VALUE_SECTION = 3;
 
         public RatingView createRatingView(Rating rating)
         {
@@ -122,8 +124,8 @@ namespace urednistvo.Controllers
                 return RedirectToAction("Index", "Text");
             }
 
-            ViewBag.DropDownListRates = new SelectList(db.Rates, "Value", "Name");
-            ViewBag.DropDownListSections = new SelectList(db.Sections, "SectionId", "Title");
+            ViewBag.DropDownListRates = new SelectList(db.Rates, "Value", "Name", 3);
+            ViewBag.DropDownListSections = new SelectList(db.Sections, "SectionId", "Title", 3);
 
             if (db.Ratings.Count(r => r.UserId == userId && r.TextId == id) > 5)
             {
