@@ -18,12 +18,13 @@
             Broj tekstova
         </th>
         <th></th>
+        <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink(item.Title, "Details/" + item.EditionId, "Editions")
+            <label>item.Title</label>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.TimeOfRelease)
@@ -32,7 +33,10 @@
             @Html.DisplayFor(modelItem => item.NumberOfTexts)
         </td>
         <td>
-            @Html.ActionLink("Svi tekstovi", "EditionTexts/" + item.EditionId, "Editions")
+            @Html.ActionLink("Po podlistcima", "Details/" + item.EditionId, "Editions")
+        </td>
+        <td>
+            @Html.ActionLink("Popis tekstova", "EditionTexts/" + item.EditionId, "Editions")
         </td>
     </tr>
 }
