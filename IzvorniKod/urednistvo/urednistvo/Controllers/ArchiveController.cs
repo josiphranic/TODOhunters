@@ -25,12 +25,12 @@ namespace urednistvo.Controllers
             {
                 if (Session["UserID"] == null || (String)Session["Role"] == RoleNames.REGISTERED_USER)
                 {
-                    list = db.Texts.Where(t => t.WebPublishable == true && t.Time.CompareTo(dateArchive) <= 0).ToList();
+                    list = db.Texts.Where(t => t.WebPublishable && t.Time.CompareTo(dateArchive) <= 0).ToList();
                 }
                 else if ((String)Session["Role"] == RoleNames.AUTHOR)
                 {
                     int UserId = Int32.Parse((String)Session["UserID"]);
-                    list = db.Texts.Where(t => t.UserId == UserId && t.Time.CompareTo(dateArchive) <= 0).ToList();
+                    list = db.Texts.Where(t => (t.UserId == UserId && t.Time.CompareTo(dateArchive) <= 0) || (t.Time.CompareTo(dateArchive) <= 0 && t.WebPublishable)).ToList();
                 }
                 else
                 {

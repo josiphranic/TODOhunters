@@ -1,5 +1,3 @@
 12. listopad, 2016
-    	Matisse
-		Upoznavanje, odredivanje tehnologija.
-
-17. listopad, 2016	A109		Podesavanje Visual Studija, spajanje na Git.
+    Matisse
+    Upoznavanje, odredivanje tehnologija.
