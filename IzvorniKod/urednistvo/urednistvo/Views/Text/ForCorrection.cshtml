@@ -31,7 +31,16 @@
                 @Html.ActionLink(@text.Username + " ", "Details/" + @text.UserId, "User")
             </td>
             <td>
-                @Html.ActionLink(@text.FinalSection + " ", "Details/" + @text.FinalSectionId, "Sections")
+                @if (text.FinalSectionId != -1)
+                {
+                    <a href='@Url.Action("Details/" + @text.FinalSectionId, "Sections")'>
+                        <span class="glyphicon glyphicon-file"></span> @text.FinalSection
+                    </a>
+                }
+                else
+                {
+                    <label><span class="glyphicon glyphicon-file"></span> @text.FinalSection </label>
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => text.Time)
@@ -46,7 +55,7 @@
                 {
 
                     <input type="file" name="uploadFile" id="uploadFile" />
-                    <input type="submit" value="Predaj PDF" />
+                    <input type="submit" value="Predaj RTF" />
 
                 }
             </td>

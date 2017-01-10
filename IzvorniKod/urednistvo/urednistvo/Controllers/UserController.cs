@@ -61,6 +61,11 @@ namespace urednistvo.Controllers
         {
             if (ModelState.IsValid)
             {
+                if(db.Users.Any(u => u.UserName == account.UserName))
+                {
+                    TempData["Message"] = "Korisničko ime " + account.UserName + " već postoji.";
+                    return RedirectToAction("Register") ;
+                }
                 using (UrednistvoDatabase db = new UrednistvoDatabase())
                 {
                     db.Users.Add(account);

@@ -17,6 +17,7 @@ namespace urednistvo.ModelsView.Utilities
             if ((int)TextStatus.DECLINED == i) return "Odbijen";
             if ((int)TextStatus.GRAPHIC == i) return "Graficki ispravljen";
             if ((int)TextStatus.CORRECTED == i) return "Ispravljen od korektora";
+            if ((int)TextStatus.ADDED_PICS == i) return "Dodane slike";
             return "Nepoznat";
         }
     }

@@ -29,35 +29,15 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li><span class="text-style" title="Izdanja" onclick="location.href='@Url.Action("Index", "Text")'">Svi tekstovi</span></li>
+                                @if ((string)Session["Role"] == "Autor")
+                                {
+                                    <li><span class="text-style" title="Moji tekstovi" onclick="location.href='@Url.Action("ByAuthor/" + (string)Session["UserID"], "Text")'">Moji tekstovi</span></li>
+                                }
                                 <li><span class="text-style" title="Najave" onclick="location.href='@Url.Action("AnnouncementTexts", "Text")'">Najave</span></li>
                                 <li><span class="text-style" title="Arhiva" onclick="location.href='@Url.Action("Index", "Archive")'">Arhiva</span></li>
                             </ul>
                         </div>
                     </li>
-                    @if ((string)Session["Role"] == "Lektor")
-                    {
-                        <li><span class="glyphicon glyphicon-flash icon" title="Lektoriraj" onclick="location.href='@Url.Action("ForLectoring", "Text")'"></span></li>
-                    }
-                    @if ((string)Session["Role"] == "Grafički urednik")
-                    {
-                        <li><span class="glyphicon glyphicon-flash icon" title="Grafički uredi" onclick="location.href='@Url.Action("ForGraphicEditing", "Text")'"></span></li>
-                    }
-                    @if ((string)Session["Role"] == "Korektor")
-                    {
-                        <li><span class="glyphicon glyphicon-flash icon" title="Korigiraj" onclick="location.href='@Url.Action("ForCorrection", "Text")'"></span></li>
-                    }
-                    <li>
-                        <div class="btn-group actions-div">
-                            <button class="btn btn-lg dropdown-toggle actions-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="glyphicon glyphicon-user" title="Korisnici"></span><!--<span class="caret"></span>-->
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><span class="text-style" onclick="location.href='@Url.Action("Index", "User")'">Svi korisnici</span></li>
-                                <li><span class="text-style" onclick="location.href='@Url.Action("EditorialCouncil", "Home")'">Uredničko vijeće</span></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li><span class="glyphicon glyphicon-bullhorn icon" title="Obavijesti" onclick="location.href='@Url.Action("Index", "Notification")'"></span></li>
                     <li>
                         <div class="btn-group actions-div">
                             <button class="btn btn-lg dropdown-toggle actions-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -69,8 +49,51 @@
                             </ul>
                         </div>
                     </li>
-                    <li><span class="glyphicon glyphicon-signal icon" title="Statistika" onclick="location.href='@Url.Action("Index", "Statistics")'"></span></li>
+                    @if (Session["UserID"] != null)
+                    {
+                    <li>
+                        <div class="btn-group actions-div">
+                            <button class="btn btn-lg dropdown-toggle actions-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="glyphicon glyphicon-user" title="Korisnici"></span><!--<span class="caret"></span>-->
+                            </button>
+                            <ul class="dropdown-menu">
+                                    <li><span class="text-style" onclick="location.href='@Url.Action("Index", "User")'">Svi korisnici</span></li>
+                                    <li><span class="text-style" onclick="location.href='@Url.Action("EditorialCouncil", "Home")'">Uredničko vijeće</span></li>
+                            </ul>
+                        </div>
+                    </li>
+                    }
+                    <li><span class="glyphicon glyphicon-bullhorn icon" title="Obavijesti" onclick="location.href='@Url.Action("Index", "Notification")'"></span></li>
                     <li><span class="glyphicon glyphicon-phone-alt icon" title="Kontakt" onclick="location.href='@Url.Action("Contact", "Home")'"></span></li>
+                    @if (Session["UserID"] != null && (string)Session["Role"] != "Registrirani korisnik")
+                    {
+                        <li><div class="divider"></div></li>
+                    }
+                    @if ((string)Session["Role"] == "Lektor")
+                    {
+                        <li><span class="glyphicon glyphicon-pencil icon" title="Lektoriraj" onclick="location.href='@Url.Action("ForLectoring", "Text")'"></span></li>
+                    }
+                    @if ((string)Session["Role"] == "Grafički urednik")
+                    {
+                        <li><span class="glyphicon glyphicon-film icon" title="Grafički uredi" onclick="location.href='@Url.Action("ForGraphicEditing", "Text")'"></span></li>
+                    }
+                    @if ((string)Session["Role"] == "Korektor")
+                    {
+                        <li><span class="glyphicon glyphicon-edit icon" title="Korigiraj" onclick="location.href='@Url.Action("ForCorrection", "Text")'"></span></li>
+                    }
+                    @if ((string)Session["Role"] == "Autor")
+                    {
+                        <li><span class="glyphicon glyphicon-send icon" title="Napiši tekst" onclick="location.href='@Url.Action("Create", "Text")'"></span></li>
+                    }
+                    @if ((string)Session["Role"] == "Glavni urednik")
+                    {
+                        <li><span class="glyphicon glyphicon-picture icon" title="Dodaj slike" onclick="location.href='@Url.Action("ForAddingImages", "Text")'"></span></li>
+                    }
+                    @if ((string)Session["Role"] == "Glavni urednik" || (string)Session["Role"] == "Član uredničkog vijeća")
+                    {
+                        <li><span class="glyphicon glyphicon-star icon" title="Ocijeni" onclick="location.href='@Url.Action("ForRate", "Text")'"></span></li>
+                    <li><span class="glyphicon glyphicon-signal icon" title="Statistika" onclick="location.href='@Url.Action("Index", "Statistics")'"></span></li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -117,6 +140,14 @@
     }
 </script>
 <style>
+    .divider{
+        position: absolute;
+        border-left: 1px solid white;
+        height: 43px;
+        border-left-width: 3px;
+        top: 7px;
+        margin-left: 10px;
+    }
     .cool-footer{
         position: relative;
         height: 5px;

@@ -1,0 +1,64 @@
+﻿@model List<urednistvo.ModelsView.Textual.TextView>
+@{
+    ViewBag.Title = "Tekstovi";
+}
+<h2>Dodavanje slika uz tekst</h2>
+<br />
+<table class="table">
+    <tr>
+        <th>
+            Naslov
+        </th>
+        <th>
+            Autor
+        </th>
+        <th>
+            Podlistak
+        </th>
+        <th>
+            Vrijeme
+        </th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    @foreach (var text in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(@text.Title + "(" + @text.Subtitle + ")", "Details/" + @text.TextId, "Text")
+            </td>
+            <td>
+                @Html.ActionLink(@text.Username + " ", "Details/" + @text.UserId, "User")
+            </td>
+            <td>
+                @if (text.FinalSectionId != -1)
+                {
+                    <a href='@Url.Action("Details/" + @text.FinalSectionId, "Sections")'>
+                        <span class="glyphicon glyphicon-file"></span> @text.FinalSection
+                    </a>
+                }
+                else
+                {
+                    <label><span class="glyphicon glyphicon-file"></span> @text.FinalSection </label>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => text.Time)
+            </td>
+            <td>
+                <a href='@Url.Action("Download/" + @text.TextId, "Text")'>
+                    <span class="glyphicon glyphicon-download" title="Preuzmi tekst"></span>
+                </a>
+            </td>
+            <td>
+                <a href='@Url.Action("Create/" + @text.TextId, "Image")'>
+                    <span class="glyphicon glyphicon-picture" title="Dodaj sliku"></span>
+                </a>
+            </td>
+            <td>
+                @Html.ActionLink("Zaključaj", "EndAddingPic/" + @text.TextId, "Text")
+            </td>
+        </tr>
+    }
+</table>

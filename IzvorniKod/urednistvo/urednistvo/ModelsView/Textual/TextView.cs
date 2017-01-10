@@ -20,6 +20,7 @@ namespace urednistvo.ModelsView.Textual
         public string FinalSection { get; set; }
         public int? WantedSectionByAuthorId { get; set; }
         public int FinalSectionId { get; set; }
+        public int RatingsCount { get; set; }
 
         public DateTime Time { get; set; }
 
@@ -28,7 +29,7 @@ namespace urednistvo.ModelsView.Textual
 
         public bool Returned { get; set; }
 
-        public ICollection<string> Suggestions { get; set; }
+        public string Suggestions { get; set; }
         public ICollection<string> Comments { get; set; }
         public ICollection<RatingView> Ratings { get; set; }
         public string TextStatus { get; set; }

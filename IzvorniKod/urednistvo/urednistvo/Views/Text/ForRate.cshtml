@@ -1,0 +1,68 @@
+﻿@model List<urednistvo.ModelsView.Textual.TextView>
+@{
+    ViewBag.Title = "Arhiva";
+}
+<h2>Tekstovi za ocijenjivanje</h2>
+<br />
+<table class="table">
+    <tr>
+        <th>
+            Naslov
+        </th>
+        <th>
+            Autor
+        </th>
+        <th>
+            Željeni podlistak
+        </th>
+        <th>
+            Ažurirano
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+    @foreach (var text in Model)
+    {
+        <tr>
+            <td>
+                <a href='@Url.Action("Details/" + @text.TextId, "Text")'>
+                    <span class="glyphicon glyphicon-list"></span> @text.Title (@text.Subtitle)
+                </a>
+            </td>
+
+            <td>
+                <a href='@Url.Action("Details/" + @text.UserId, "User")'>
+                    <span class="glyphicon glyphicon-user"></span> @text.Username
+                </a>
+            </td>
+
+            <td>
+                <a href='@Url.Action("Details/" + @text.WantedSectionByAuthorId, "Sections")'>
+                    <span class="glyphicon glyphicon-file"></span> @text.WantedSectionByAuthor
+                </a>
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => text.Time)
+            </td>
+
+            <td>
+                <a href='@Url.Action("ByText/" + @text.TextId, "Ratings")'>
+                    <span class="glyphicon glyphicon-star" title="Ocjene"></span>
+                </a>
+            </td>
+
+            <td>
+                @Html.ActionLink("Ocijeni", "Create/" + @text.TextId, "Ratings")
+            </td>
+
+            <td>
+                //Promijeniti na 5
+                @if (text.RatingsCount > 0)
+                {
+                    @Html.ActionLink("Konačna ocjena", "EditEditor/" + @text.TextId, "Text")
+                }
+            </td>
+        </tr>
+    }
+</table>
