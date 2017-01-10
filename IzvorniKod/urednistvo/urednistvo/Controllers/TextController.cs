@@ -143,7 +143,7 @@ namespace urednistvo.Controllers
                 return RedirectToAction("Index", "Text");
             }
 
-            List<Text> list = db.Texts.Where(t => t.TextStatus == (int)TextStatus.LECTORED).ToList();
+            List<Text> list = db.Texts.Where(t => t.TextStatus == (int)TextStatus.LECTORED && t.EditionPublishable == true).ToList();
             if (list.Count == 0)
             {
                 TempData["Message"] = "Nema tekstova za lektoriranje.";

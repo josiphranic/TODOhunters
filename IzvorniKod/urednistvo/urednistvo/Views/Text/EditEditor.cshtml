@@ -47,7 +47,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Item1.TextId)
         <div class="form-group">
-            <label class="control-label col-md-2">Objavi na web</label>
+            <label class="control-label col-md-2">Objavi na web-u</label>
             <div class="col-md-10">
                 <div class="checkbox">
                     @Html.EditorFor(model => model.Item1.WebPublishable)
@@ -56,7 +56,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-md-2">Objavi u uređivanju</label>
+            <label class="control-label col-md-2">Objavi u tiskovini</label>
             <div class="col-md-10">
                 <div class="checkbox">
                     @Html.EditorFor(model => model.Item1.EditionPublishable)

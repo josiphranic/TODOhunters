@@ -75,5 +75,39 @@ namespace urednistvo.Controllers
 
             return View(textViews);
         }
+
+        // GET: Sections/Details/5
+        public ActionResult DetailsByEdition(int SectionId, int EditionId)
+        {
+            Edition edition = db.Editions.Find(EditionId);
+
+            if(edition == null)
+            {
+                TempData["Message"] = "Greska kod trazenja teksta.";
+                RedirectToAction("Details/" + SectionId);
+            }
+
+            DateTime end = edition.TimeOfRelease;
+            DateTime start = edition.TimeOfRelease.AddDays(-7);
+
+            List<Text> list = db.Texts.Where(t => ((t.WebPublishable == true && t.TextStatus == (int)TextStatus.LECTORED) ||
+                                                    (t.EditionPublishable == true && t.TextStatus == (int)TextStatus.CORRECTED)) &&
+                                                        t.Time < end &&
+                                                        t.Time > start && t.FinalSectionId == SectionId).ToList();
+            if (list.Count == 0)
+            {
+                TempData["Message"] = "Nema tekstova u ovom podlistku za odabrano izdanje.";
+                return RedirectToAction("Index");
+            }
+
+            List<TextView> textViews = new List<TextView>();
+
+            foreach (Text t in list)
+            {
+                textViews.Add(TextController.getTextView(t));
+            }
+
+            return View(textViews);
+        }
     }
 }

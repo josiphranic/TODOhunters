@@ -501,6 +501,7 @@
     <Content Include="Views\Text\ForAddingImages.cshtml" />
     <Content Include="Views\Text\ForRate.cshtml" />
     <Content Include="Views\Ratings\ByText.cshtml" />
+    <Content Include="Views\Sections\DetailsByEdition.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

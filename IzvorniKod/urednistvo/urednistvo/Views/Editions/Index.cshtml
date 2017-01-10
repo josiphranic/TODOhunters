@@ -24,7 +24,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            <label>item.Title</label>
+            <label>@item.Title</label>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.TimeOfRelease)

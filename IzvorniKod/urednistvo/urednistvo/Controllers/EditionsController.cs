@@ -61,7 +61,7 @@ namespace urednistvo.Controllers
                     sViews.Add(SectionsController.createSectionView(s, start, end));
                 }
 
-                return View(sViews);
+                return View(new Tuple<List<SectionView>, Edition>(sViews, edition));
             }
         }
 
