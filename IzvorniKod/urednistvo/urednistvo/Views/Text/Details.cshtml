@@ -118,8 +118,6 @@
         <label> |</label>
     }
     @Html.ActionLink("Povratak na listu tekstova ", "Index")<label>  | </label>
-    <a href='@Url.Action("ByText/" + @Model.TextId, "Comment")'>
-        <span class="glyphicon glyphicon-comment" title="Komentari"></span>
-    </a> <label> | </label>
+    @Html.ActionLink("Komentari na tekst", "ByText/" + Model.TextId, "Comment" ) <label> | </label>
     @Html.ActionLink("Komentiraj", "Create/" + Model.TextId, "Comment")
 </p>

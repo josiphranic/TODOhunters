@@ -178,9 +178,9 @@ namespace urednistvo.Controllers
         // GET: Text/Create
         public ActionResult Create()
         {
-            if(Session["UserID"] == null || (String)Session["Role"] != RoleNames.AUTHOR)
+            if(Session["UserID"] == null)
             {
-                TempData["Message"] = "Morate biti prijavljeni kao autor da napišete tekst.";
+                TempData["Message"] = "Morate biti logirani da napišete tekst.";
                 return RedirectToAction("Index");
             }
             ViewBag.DropDownList = new SelectList(db.Sections, "SectionId", "Title");
