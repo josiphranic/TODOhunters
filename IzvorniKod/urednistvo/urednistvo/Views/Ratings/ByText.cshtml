@@ -1,0 +1,55 @@
+﻿@model List<urednistvo.ModelsView.Textual.RatingView>
+@{
+    ViewBag.Title = "Tekstovi";
+}
+<h2>Ocjene teksta</h2>
+<table class="table">
+    <tr>
+        <th>
+            Naslov
+        </th>
+        <th>
+            Autor
+        </th>
+        <th>
+            Objaviti na web
+        </th>
+        <th>
+            Objava u izdanju
+        </th>
+        <th>
+            Predlozeni podlistak
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Title, "Details/" + item.TextId, "Text")
+            </td>
+            <td>
+                @Html.ActionLink(item.Username, "Details/" + item.UserId, "User")
+            </td>
+            <td>
+                @if (item.WebPublishable == true)
+                {
+                    <label>Da</label>
+                }
+                else
+                {
+                    <label>Ne</label>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rate)
+            </td>
+            <td>
+                @Html.ActionLink(item.SectionTitle, "Details/" + item.SectionId, "Sections")
+            </td>
+            <td>
+                @Html.ActionLink("Sve ocjene", "ByText/" + item.TextId, "Ratings")
+            </td>
+        </tr>
+    }
+</table>

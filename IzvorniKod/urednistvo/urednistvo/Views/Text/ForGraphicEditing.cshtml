@@ -32,7 +32,16 @@
                 @Html.ActionLink(@text.Username + " ", "Details/" + @text.UserId, "User")
             </td>
             <td>
-                @Html.ActionLink(@text.FinalSection + " ", "Details/" + @text.FinalSectionId, "Sections")
+                @if (text.FinalSectionId != -1)
+                {
+                    <a href='@Url.Action("Details/" + @text.FinalSectionId, "Sections")'>
+                        <span class="glyphicon glyphicon-file"></span> @text.FinalSection
+                    </a>
+                }
+                else
+                {
+                    <label><span class="glyphicon glyphicon-file"></span> @text.FinalSection </label>
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => text.Time)
@@ -48,14 +57,20 @@
                 </a>
             </td>
             <td>
-                @using (Html.BeginForm("UploadRTF/" + @text.TextId, "Text", FormMethod.Post, new { id = "attachment", enctype = "multipart/form-data", encoding = "multipart/form-data" }))
-                {
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        @using (Html.BeginForm("UploadRTF/" + @text.TextId, "Text", FormMethod.Post, new { id = "attachment", enctype = "multipart/form-data", encoding = "multipart/form-data" }))
+                        {
 
-                    <input type="file" name="uploadFile" id="uploadFile" />
-                    <input type="submit" value="Predaj RTF" />
+                            <input type="file" value="Pretraži..." name="uploadFile" id="uploadFile" title="Pretraži..." />
+                            <input type="submit" value="Predaj RTF" />
+                        }
+                        </div>
+                    </div>
 
-                }
-            </td>
+                        
+                    </td>
+
         </tr>
     }
 </table>

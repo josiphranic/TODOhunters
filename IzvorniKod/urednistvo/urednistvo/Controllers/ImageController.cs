@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using urednistvo.Models;
 using urednistvo.ModelsView.Utilities;
+using urednistvo.ModelsView;
 
 namespace urednistvo.Controllers
 {
@@ -78,15 +79,15 @@ namespace urednistvo.Controllers
         }
 
         // GET: Image/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
-            if ((String)Session["Role"] != RoleNames.EDITOR && (String)Session["Role"] != RoleNames.GRAPHIC_EDITOR)
+            if ((String)Session["Role"] != RoleNames.EDITOR)
             {
                 TempData["Message"] = "Nemate ovlati pristupiti ovoj stranici.";
                 return RedirectToAction("Index", "Text");
             }
 
-            ViewBag.TextId = new SelectList(db.Texts, "TextId", "Title");
+            ViewBag.TextId = new SelectList(db.Texts.Where(t => t.TextStatus == (int)TextStatus.LECTORED), "TextId", "Title");
             return View();
         }
 
@@ -112,7 +113,7 @@ namespace urednistvo.Controllers
                 db.SaveChanges();
 
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("ForAddingImages", "Text");
         }
 
         public ActionResult Download(int? id)

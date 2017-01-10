@@ -100,16 +100,17 @@ namespace urednistvo.Controllers
             return View();
         }
 
-        public static void createNotification(Text text, string message)
+        public static void createNotificationForEditor(Text text, string message)
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
                 Notification notification = new Notification();
 
-                notification.Title = "Obavijest o vasem tekstu: \" " + text.Title + "\"";
+                int roleValue = db.Roles.Single(r => r.RoleName == RoleNames.EDITOR).Value;
+
+                notification.Title = "Obavijest o tekstu: \" " + text.Title + "\"";
                 notification.Content = message;
                 notification.Users.Add(db.Users.Single(u => u.UserId == text.UserId));
-                //PROVJERITI REDAK IZNAD JEL OK
                 notification.Time = DateTime.Now;
 
                 db.Notifications.Add(notification);
@@ -117,20 +118,74 @@ namespace urednistvo.Controllers
             }
         }
 
-        public static void createNotification(int Role, Text text, string message)
+        public static void createNotificationForLector(Text text)
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
                 Notification notification = new Notification();
 
-                notification.Title = "Tekst \" " + text.Title + "\" je spreman za vase lektoriranje.";
-                notification.Content = message;
-                notification.Users = db.Users.Where(u => u.Role == Role).ToList();
+                int roleValue = db.Roles.Single(r => r.RoleName == RoleNames.LECTOR).Value;
+
+                notification.Title = "Novi tekst za lektoriranje";
+                notification.Content = "Tekst \" " + text.Title + "\" je spreman za vase lektoriranje.";
+                notification.Users = db.Users.Where(u => u.Role == roleValue).ToList();
                 notification.Time = DateTime.Now;
 
                 db.Notifications.Add(notification);
                 db.SaveChanges();
             }
         }
+
+        public static void createNotificationForGraphicEditor(Text text)
+        {
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
+            {
+                Notification notification = new Notification();
+
+                int roleValue = db.Roles.Single(r => r.RoleName == RoleNames.GRAPHIC_EDITOR).Value;
+
+                notification.Title = "Novi tekst za grafičko uređivanje";
+                notification.Content = "Tekst \" " + text.Title + "\" je spreman za vase grafičko uređivanje.";
+                notification.Users = db.Users.Where(u => u.Role == roleValue).ToList();
+                notification.Time = DateTime.Now;
+
+                db.Notifications.Add(notification);
+                db.SaveChanges();
+            }
+        }
+
+        public static void createNotificationForCorrector(Text text)
+        {
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
+            {
+                Notification notification = new Notification();
+
+                int roleValue = db.Roles.Single(r => r.RoleName == RoleNames.CORRECTOR).Value;
+
+                notification.Title = "Novi tekst za korekciju";
+                notification.Content = "Tekst \" " + text.Title + "\" je spreman za vašu korekciju.";
+                notification.Users = db.Users.Where(u => u.Role == roleValue).ToList();
+                notification.Time = DateTime.Now;
+
+                db.Notifications.Add(notification);
+                db.SaveChanges();
+            }
+        }
+
+        public static void createNotificationForAuthor(Text text, string message)
+        {
+            using (UrednistvoDatabase db = new UrednistvoDatabase())
+            {
+                Notification notification = new Notification();
+
+                notification.Title = "Obavijest o vašem tekstu \"" + text.Title + "\"";
+                notification.Content = message;
+                notification.Users = db.Users.Where(u => u.UserId == text.UserId).ToList();
+                notification.Time = DateTime.Now;
+
+                db.Notifications.Add(notification);
+                db.SaveChanges();
+            }
+        }       
     }
 }

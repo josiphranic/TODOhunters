@@ -114,7 +114,7 @@
     @if (((String)Session["Role"] == "Glavni urednik" || (String)Session["Role"] == "Član uredničkog vijeća") && Model.TextStatus == "Poslan")
 
     {
-        @Html.ActionLink("Ocjeni", "EditMember", new { id = Model.TextId });
+        @Html.ActionLink("Ocijeni", "EditMember", new { id = Model.TextId });
         <label> |</label>
     }
     @Html.ActionLink("Povratak u arhivu tekstova ", "Index") <label> | </label>
