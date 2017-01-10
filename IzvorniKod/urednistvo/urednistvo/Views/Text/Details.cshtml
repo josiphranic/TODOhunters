@@ -33,6 +33,33 @@
         <dd>
             @Html.DisplayFor(model => model.Time)
         </dd>
+        <dt>
+            Za web
+        </dt>
+        <dd>
+            @if (Model.WebPublishable == "True")
+            {
+                <span class="glyphicon glyphicon-check" title=""></span>
+            }
+            else
+            {
+                <span class="glyphicon glyphicon-minus" title=""></span>
+            }
+        </dd>
+        <dt>
+            Za tiskovinu
+        </dt>
+        <dd>
+            @if (Model.EditionPublishable == "True")
+            {
+                <span class="glyphicon glyphicon-check" title=""></span>
+            }
+            else
+            {
+                <span class="glyphicon glyphicon-minus" title=""></span>
+            }
+        </dd>
+
     </dl>
 </div>
 @if ((String)Session["UserID"] == Model.UserId.ToString())
@@ -46,32 +73,7 @@
             <dd>
                 <label>@Model.TextStatus</label>
             </dd>
-            <dt>
-                Objavljeno na webu
-            </dt>
-            <dd>
-                @if (Model.WebPublishable == "True")
-                {
-                    <label>Da</label>
-                }
-                else
-                {
-                    <label>Ne</label>
-                }
-            </dd>
-            <dt>
-                Poslano na uređivanje
-            </dt>
-            <dd>
-                @if (Model.EditionPublishable == "True")
-                {
-                    <label>Da</label>
-                }
-                else
-                {
-                    <label>Ne</label>
-                }
-            </dd>
+         
             <dt>
                 Prijedlozi
             </dt>
