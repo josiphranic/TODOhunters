@@ -392,10 +392,7 @@ namespace urednistvo.Controllers
                 }
 
                 db.SaveChanges();
-                IEnumerable<SelectListItem> sections = db.Sections.Select(
-                    s => new SelectListItem { Value = s.SectionId.ToString(), Text = s.Title });
-
-                ViewData["sections"] = sections;
+                ViewBag.DropDownListSections = new SelectList(db.Sections, "SectionId", "Title");
                 TempData["Message"] = "Obavijest je poslana autoru teksta.";
 
                 return RedirectToAction("Index");

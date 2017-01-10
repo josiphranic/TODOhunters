@@ -44,51 +44,37 @@
                 Status teksta
             </dt>
             <dd>
-                <label>@Model.TextStatus</label>
+                @Html.DisplayFor(model => model.TextStatus)
             </dd>
             <dt>
                 Objavljeno na webu
             </dt>
             <dd>
-                @if (Model.WebPublishable == "True")
-                {
-                    <label>Da</label>
-                }
-                else
-                {
-                    <label>Ne</label>
-                }
+                @Html.DisplayFor(model => model.WebPublishable)
             </dd>
             <dt>
                 Poslano na uređivanje
             </dt>
             <dd>
-                @if (Model.EditionPublishable == "True")
-                {
-                    <label>Da</label>
-                }
-                else
-                {
-                    <label>Ne</label>
-                }
+                @Html.DisplayFor(model => model.EditionPublishable)
             </dd>
             <dt>
                 Prijedlozi
             </dt>
             <dd>
-                <label>@Model.Suggestions</label>
+                @Html.DisplayFor(model => model.Suggestions)
             </dd>
             <dt>
                 Željeni podlistak
             </dt>
             <dd>
-                <label>@Model.WantedSectionByAuthor</label>
+                @Html.DisplayFor(model => model.WantedSectionByAuthor)
             </dd>
             <dt>
                 Konačni podlistak
             </dt>
             <dd>
-                <label>@Model.FinalSection</label>
+                @Html.DisplayFor(model => model.FinalSection)
             </dd>
         </dl>
     </div>
