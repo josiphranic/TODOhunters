@@ -125,8 +125,8 @@ namespace urednistvo.Controllers
                 return RedirectToAction("Index", "Text");
             }
 
-            ViewBag.DropDownListRates = new SelectList(db.Rates, "Value", "Name", 3);
-            ViewBag.DropDownListSections = new SelectList(db.Sections, "SectionId", "Title", 3);
+            ViewBag.DropDownListRates = new SelectList(db.Rates, "Value", "Name", DEFAULT_VALUE_RATE);
+            ViewBag.DropDownListSections = new SelectList(db.Sections, "SectionId", "Title", DEFAULT_VALUE_SECTION);
 
             if (db.Ratings.Count(r => r.UserId == userId && r.TextId == id) > 5)
             {

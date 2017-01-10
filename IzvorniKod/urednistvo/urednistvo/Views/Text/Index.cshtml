@@ -94,9 +94,12 @@
                 </a>
             </td>
             <td>
+                @if (text.EditionPublishable == "True")
+                {
                 <a href='@Url.Action("DownloadRTF/" + @text.TextId, "Text")'>
                     <span class="glyphicon glyphicon-download" title="Preuzmi"></span>
                 </a>
+                }
             </td>
         </tr>
     }

@@ -351,8 +351,8 @@ namespace urednistvo.Controllers
                 }
                 var text = db.Texts.Single(d => d.TextId == id);
 
-                ViewBag.DropDownListSections = new SelectList(db.Sections, "SectionId", "Title");
-                return View(text);
+                Section s = db.Sections.Find(text.WantedSectionByAuthorId);
+                return View(new Tuple<Text, string>(text, s == null ? "-" : s.Title));
             }
         }
 
@@ -513,12 +513,14 @@ namespace urednistvo.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Pdf pdf = db.Pdfs.Single(p => p.TextId == (int)id);
-            if (pdf == null)
+            List<Pdf> pdfs = db.Pdfs.Where(p => p.TextId == (int)id).ToList();
+            if (pdfs.Count == 0)
             {
-                return HttpNotFound();
+                TempData["Message"] = "Ovaj tekst nema RTF dokument.";
+                return RedirectToAction("Index", "Text");
             }
 
+            Pdf pdf = pdfs.First();
             string path = Server.MapPath("~/RTFs/" + pdf.PdfName);
             byte[] fileBytes = System.IO.File.ReadAllBytes(path);
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, pdf.PdfName);
