@@ -63,7 +63,6 @@
                             </ul>
                         </div>
                     </li>
-                    }
                     <li><span class="glyphicon glyphicon-bullhorn icon" title="Obavijesti" onclick="location.href='@Url.Action("Index", "Notification")'"></span></li>
                     <li><span class="glyphicon glyphicon-phone-alt icon" title="Kontakt" onclick="location.href='@Url.Action("Contact", "Home")'"></span></li>
                     @if (Session["UserID"] != null && (string)Session["Role"] != "Registrirani korisnik")

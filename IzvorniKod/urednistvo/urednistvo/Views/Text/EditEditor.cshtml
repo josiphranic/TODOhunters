@@ -50,7 +50,7 @@
             <label class="control-label col-md-2">Objavi na web-u</label>
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.EditorFor(model => model.Item1.WebPublishable)
+                    @Html.CheckBoxFor(model => model.Item1.WebPublishable, new { @id = "web" })
                     @Html.ValidationMessageFor(model => model.Item1.WebPublishable, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -59,7 +59,7 @@
             <label class="control-label col-md-2">Objavi u tiskovini</label>
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.EditorFor(model => model.Item1.EditionPublishable)
+                    @Html.CheckBoxFor(model => model.Item1.EditionPublishable, new { @id = "edition", onchange = "checkAnother()" })
                     @Html.ValidationMessageFor(model => model.Item1.EditionPublishable, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -145,3 +145,11 @@
 <div>
     @Html.ActionLink("Povratak na listu tekstova", "Index")
 </div>
+<script type="text/javascript">
+    function checkAnother() {
+        var checked = $('#edition').is(':checked');
+        if (checked) {
+            $('#web').prop('checked', true);
+        }
+    }
+</script>
