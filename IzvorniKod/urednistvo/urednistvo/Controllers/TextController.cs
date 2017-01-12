@@ -17,11 +17,12 @@ namespace urednistvo.Controllers
     {
         private UrednistvoDatabase db = new UrednistvoDatabase();
 
-        public static TextView getTextView(Text text)
+        public static TextView getTextView(Text textInput)
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
                 TextView textView = new TextView();
+                var text = db.Texts.FirstOrDefault(t => t.TextId == textInput.TextId);
 
                 textView.TextId = text.TextId;
                 textView.Title = text.Title;

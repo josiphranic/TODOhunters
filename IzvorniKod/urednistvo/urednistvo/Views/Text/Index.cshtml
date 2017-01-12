@@ -104,21 +104,29 @@
                     <span class="glyphicon glyphicon-star" title="Ocjene"></span>
                 </a>
             </td>
-            <td>
-                <a href='@Url.Action("Edit/" + @text.TextId, "Text")'>
-                    <span class="glyphicon glyphicon-pencil" title="Uređivanje"></span>
-                </a>
-            </td>
-            <td>
-                <a href='@Url.Action("Delete/" + @text.TextId, "Text")'>
-                    <span class="glyphicon glyphicon-trash" title="Obriši"></span>
-                </a>
-            </td>
+             @if (Session["UserID"] != null)
+             {
+                <td>
+                    <a href='@Url.Action("Edit/" + @text.TextId, "Text")'>
+                        <span class="glyphicon glyphicon-pencil" title="Uređivanje"></span>
+                    </a>
+                </td>
+                <td>
+                    <a href='@Url.Action("Delete/" + @text.TextId, "Text")'>
+                        <span class="glyphicon glyphicon-trash" title="Obriši"></span>
+                    </a>
+                </td>
+             }
+            
         </tr>
     }
 
 </table>
 
-<p>
-    <font size="3">@Html.ActionLink("Novi tekst", "Create")</font>
-</p>
+@if (Session["UserID"] != null)
+{
+    <p>
+        <font size="3">@Html.ActionLink("Novi tekst", "Create")</font>
+    </p>
+}
+
