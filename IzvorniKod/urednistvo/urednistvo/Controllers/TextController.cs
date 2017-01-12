@@ -500,6 +500,7 @@ namespace urednistvo.Controllers
                         t.TextStatus = (int)TextStatus.GRAPHIC;
                         db.SaveChanges();
 
+                        TempData["Message"] = "Tekst je uspješno grafički uređen.";
                         return RedirectToAction("ForGraphicEditing/" + id);
                     }
                     else if ((string)Session["Role"] == RoleNames.CORRECTOR)
@@ -508,6 +509,7 @@ namespace urednistvo.Controllers
                         t.TextStatus = (int)TextStatus.CORRECTED;
                         db.SaveChanges();
 
+                        TempData["Message"] = "Tekst je uspješno ispravljen.";
                         return RedirectToAction("ForCorrection/" + id);
                     }
                 }
@@ -607,7 +609,7 @@ namespace urednistvo.Controllers
 
             text.TextStatus = (int)TextStatus.ADDED_PICS;
             db.SaveChanges();
-            return RedirectToAction("Index", "Image");
+            return RedirectToAction("ForAddingImages", "Text");
         }
     }
 }
