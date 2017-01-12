@@ -1,6 +1,10 @@
 ﻿@model List<urednistvo.ModelsView.Textual.TextView>
 
 <span class="side-title"><span class="glyphicon glyphicon-road"></span> Najave</span>
+@if (Model.Count() < 1)
+{
+    <span class="notif-info">Nema najava</span>
+}
 <div class="col">
     @foreach (var n in Model)
     {

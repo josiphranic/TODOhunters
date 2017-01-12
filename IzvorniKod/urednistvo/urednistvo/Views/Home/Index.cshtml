@@ -19,6 +19,10 @@
 </div>
 <div class="col-md-2">
     <span class="side-title"><span class="glyphicon glyphicon-bullhorn"></span> Obavijesti</span>
+    @if (Model.Item2.Count() < 1)
+    {
+        <span class="notif-info">Nema obavijesti</span>
+    }
     <div class="col">
         @foreach (var n in Model.Item2)
         {
@@ -46,6 +50,10 @@
     }
 </script>
 <style>
+    .notif-info{
+        display:block;
+        font-style: italic;
+    }
     .top-line{
         display:inline-block;
     }

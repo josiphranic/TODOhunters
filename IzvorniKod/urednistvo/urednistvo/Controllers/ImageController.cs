@@ -22,7 +22,7 @@ namespace urednistvo.Controllers
         {
             if((String)Session["Role"] != RoleNames.EDITOR && (String)Session["Role"] != RoleNames.GRAPHIC_EDITOR)
             {
-                TempData["Message"] = "Nemate ovlati pristupiti ovoj stranici.";
+                TempData["Message"] = "Nemate ovlasti pristupiti ovoj stranici.";
                 return RedirectToAction("Index", "Text");
             }
 
@@ -34,7 +34,7 @@ namespace urednistvo.Controllers
         {
             if ((String)Session["Role"] != RoleNames.EDITOR && (String)Session["Role"] != RoleNames.GRAPHIC_EDITOR)
             {
-                TempData["Message"] = "Nemate ovlati pristupiti ovoj stranici.";
+                TempData["Message"] = "Nemate ovlasti pristupiti ovoj stranici.";
                 return RedirectToAction("Index", "Text");
             }
 
@@ -54,7 +54,7 @@ namespace urednistvo.Controllers
         {
             if ((String)Session["Role"] != RoleNames.EDITOR && (String)Session["Role"] != RoleNames.GRAPHIC_EDITOR)
             {
-                TempData["Message"] = "Nemate ovlati pristupiti ovoj stranici.";
+                TempData["Message"] = "Nemate ovlasti pristupiti ovoj stranici.";
                 return RedirectToAction("Index", "Text");
             }
 
@@ -83,7 +83,7 @@ namespace urednistvo.Controllers
         {
             if ((String)Session["Role"] != RoleNames.EDITOR)
             {
-                TempData["Message"] = "Nemate ovlati pristupiti ovoj stranici.";
+                TempData["Message"] = "Nemate ovlasti pristupiti ovoj stranici.";
                 return RedirectToAction("Index", "Text");
             }
 
@@ -120,7 +120,7 @@ namespace urednistvo.Controllers
         {
             if ((String)Session["Role"] != RoleNames.EDITOR && (String)Session["Role"] != RoleNames.GRAPHIC_EDITOR)
             {
-                TempData["Message"] = "Nemate ovlati pristupiti ovoj stranici.";
+                TempData["Message"] = "Nemate ovlasti pristupiti ovoj stranici.";
                 return RedirectToAction("Index", "Text");
             }
 

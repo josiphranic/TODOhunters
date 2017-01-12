@@ -67,7 +67,7 @@ namespace urednistvo.Controllers
         {
             if ((String)Session["Role"] != RoleNames.EDITOR)
             {
-                TempData["Message"] = "Nemate ovlati pristupiti ocjenama.";
+                TempData["Message"] = "Nemate ovlasti pristupiti ocjenama.";
                 return RedirectToAction("Index", "Text");
             }
 
@@ -85,7 +85,7 @@ namespace urednistvo.Controllers
         {
             if ((String)Session["Role"] != RoleNames.EDITOR)
             {
-                TempData["Message"] = "Nemate ovlati pristupiti ocjenama.";
+                TempData["Message"] = "Nemate ovlasti pristupiti ocjenama.";
                 return RedirectToAction("Index", "Text");
             }
 
