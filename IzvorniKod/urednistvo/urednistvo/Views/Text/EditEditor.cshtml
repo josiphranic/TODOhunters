@@ -1,4 +1,4 @@
-﻿@model Tuple<urednistvo.Models.Text, string>
+﻿@model urednistvo.Models.Text
 @{
     ViewBag.Title = "Uređivanje";
 }
@@ -10,31 +10,31 @@
             Naslov
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Item1.Title)
+            @Html.DisplayFor(model => model.Title)
         </dd>
         <dt>
             Podnaslov
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Item1.Subtitle)
+            @Html.DisplayFor(model => model.Subtitle)
         </dd>
         <dt>
             Sadržaj
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Item1.Content)
+            @Html.DisplayFor(model => model.Content)
         </dd>
         <dt>
             Ažurirano
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Item1.Time)
+            @Html.DisplayFor(model => model.Time)
         </dd>
         <dt>
             Željeni podlistak
         </dt>
         <dd>
-            <label>@Model.Item2</label>
+            <label>@Model.WantedSectionByAuthorId</label>
         </dd>
     </dl>
 </div>
@@ -45,30 +45,32 @@
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Item1.TextId)
+        @Html.HiddenFor(model => model.TextId)
+
         <div class="form-group">
             <label class="control-label col-md-2">Objavi na web-u</label>
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.CheckBoxFor(model => model.Item1.WebPublishable, new { @id = "web" })
-                    @Html.ValidationMessageFor(model => model.Item1.WebPublishable, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.WebPublishable)
+                    @Html.ValidationMessageFor(model => model.WebPublishable, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
+
         <div class="form-group">
             <label class="control-label col-md-2">Objavi u tiskovini</label>
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.CheckBoxFor(model => model.Item1.EditionPublishable, new { @id = "edition", onchange = "checkAnother()" })
-                    @Html.ValidationMessageFor(model => model.Item1.EditionPublishable, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.EditionPublishable)
+                    @Html.ValidationMessageFor(model => model.EditionPublishable, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-md-2">Dodaj prijedlog</label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Item1.Suggestions, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Item1.Suggestions, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Suggestions, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Suggestions, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -129,7 +131,7 @@
         <div class="form-group">
             <label class="control-label col-md-2">Konačni podlistak</label>
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Item1.FinalSectionId, sections, new { @class = "dropdown" })
+                @Html.DropDownListFor(model => model.FinalSectionId, sections, new { @class = "dropdown" })
             </div>
         </div>
         <div class="form-group">

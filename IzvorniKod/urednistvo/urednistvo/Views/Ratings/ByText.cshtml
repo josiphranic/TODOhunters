@@ -20,7 +20,6 @@
         <th>
             Predlozeni podlistak
         </th>
-        <th></th>
     </tr>
     @foreach (var item in Model)
     {
@@ -47,9 +46,13 @@
             <td>
                 @Html.ActionLink(item.SectionTitle, "Details/" + item.SectionId, "Sections")
             </td>
-            <td>
-                @Html.ActionLink("Sve ocjene", "ByText/" + item.TextId, "Ratings")
-            </td>
         </tr>
     }
 </table>
+
+<p>
+@if (Model.Count() >= 5)
+{
+    @Html.ActionLink("Konačna ocjena", "EditEditor/" + Model.FirstOrDefault().TextId, "Text")
+}
+</p>

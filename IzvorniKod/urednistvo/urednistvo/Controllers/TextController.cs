@@ -36,19 +36,14 @@ namespace urednistvo.Controllers
                 textView.EditionPublishable = text.EditionPublishable.ToString();
                 textView.FinalSectionId = text.FinalSectionId;
                 textView.WantedSectionByAuthorId = text.WantedSectionByAuthorId;
-                textView.RatingsCount = text.Ratings == null ? 0 : text.Ratings.Count();
+
+                textView.RatingsCount = db.Ratings.Where(r => r.TextId == text.TextId).Count();
 
                 Section section = db.Sections.Find(text.FinalSectionId);
                 textView.FinalSection = (section == null) ? "-" : section.Title;
 
-                if (text.WantedSectionByAuthorId != null)
-                {
-                    section = db.Sections.Find(text.WantedSectionByAuthorId);
-                    textView.WantedSectionByAuthor = (section == null) ? "-" : section.Title;
-                } else
-                {
-                    textView.WantedSectionByAuthor = "-";
-                }
+                section = db.Sections.Find(text.WantedSectionByAuthorId);
+                textView.WantedSectionByAuthor = (section == null) ? "-" : section.Title;
 
                 if (text.Suggestions == null)
                 {
@@ -178,11 +173,7 @@ namespace urednistvo.Controllers
 
             foreach (Text t in list)
             {
-                int ratesCount = db.Ratings.Where(r => r.TextId == t.TextId).Count();
-                if (ratesCount < EDITORIAL_COUNCIL_MEMBERS)
-                {
-                    listView.Add(getTextView(t, false));
-                }
+                listView.Add(getTextView(t, false));
             }
             return View(listView);
         }
@@ -352,7 +343,7 @@ namespace urednistvo.Controllers
                 var text = db.Texts.Single(d => d.TextId == id);
 
                 Section s = db.Sections.Find(text.WantedSectionByAuthorId);
-                return View(new Tuple<Text, string>(text, s == null ? "-" : s.Title));
+                return View(text);
             }
         }
 
