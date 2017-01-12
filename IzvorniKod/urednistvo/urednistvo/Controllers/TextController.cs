@@ -16,6 +16,7 @@ namespace urednistvo.Controllers
     public class TextController : Controller
     {
         private UrednistvoDatabase db = new UrednistvoDatabase();
+        private static int EDITORIAL_COUNCIL_MEMBERS = 5;
 
         public static TextView getTextView(Text text)
         {
@@ -178,7 +179,7 @@ namespace urednistvo.Controllers
             foreach (Text t in list)
             {
                 int ratesCount = db.Ratings.Where(r => r.TextId == t.TextId).Count();
-                if (ratesCount < 5)
+                if (ratesCount < EDITORIAL_COUNCIL_MEMBERS)
                 {
                     listView.Add(getTextView(t));
                 }
@@ -343,8 +344,7 @@ namespace urednistvo.Controllers
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
-                if (db.Ratings.Count(r => r.TextId == id) < 1)
-                    //PROMIJENITI NA 5
+                if (db.Ratings.Count(r => r.TextId == id) < EDITORIAL_COUNCIL_MEMBERS)
                 {
                     TempData["Message"] = "Svi članovi uredničkog vijeća moraju ocijeniti tekst.";
                     return RedirectToAction("Details/" + id, "Text");
