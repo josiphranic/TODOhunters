@@ -18,7 +18,7 @@ namespace urednistvo.Controllers
         private UrednistvoDatabase db = new UrednistvoDatabase();
         private static int EDITORIAL_COUNCIL_MEMBERS = 5;
 
-        public static TextView getTextView(Text text)
+        public static TextView getTextView(Text text, bool copyContent)
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
@@ -30,7 +30,7 @@ namespace urednistvo.Controllers
                 textView.Username = db.Users.Single(u => u.UserId == text.UserId).UserName;
                 textView.UserId = text.UserId;
                 textView.Time = text.Time;
-                textView.Content = text.Content;
+                if(copyContent) textView.Content = text.Content;
                 textView.TextStatus = TextStatusNameGetter.getName(text.TextStatus);
                 textView.WebPublishable = text.WebPublishable.ToString();
                 textView.EditionPublishable = text.EditionPublishable.ToString();
@@ -82,7 +82,7 @@ namespace urednistvo.Controllers
 
             foreach (Text t in list.ToList())
             {
-                listView.Add(getTextView(t));
+                listView.Add(getTextView(t, false));
             }
             return View(listView);
         }
@@ -108,7 +108,7 @@ namespace urednistvo.Controllers
 
             foreach (Text t in list)
             {
-                listView.Add(getTextView(t));
+                listView.Add(getTextView(t, false));
             }
             return View(listView);
         }
@@ -131,7 +131,7 @@ namespace urednistvo.Controllers
 
             foreach (Text t in list)
             {
-                listView.Add(getTextView(t));
+                listView.Add(getTextView(t, false));
             }
             return View(listView);
         }
@@ -154,7 +154,7 @@ namespace urednistvo.Controllers
 
             foreach (Text t in list)
             {
-                listView.Add(getTextView(t));
+                listView.Add(getTextView(t, false));
             }
             return View(listView);
         }
@@ -181,7 +181,7 @@ namespace urednistvo.Controllers
                 int ratesCount = db.Ratings.Where(r => r.TextId == t.TextId).Count();
                 if (ratesCount < EDITORIAL_COUNCIL_MEMBERS)
                 {
-                    listView.Add(getTextView(t));
+                    listView.Add(getTextView(t, false));
                 }
             }
             return View(listView);
@@ -199,7 +199,7 @@ namespace urednistvo.Controllers
 
             foreach (Text t in list)
             {
-                listView.Add(getTextView(t));
+                listView.Add(getTextView(t, false));
             }
             return View(listView);
         }
@@ -216,7 +216,7 @@ namespace urednistvo.Controllers
 
             foreach (Text t in list)
             {
-                listView.Add(getTextView(t));
+                listView.Add(getTextView(t, false));
             }
             return View(listView);
         }
@@ -225,11 +225,11 @@ namespace urednistvo.Controllers
         public ActionResult Details(int id)
         {
             if (db.Texts.Find(id).WebPublishable) {
-                return View(getTextView(db.Texts.Single(u => u.TextId == id)));
+                return View(getTextView(db.Texts.Single(u => u.TextId == id), true));
             }
             if(Session["UserID"] != null && (String)Session["Role"] != RoleNames.REGISTERED_USER)
             {
-                return View(getTextView(db.Texts.Single(u => u.TextId == id)));
+                return View(getTextView(db.Texts.Single(u => u.TextId == id), true));
             }
             TempData["Message"] = "Ne možete vidjeti ovaj tekst.";
             return RedirectToAction("Index", "Text");
@@ -552,7 +552,7 @@ namespace urednistvo.Controllers
 
                 foreach (Text text in texts)
                 {
-                    textViews.Add(getTextView(text));
+                    textViews.Add(getTextView(text, false));
                 }
 
                 return View(textViews);
@@ -581,7 +581,7 @@ namespace urednistvo.Controllers
 
                 foreach (Text text in texts)
                 {
-                    textViews.Add(getTextView(text));
+                    textViews.Add(getTextView(text, false));
                 }
 
                 return PartialView("_Announcements", textViews);

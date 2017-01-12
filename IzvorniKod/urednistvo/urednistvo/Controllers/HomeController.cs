@@ -43,7 +43,7 @@ namespace urednistvo.Controllers
                 // zbog toga sto linq ne prepoznaje metodu toTextView, idemo rucno...
                 var textViews = new List<TextView>();
                 foreach(var text in texts) {
-                    textViews.Add(TextController.getTextView(text));
+                    textViews.Add(TextController.getTextView(text, false));
                 }
                 Tuple<IEnumerable<TextView>, IEnumerable<Notification>> tuple = new Tuple<IEnumerable<TextView>, IEnumerable<Notification>>(textViews,notifs);
                 return View(tuple);

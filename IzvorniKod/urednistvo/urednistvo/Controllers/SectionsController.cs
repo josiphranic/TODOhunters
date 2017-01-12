@@ -70,7 +70,7 @@ namespace urednistvo.Controllers
 
             foreach (Text t in list)
             {
-                textViews.Add(TextController.getTextView(t));
+                textViews.Add(TextController.getTextView(t, false));
             }
 
             return View(textViews);
@@ -104,7 +104,7 @@ namespace urednistvo.Controllers
 
             foreach (Text t in list)
             {
-                textViews.Add(TextController.getTextView(t));
+                textViews.Add(TextController.getTextView(t, false));
             }
 
             return View(textViews);

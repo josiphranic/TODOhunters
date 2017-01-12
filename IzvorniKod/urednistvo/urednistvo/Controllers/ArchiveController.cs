@@ -41,7 +41,7 @@ namespace urednistvo.Controllers
             List<TextView> listView = new List<TextView>();
             foreach (Text t in list.ToList())
             {
-                listView.Add(TextController.getTextView(t));
+                listView.Add(TextController.getTextView(t, false));
             }
             return View(listView);
         }
@@ -167,11 +167,11 @@ namespace urednistvo.Controllers
             {
                 if (db.Texts.Find(id).WebPublishable)
                 {
-                    return View(TextController.getTextView(db.Texts.Single(u => u.TextId == id)));
+                    return View(TextController.getTextView(db.Texts.Single(u => u.TextId == id), true));
                 }
                 if (Session["UserID"] != null && (String)Session["Role"] != RoleNames.REGISTERED_USER)
                 {
-                    return View(TextController.getTextView(db.Texts.Single(u => u.TextId == id)));
+                    return View(TextController.getTextView(db.Texts.Single(u => u.TextId == id), true));
                 }
             }
             
