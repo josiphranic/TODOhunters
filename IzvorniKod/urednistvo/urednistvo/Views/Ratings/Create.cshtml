@@ -20,21 +20,21 @@
                     @Html.DropDownListFor(model => model.WebPublishable, new List<SelectListItem>
                         {new SelectListItem {Text = "Za", Value = "True", Selected = true},
                         new SelectListItem {Text = "Protiv", Value = "False" }
-                   });
+                   })
                 </div>
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label col-md-2">Ocjena</label>
-            <div class="col-md-10">
+            <div class="col-md-10" style="margin-top:12px">
                 @Html.DropDownListFor(model => model.Rate, (IEnumerable<SelectListItem>)ViewBag.DropDownListRates, new { @class = "dropdown" })
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label col-md-2">Podlistak</label>
-            <div class="col-md-10">
+            <div class="col-md-10" style="margin-top:11px">
                 @Html.DropDownListFor(model => model.SectionId, (IEnumerable<SelectListItem>)ViewBag.DropDownListSections, new { @class = "dropdown" })
             </div>
         </div>
