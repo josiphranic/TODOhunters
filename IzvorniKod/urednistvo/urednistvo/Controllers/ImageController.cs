@@ -72,7 +72,7 @@ namespace urednistvo.Controllers
             if(images.Count() == 0)
             {
                 TempData["Message"] = "Nema slika za ovaj tekst.";
-                return RedirectToAction("Index");
+                return RedirectToAction("ForGraphicEditing", "Text");
             }
 
             return View(images.ToList());
