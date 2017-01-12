@@ -147,7 +147,7 @@ namespace urednistvo.Controllers
             List<Text> list = db.Texts.Where(t => t.TextStatus == (int)TextStatus.LECTORED && t.EditionPublishable == true).ToList();
             if (list.Count == 0)
             {
-                TempData["Message"] = "Nema tekstova za lektoriranje.";
+                TempData["Message"] = "Nema tekstova za dodavanje slika.";
                 return RedirectToAction("Index", "User");
             }
             List<TextView> listView = new List<TextView>();

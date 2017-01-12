@@ -57,7 +57,10 @@
             </td>
 
             <td>
+                @if (text.RatingsCount >= 5)
+                {
                     @Html.ActionLink("Konačna ocjena", "EditEditor/" + @text.TextId, "Text")
+                }
             </td>
         </tr>
     }
