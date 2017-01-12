@@ -16,8 +16,9 @@ namespace urednistvo.Controllers
     public class TextController : Controller
     {
         private UrednistvoDatabase db = new UrednistvoDatabase();
+        private static int EDITORIAL_COUNCIL_MEMBERS = 5;
 
-        public static TextView getTextView(Text textInput)
+        public static TextView getTextView(Text text, bool copyContent)
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
@@ -30,7 +31,7 @@ namespace urednistvo.Controllers
                 textView.Username = db.Users.Single(u => u.UserId == text.UserId).UserName;
                 textView.UserId = text.UserId;
                 textView.Time = text.Time;
-                textView.Content = text.Content;
+                if(copyContent) textView.Content = text.Content;
                 textView.TextStatus = TextStatusNameGetter.getName(text.TextStatus);
                 textView.WebPublishable = text.WebPublishable.ToString();
                 textView.EditionPublishable = text.EditionPublishable.ToString();
@@ -82,7 +83,7 @@ namespace urednistvo.Controllers
 
             foreach (Text t in list.ToList())
             {
-                listView.Add(getTextView(t));
+                listView.Add(getTextView(t, false));
             }
             return View(listView);
         }
@@ -108,7 +109,7 @@ namespace urednistvo.Controllers
 
             foreach (Text t in list)
             {
-                listView.Add(getTextView(t));
+                listView.Add(getTextView(t, false));
             }
             return View(listView);
         }
@@ -131,7 +132,7 @@ namespace urednistvo.Controllers
 
             foreach (Text t in list)
             {
-                listView.Add(getTextView(t));
+                listView.Add(getTextView(t, false));
             }
             return View(listView);
         }
@@ -147,14 +148,14 @@ namespace urednistvo.Controllers
             List<Text> list = db.Texts.Where(t => t.TextStatus == (int)TextStatus.LECTORED && t.EditionPublishable == true).ToList();
             if (list.Count == 0)
             {
-                TempData["Message"] = "Nema tekstova za lektoriranje.";
+                TempData["Message"] = "Nema tekstova za dodavanje slika.";
                 return RedirectToAction("Index", "User");
             }
             List<TextView> listView = new List<TextView>();
 
             foreach (Text t in list)
             {
-                listView.Add(getTextView(t));
+                listView.Add(getTextView(t, false));
             }
             return View(listView);
         }
@@ -179,9 +180,9 @@ namespace urednistvo.Controllers
             foreach (Text t in list)
             {
                 int ratesCount = db.Ratings.Where(r => r.TextId == t.TextId).Count();
-                if (ratesCount < 5)
+                if (ratesCount < EDITORIAL_COUNCIL_MEMBERS)
                 {
-                    listView.Add(getTextView(t));
+                    listView.Add(getTextView(t, false));
                 }
             }
             return View(listView);
@@ -199,7 +200,7 @@ namespace urednistvo.Controllers
 
             foreach (Text t in list)
             {
-                listView.Add(getTextView(t));
+                listView.Add(getTextView(t, false));
             }
             return View(listView);
         }
@@ -216,7 +217,7 @@ namespace urednistvo.Controllers
 
             foreach (Text t in list)
             {
-                listView.Add(getTextView(t));
+                listView.Add(getTextView(t, false));
             }
             return View(listView);
         }
@@ -225,11 +226,11 @@ namespace urednistvo.Controllers
         public ActionResult Details(int id)
         {
             if (db.Texts.Find(id).WebPublishable) {
-                return View(getTextView(db.Texts.Single(u => u.TextId == id)));
+                return View(getTextView(db.Texts.Single(u => u.TextId == id), true));
             }
             if(Session["UserID"] != null && (String)Session["Role"] != RoleNames.REGISTERED_USER)
             {
-                return View(getTextView(db.Texts.Single(u => u.TextId == id)));
+                return View(getTextView(db.Texts.Single(u => u.TextId == id), true));
             }
             TempData["Message"] = "Ne možete vidjeti ovaj tekst.";
             return RedirectToAction("Index", "Text");
@@ -344,8 +345,7 @@ namespace urednistvo.Controllers
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
-                if (db.Ratings.Count(r => r.TextId == id) < 1)
-                    //PROMIJENITI NA 5
+                if (db.Ratings.Count(r => r.TextId == id) < EDITORIAL_COUNCIL_MEMBERS)
                 {
                     TempData["Message"] = "Svi članovi uredničkog vijeća moraju ocijeniti tekst.";
                     return RedirectToAction("Details/" + id, "Text");
@@ -409,6 +409,12 @@ namespace urednistvo.Controllers
         // GET: Text/Delete/5
         public ActionResult Delete(int id)
         {
+            if((string)Session["Role"] != RoleNames.EDITOR)
+            {
+                TempData["Message"] = "Nemate prava za brisanje teksta.";
+                return RedirectToAction("Index", "Text");
+            }
+
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
                 db.Texts.Remove(db.Texts.Find(id));
@@ -547,7 +553,7 @@ namespace urednistvo.Controllers
 
                 foreach (Text text in texts)
                 {
-                    textViews.Add(getTextView(text));
+                    textViews.Add(getTextView(text, false));
                 }
 
                 return View(textViews);
@@ -576,7 +582,7 @@ namespace urednistvo.Controllers
 
                 foreach (Text text in texts)
                 {
-                    textViews.Add(getTextView(text));
+                    textViews.Add(getTextView(text, false));
                 }
 
                 return PartialView("_Announcements", textViews);

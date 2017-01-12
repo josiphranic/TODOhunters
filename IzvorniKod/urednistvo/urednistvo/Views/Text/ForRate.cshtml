@@ -57,8 +57,7 @@
             </td>
 
             <td>
-                //Promijeniti na 5
-                @if (text.RatingsCount > 0)
+                @if (text.RatingsCount >= 5)
                 {
                     @Html.ActionLink("Konačna ocjena", "EditEditor/" + @text.TextId, "Text")
                 }
