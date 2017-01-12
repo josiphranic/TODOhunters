@@ -408,6 +408,12 @@ namespace urednistvo.Controllers
         // GET: Text/Delete/5
         public ActionResult Delete(int id)
         {
+            if((string)Session["Role"] != RoleNames.EDITOR)
+            {
+                TempData["Message"] = "Nemate prava za brisanje teksta.";
+                return RedirectToAction("Index", "Text");
+            }
+
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
                 db.Texts.Remove(db.Texts.Find(id));

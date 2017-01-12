@@ -68,6 +68,7 @@ namespace urednistvo.Controllers
                 }
                 using (UrednistvoDatabase db = new UrednistvoDatabase())
                 {
+                    account.Role = db.Roles.Single(r => r.RoleName == RoleNames.REGISTERED_USER).Value;
                     db.Users.Add(account);
                     db.SaveChanges();
                 }

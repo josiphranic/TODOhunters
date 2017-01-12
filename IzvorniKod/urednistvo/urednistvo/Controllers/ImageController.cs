@@ -87,7 +87,7 @@ namespace urednistvo.Controllers
                 return RedirectToAction("Index", "Text");
             }
 
-            ViewBag.TextId = new SelectList(db.Texts.Where(t => t.TextStatus == (int)TextStatus.LECTORED), "TextId", "Title");
+            ViewBag.TextId = new SelectList(db.Texts.Where(t => t.TextStatus == (int)TextStatus.LECTORED && t.EditionPublishable == true), "TextId", "Title");
             return View();
         }
 
