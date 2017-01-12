@@ -18,7 +18,7 @@ namespace urednistvo.Controllers
         private UrednistvoDatabase db = new UrednistvoDatabase();
         private static int EDITORIAL_COUNCIL_MEMBERS = 5;
 
-        public static TextView getTextView(Text text, bool copyContent)
+        public static TextView getTextView(Text textInput, bool copyContent)
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
