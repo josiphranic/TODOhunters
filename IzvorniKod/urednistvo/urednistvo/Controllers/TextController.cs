@@ -83,8 +83,9 @@ namespace urednistvo.Controllers
             return View(listView);
         }
 
-        public ActionResult ByAuthor(int id)
+        public ActionResult ByAuthor(int? id)
         {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             List<Text> list;
             if (Session["UserID"] == null || (String)Session["Role"] == RoleNames.REGISTERED_USER)
             {
@@ -214,8 +215,9 @@ namespace urednistvo.Controllers
         }
 
         // GET: Text/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             if (db.Texts.Find(id).WebPublishable) {
                 return View(getTextView(db.Texts.Single(u => u.TextId == id), true));
             }
@@ -268,9 +270,10 @@ namespace urednistvo.Controllers
             return View();
         }
 
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            if(Session["UserID"] == null)
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (Session["UserID"] == null)
             {
                 TempData["Message"] = "Ne možete mijenjati ovaj tekst.";
                 return RedirectToAction("Details/" + id, "Text");
@@ -332,8 +335,9 @@ namespace urednistvo.Controllers
         }
 
         // GET: Text/EditEditor/5
-        public ActionResult EditEditor(int id)
+        public ActionResult EditEditor(int? id)
         {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {  
 
@@ -404,15 +408,17 @@ namespace urednistvo.Controllers
         }
 
         // GET: Text/EditMember/5
-        public ActionResult EditMember(int id)
+        public ActionResult EditMember(int? id)
         {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             return RedirectToAction("Create/" + id, "Ratings");
         }
 
         // GET: Text/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            if((string)Session["Role"] != RoleNames.EDITOR)
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if ((string)Session["Role"] != RoleNames.EDITOR)
             {
                 TempData["Message"] = "Nemate prava za brisanje teksta.";
                 return RedirectToAction("Index", "Text");
@@ -428,9 +434,9 @@ namespace urednistvo.Controllers
         }
 
         //GET: Text/Download/<id>
-        public ActionResult Download(int id)
+        public ActionResult Download(int? id)
         {
-
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             if (db.Texts.Find(id).WebPublishable)
             {
                 return createRTF(db.Texts.Single(u => u.TextId == id));

@@ -1,12 +1,33 @@
 ﻿@model List<urednistvo.ModelsView.Textual.CommentView>
 
 @{
-    ViewBag.Title = "Komentari po tekstu";
+    Layout = null;
+}
+@if (Model.Count > 0)
+{
+    <h3>
+        Komentari
+    </h3>
+    <div class="col-md-12" style="min-height:6em">
+        @foreach (var comment in Model)
+        {
+            <div class="col-md-10 col-md-offset-1" style="background-color:#eefce8; border-radius: 15px 50px;min-height:6em">
+                <a href='@Url.Action("Details/" + @comment.UserId, "User")' style="float:left; min-height:2em">
+                    <span class="glyphicon glyphicon-user"></span> @comment.Username
+                </a>
+
+                <div class="col-md-12">
+                    <text>@Html.DisplayFor(modelItem => comment.Content)</text>
+                </div>
+                <p><span style="float:right">@Html.DisplayFor(modelItem => comment.Time)</span></p>
+            </div>
+        }
+    </div>
 }
 
-<h2>Po tekstu</h2>
 
-<table class="table">
+
+@*<table class="table">
     <tr>
         <th>
             Autor
@@ -38,10 +59,10 @@
         </tr>
     }
 
-</table>
+</table>*@
 
 
 <p>
     @*@Html.ActionLink("Uređivanje (nedefinirano)", "Edit", new { /* id = Model.PrimaryKey */ }) |*@
-    @Html.ActionLink("Povratak na listu korisnika", "Index", "User")
+    @*@Html.ActionLink("Povratak na listu korisnika", "Index", "User")*@
 </p>

@@ -6,7 +6,6 @@
 
 <h2>Svi tekstovi</h2>
 <br /> 
-
 @foreach(var t in Model.GroupBy(t => t.FinalSectionId))
 {
     <div class="col-md-12" style="background-color:#eefce8">
@@ -26,7 +25,7 @@
         <div class="col-md-12" >
             <div class="col-md-1">
                 <div class="col-md-6"  style="padding-top:2em">
-                    <a href='@Url.Action("ByText/" + @text.TextId, "Comment")'>
+                    <a href='@Url.Action("Details/" + @text.TextId, "Text")'>
                         <span class="glyphicon glyphicon-comment" title="Komentari"></span>
                     </a>
                 </div>

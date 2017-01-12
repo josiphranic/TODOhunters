@@ -8,39 +8,31 @@
 <h3 style="padding-left:0.5em">
     @Html.DisplayFor(model => model.Subtitle)
 </h3>
-<p><span style="float:right">Objava: @Html.DisplayFor(model => model.Time)</span></p>
-<br />
-<div class="col-md-12" style="padding-top:1em; padding-bottom:1em">
-   <div class="col-md-10 col-md-offset-1">
-       <text style="font-size:medium">@Model.Content</text>
-       @*@Html.DisplayFor(model => model.Content)*@
-   </div>
-    @*<hr />
-    <dl class="dl-horizontal">
-        <dt>
-            Naslov
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt>
-            Podnaslov
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Subtitle)
-        </dd>
-        <dt>
-            Sadržaj
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Content)
-        </dd>      
 
-    </dl>*@
+<br />
+<div class="col-md-12" style="padding-top:1em; padding-bottom:1em; background-color:#eefce8; border-radius:75px">
+   <div class="col-md-10 col-md-offset-1" >
+       <hr />
+       <text style="font-size:medium">@Model.Content</text>
+       <hr/>
+       @*@Html.DisplayFor(model => model.Content)*@
+       <div class="row">
+           <p>
+               <span style="float:left">Autor: </span>
+               <a href='@Url.Action("Details/" + @Model.UserId, "User")' style="float:left">
+                   <span class="glyphicon glyphicon-user"></span> @Model.Username
+               </a>
+               @*<span style="float:left">Autor: @Model.Username</span>*@
+               <span style="float:right">Objava: @Html.DisplayFor(model => model.Time)</span>
+           </p>
+       </div>
+   </div>
+    
 </div>
+
 @if ((String)Session["UserID"] == Model.UserId.ToString())
 {
-    <div>
+    <div class="col-md-12">
         <hr />
         <dl class="dl-horizontal">
             <dt>
@@ -97,7 +89,8 @@
         </dl>
     </div>
 }
-<p> @if (Session["UserID"] != null)
+<p> 
+    @if (Session["UserID"] != null)
     {
         if (Int32.Parse((string)Session["UserID"]) == Model.UserId && Model.TextStatus == "Vraćen")
         {
@@ -116,14 +109,21 @@
             <label> |</label>
         }
     }
-    @Html.ActionLink("Povratak na listu tekstova ", "Index")<label>  | </label>
-    <a href='@Url.Action("ByText/" + @Model.TextId, "Comment")'>
-        <span class="glyphicon glyphicon-comment" title="Komentari"></span>
-    </a> 
-    @if (Session["UserID"] != null)
-    {
-        <label> | </label>
-        @Html.ActionLink("Komentiraj", "Create/" + Model.TextId, "Comment")
-    }
-    
+        
 </p>
+
+<div class="col-md-12">
+    @Html.Action("ByText", "Comment", Model.TextId)
+    <div class="row col-md-12" style="min-height:2em">
+        @if (Session["UserID"] != null)
+        {
+            <a href='@Url.Action("Create/" + @Model.TextId, "Comment")'>
+                <span class="glyphicon glyphicon-comment" title="Komentiraj"></span> Ostavi svoj komentar! 
+            </a>
+            <span>|</span> @Html.ActionLink("Povratak na listu tekstova ", "Index")
+        }
+    </div>
+    
+</div>
+
+
