@@ -66,18 +66,25 @@
                     <span class="glyphicon glyphicon-star" title="Ocjene"></span>
                 </a>
             </td>
+             @if (Session["UserID"] != null && text.UserId == Int32.Parse((String)Session["UserID"]))
+             {
+                <td>
+                    <a href='@Url.Action("Edit/" + @text.TextId, "Text")'>
+                        <span class="glyphicon glyphicon-pencil" title="Uređivanje"></span>
+                    </a>
+                </td>
+                <td>
+                    <a href='@Url.Action("Delete/" + @text.TextId, "Text")'>
+                        <span class="glyphicon glyphicon-trash" title="Obriši"></span>
+                    </a>
+                </td>
+             }
+             else {
+                  <td></td>
+                  <td></td>
+             }
             <td>
-                <a href='@Url.Action("Edit/" + @text.TextId, "Text")'>
-                    <span class="glyphicon glyphicon-pencil" title="Uređivanje"></span>
-                </a>
-            </td>
-            <td>
-                <a href='@Url.Action("Delete/" + @text.TextId, "Text")'>
-                    <span class="glyphicon glyphicon-trash" title="Obriši"></span>
-                </a>
-            </td>
-            <td>
-                @if (text.UserId == Int32.Parse((String)Session["UserID"]))
+                @if (Session["UserID"] != null && text.UserId == Int32.Parse((String)Session["UserID"]))
                 {
                     @Html.DisplayFor(modelItem => text.TextStatus)
                 }
