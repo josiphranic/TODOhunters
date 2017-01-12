@@ -3,11 +3,19 @@
     ViewBag.Title = "Detalji o tekstu";
 }
 <h2>
-    Detalji teksta "@Model.Title"
+    <strong>@Model.Title</strong> 
 </h2>
+<h3 style="padding-left:0.5em">
+    @Html.DisplayFor(model => model.Subtitle)
+</h3>
+<p><span style="float:right">Objava: @Html.DisplayFor(model => model.Time)</span></p>
 <br />
-<div>
-    <hr />
+<div class="col-md-12" style="padding-top:1em; padding-bottom:1em">
+   <div class="col-md-10 col-md-offset-1">
+       <text style="font-size:medium">@Model.Content</text>
+       @*@Html.DisplayFor(model => model.Content)*@
+   </div>
+    @*<hr />
     <dl class="dl-horizontal">
         <dt>
             Naslov
@@ -26,41 +34,9 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Content)
-        </dd>
-        <dt>
-            Ažurirano
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Time)
-        </dd>
-        <dt>
-            Za web
-        </dt>
-        <dd>
-            @if (Model.WebPublishable == "True")
-            {
-                <span class="glyphicon glyphicon-check" title=""></span>
-            }
-            else
-            {
-                <span class="glyphicon glyphicon-minus" title=""></span>
-            }
-        </dd>
-        <dt>
-            Za tiskovinu
-        </dt>
-        <dd>
-            @if (Model.EditionPublishable == "True")
-            {
-                <span class="glyphicon glyphicon-check" title=""></span>
-            }
-            else
-            {
-                <span class="glyphicon glyphicon-minus" title=""></span>
-            }
-        </dd>
+        </dd>      
 
-    </dl>
+    </dl>*@
 </div>
 @if ((String)Session["UserID"] == Model.UserId.ToString())
 {
@@ -91,6 +67,32 @@
             </dt>
             <dd>
                 <label>@Model.FinalSection</label>
+            </dd>
+            <dt>
+                Za web
+            </dt>
+            <dd>
+                @if (Model.WebPublishable == "True")
+                {
+                    <span class="glyphicon glyphicon-check" title=""></span>
+                }
+                else
+                {
+                    <span class="glyphicon glyphicon-minus" title=""></span>
+                }
+            </dd>
+            <dt>
+                Za tiskovinu
+            </dt>
+            <dd>
+                @if (Model.EditionPublishable == "True")
+                {
+                    <span class="glyphicon glyphicon-check" title=""></span>
+                }
+                else
+                {
+                    <span class="glyphicon glyphicon-minus" title=""></span>
+                }
             </dd>
         </dl>
     </div>
