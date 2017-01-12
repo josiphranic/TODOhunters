@@ -335,13 +335,25 @@ namespace urednistvo.Controllers
         public ActionResult EditEditor(int id)
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
-            {
+            {  
+
                 if (db.Ratings.Count(r => r.TextId == id) < EDITORIAL_COUNCIL_MEMBERS)
                 {
                     TempData["Message"] = "Svi članovi uredničkog vijeća moraju ocijeniti tekst.";
                     return RedirectToAction("Details/" + id, "Text");
                 }
-                var text = db.Texts.Single(d => d.TextId == id);
+                Text text = db.Texts.Find(id);
+                if (text == null)
+                {
+                    TempData["Message"] = "Ovaj tekst ne postoji.";
+                    return RedirectToAction("Index");
+                }
+
+                if(text.TextStatus != (int)TextStatus.SENT)
+                {
+                    TempData["Message"] = "Ovaj tekst se ne moze ocijeniti.";
+                    return RedirectToAction("Index");
+                }
 
                 Section s = db.Sections.Find(text.WantedSectionByAuthorId);
                 return View(text);
