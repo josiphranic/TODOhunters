@@ -8,7 +8,86 @@
     <span class="glyphicon glyphicon-user"></span> @Model.First().Username
 </a></h2>
 
-<table class="table">
+@foreach (var t in Model.GroupBy(t => t.FinalSectionId))
+{
+    <div class="col-md-12" style="background-color:#eefce8">
+        @if (t.Key != -1)
+        {
+            <a href='@Url.Action("Details/" + @t.Key, "Sections")' style="font-size:large">
+                @t.FirstOrDefault(x => x.FinalSectionId == t.Key).FinalSection
+            </a>
+        }
+        else
+        {
+            <a style="font-size:large">@t.FirstOrDefault(x => x.FinalSectionId == t.Key).FinalSection </a>
+        }
+    </div>
+    foreach (var text in t)
+    {
+        <div class="col-md-12">
+            <div class="col-md-1">
+                <div class="col-md-6" style="padding-top:2em">
+                    <a href='@Url.Action("Details/" + @text.TextId, "Text")'>
+                        <span class="glyphicon glyphicon-comment" title="Komentari"></span>
+                    </a>
+                </div>
+                @if (text.EditionPublishable == "True")
+                {
+                    <div class="col-md-6" style="padding-top:2em">
+                        <a href='@Url.Action("DownloadRTF/" + @text.TextId, "Text")'>
+                            <span class="glyphicon glyphicon-download" title="Preuzmi"></span>
+                        </a>
+                    </div>
+                }
+
+            </div>
+            <div class="col-md-9 ">
+                <h3>
+                    <a href='@Url.Action("Details/" + @text.TextId, "Text")'>
+                        @text.Title
+                    </a>
+                </h3>
+                <h4>
+                    @text.Subtitle
+                </h4>
+                <p class="row">
+                    <span style="float:right">@Html.DisplayFor(modelItem => text.Time)</span>
+                </p>
+            </div>
+            <div class="col-md-2" style="padding-left:3em">
+                @if (Session["UserID"] != null)
+                {
+                    <div class="row" style="padding-top:1em">
+                        <p>
+                            <a href='@Url.Action("ByText/" + @text.TextId, "Ratings")'>
+                                <span class="glyphicon glyphicon-star" title="Ocjene"></span>
+                            </a>
+                            <a href='@Url.Action("Edit/" + @text.TextId, "Text")'>
+                                <span class="glyphicon glyphicon-pencil" title="Uređivanje"></span>
+                            </a>
+                            <a href='@Url.Action("Delete/" + @text.TextId, "Text")'>
+                                <span class="glyphicon glyphicon-trash" title="Obriši"></span>
+                            </a>
+                        </p>
+                    </div>
+                    if (text.WebPublishable == "True")
+                    {
+                        <div class="row">
+                            <p>Za web: <span class="glyphicon glyphicon-check" title=""></span></p>
+                        </div>
+                    }
+                }
+                @if (Session["UserID"] != null && text.UserId == Int32.Parse((String)Session["UserID"]))
+                {
+                    <p>Status: @Html.DisplayFor(modelItem => text.TextStatus)</p>
+                }
+
+            </div>
+
+        </div>
+    }
+}
+@*<table class="table">
     <tr>
         <th>
             Naslov
@@ -60,9 +139,6 @@
                 <a href='@Url.Action("Details/" + @text.TextId, "Text")'>
                     <span class="glyphicon glyphicon-comment" title="Komentari"></span>
                 </a>
-                @*<a href='@Url.Action("ByText/" + @text.TextId, "Comment")'>
-                    <span class="glyphicon glyphicon-comment" title="Komentari"></span>
-                </a>*@
             </td>
             <td>
                 <a href='@Url.Action("ByText/" + @text.TextId, "Ratings")'>
@@ -98,4 +174,4 @@
             </td>
         </tr>
     }
-</table>
+</table>*@
