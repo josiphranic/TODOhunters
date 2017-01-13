@@ -138,7 +138,7 @@ namespace urednistvo.Controllers
                 ModelState.Clear();
                 TempData["Message"] = "Komentar je uspjesno stvoren.";
 
-                return RedirectToAction("ByText/" + comment.TextId);
+                return RedirectToAction("Details/" + comment.TextId, "Text");
             }
             return View();
         }
