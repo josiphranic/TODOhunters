@@ -132,7 +132,11 @@ namespace urednistvo.Controllers
             {
                 NotificationController.createNotificationForEditor(db.Texts.Find(id), "Tekst \"" + db.Texts.Find(id).Title + "\"je ocijenjen od svih članova uredničkog vijeća.");
             }
-            return View();
+            var rating = new Rating
+            {
+                Text = db.Texts.SingleOrDefault(t => t.TextId == id)
+            };
+            return View(rating);
         }
 
         // POST: Ratings/Create
@@ -148,7 +152,7 @@ namespace urednistvo.Controllers
 
                 db.Ratings.Add(rating);
                 db.SaveChanges();
-                return RedirectToAction("Index", "Ratings");
+                return RedirectToAction("ForRate", "Text");
             }
 
             return View();
