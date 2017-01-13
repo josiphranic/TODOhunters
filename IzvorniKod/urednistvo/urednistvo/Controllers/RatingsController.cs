@@ -17,6 +17,9 @@ namespace urednistvo.Controllers
     {
         private UrednistvoDatabase db = new UrednistvoDatabase();
 
+        private int DEFAULT_VALUE_RATE = 3;
+        private int DEFAULT_VALUE_SECTION = 3;
+
         public RatingView createRatingView(Rating rating)
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
@@ -64,7 +67,7 @@ namespace urednistvo.Controllers
         {
             if ((String)Session["Role"] != RoleNames.EDITOR)
             {
-                TempData["Message"] = "Nemate ovlati pristupiti ocjenama.";
+                TempData["Message"] = "Nemate ovlasti pristupiti ocjenama.";
                 return RedirectToAction("Index", "Text");
             }
 
@@ -82,7 +85,7 @@ namespace urednistvo.Controllers
         {
             if ((String)Session["Role"] != RoleNames.EDITOR)
             {
-                TempData["Message"] = "Nemate ovlati pristupiti ocjenama.";
+                TempData["Message"] = "Nemate ovlasti pristupiti ocjenama.";
                 return RedirectToAction("Index", "Text");
             }
 
@@ -122,14 +125,18 @@ namespace urednistvo.Controllers
                 return RedirectToAction("Index", "Text");
             }
 
-            ViewBag.DropDownListRates = new SelectList(db.Rates, "Value", "Name");
-            ViewBag.DropDownListSections = new SelectList(db.Sections, "SectionId", "Title");
+            ViewBag.DropDownListRates = new SelectList(db.Rates, "Value", "Name", DEFAULT_VALUE_RATE);
+            ViewBag.DropDownListSections = new SelectList(db.Sections, "SectionId", "Title", DEFAULT_VALUE_SECTION);
 
-            if (db.Ratings.Count(r => r.UserId == userId && r.TextId == id) > 5)
+            if (db.Ratings.Count(r => r.UserId == userId && r.TextId == id) == 5)
             {
                 NotificationController.createNotificationForEditor(db.Texts.Find(id), "Tekst \"" + db.Texts.Find(id).Title + "\"je ocijenjen od svih članova uredničkog vijeća.");
             }
-            return View();
+            var rating = new Rating
+            {
+                Text = db.Texts.SingleOrDefault(t => t.TextId == id)
+            };
+            return View(rating);
         }
 
         // POST: Ratings/Create
@@ -145,7 +152,7 @@ namespace urednistvo.Controllers
 
                 db.Ratings.Add(rating);
                 db.SaveChanges();
-                return RedirectToAction("Index", "Ratings");
+                return RedirectToAction("ForRate", "Text");
             }
 
             return View();

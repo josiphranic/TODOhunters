@@ -34,7 +34,7 @@
             Željeni podlistak
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.WantedSectionByAuthorId)
+            <label>@Model.WantedSectionByAuthorId</label>
         </dd>
     </dl>
 </div>
@@ -46,8 +46,9 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.TextId)
+
         <div class="form-group">
-            <label class="control-label col-md-2">Objavi na web</label>
+            <label class="control-label col-md-2">Objavi na web-u</label>
             <div class="col-md-10">
                 <div class="checkbox">
                     @Html.EditorFor(model => model.WebPublishable)
@@ -55,8 +56,9 @@
                 </div>
             </div>
         </div>
+
         <div class="form-group">
-            <label class="control-label col-md-2">Objavi u uređivanju</label>
+            <label class="control-label col-md-2">Objavi u tiskovini</label>
             <div class="col-md-10">
                 <div class="checkbox">
                     @Html.EditorFor(model => model.EditionPublishable)
@@ -71,12 +73,65 @@
                 @Html.ValidationMessageFor(model => model.Suggestions, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        @{
+            List<SelectListItem> sections = new List<SelectListItem>();
+            sections.Add(new SelectListItem
+            {
+                Text = "Zabava",
+                Value = "3"
+            });
+            sections.Add(new SelectListItem
+            {
+                Text = "Sport",
+                Value = "4",
+                Selected = true
+            });
+            sections.Add(new SelectListItem
+            {
+                Text = "Crna kronika",
+                Value = "5"
+            });
+            sections.Add(new SelectListItem
+            {
+                Text = "Vijesti",
+                Value = "6"
+            });
+            sections.Add(new SelectListItem
+            {
+                Text = "Kultura",
+                Value = "7"
+            });
+            sections.Add(new SelectListItem
+            {
+                Text = "Financije",
+                Value = "8"
+            });
+            sections.Add(new SelectListItem
+            {
+                Text = "Znanost",
+                Value = "9"
+            });
+            sections.Add(new SelectListItem
+            {
+                Text = "Umjetnost",
+                Value = "10"
+            });
+            sections.Add(new SelectListItem
+            {
+                Text = "Zdravlje",
+                Value = "11"
+            });
+            sections.Add(new SelectListItem
+            {
+                Text = "Događanja",
+                Value = "12"
+            });
+        }
         <div class="form-group">
             <label class="control-label col-md-2">Konačni podlistak</label>
             <div class="col-md-10">
-                //POPRAVITI OVO KAO DROP DOWN LISTU
-                @Html.EditorFor(model => model.FinalSectionId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FinalSectionId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.FinalSectionId, sections, new { @class = "dropdown" })
             </div>
         </div>
         <div class="form-group">
@@ -92,3 +147,11 @@
 <div>
     @Html.ActionLink("Povratak na listu tekstova", "Index")
 </div>
+<script type="text/javascript">
+    function checkAnother() {
+        var checked = $('#edition').is(':checked');
+        if (checked) {
+            $('#web').prop('checked', true);
+        }
+    }
+</script>

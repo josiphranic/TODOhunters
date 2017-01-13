@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using urednistvo.Models;
+using urednistvo.ModelsView;
 using urednistvo.ModelsView.Textual;
 
 namespace urednistvo.Controllers
@@ -35,7 +36,10 @@ namespace urednistvo.Controllers
                 SectionView sView = new SectionView();
                 sView.SectionId = section.SectionId;
                 sView.Title = section.Title;
-                sView.NumberOfTexts = db.Texts.Count(t => t.Time > start && t.Time < end && t.FinalSectionId == section.SectionId);
+                sView.NumberOfTexts = db.Texts.Count(t => ((t.WebPublishable == true && t.TextStatus == (int)TextStatus.LECTORED) ||
+                                                    (t.EditionPublishable == true && t.TextStatus == (int)TextStatus.CORRECTED)) &&
+                                                        t.Time < end &&
+                                                        t.Time > start && t.FinalSectionId == section.SectionId);
 
                 return sView;
             }
@@ -66,33 +70,44 @@ namespace urednistvo.Controllers
 
             foreach (Text t in list)
             {
-                textViews.Add(TextController.getTextView(t));
+                textViews.Add(TextController.getTextView(t, false));
             }
 
             return View(textViews);
         }
 
-        // GET: Sections/Create
-        public ActionResult Create()
+        // GET: Sections/Details/5
+        public ActionResult DetailsByEdition(int SectionId, int EditionId)
         {
-            return View();
-        }
+            Edition edition = db.Editions.Find(EditionId);
 
-        // POST: Sections/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SectionId,Title")] Section section)
-        {
-            if (ModelState.IsValid)
+            if(edition == null)
             {
-                db.Sections.Add(section);
-                db.SaveChanges();
+                TempData["Message"] = "Greska kod trazenja teksta.";
+                RedirectToAction("Details/" + SectionId);
+            }
+
+            DateTime end = edition.TimeOfRelease;
+            DateTime start = edition.TimeOfRelease.AddDays(-7);
+
+            List<Text> list = db.Texts.Where(t => ((t.WebPublishable == true && t.TextStatus == (int)TextStatus.LECTORED) ||
+                                                    (t.EditionPublishable == true && t.TextStatus == (int)TextStatus.CORRECTED)) &&
+                                                        t.Time < end &&
+                                                        t.Time > start && t.FinalSectionId == SectionId).ToList();
+            if (list.Count == 0)
+            {
+                TempData["Message"] = "Nema tekstova u ovom podlistku za odabrano izdanje.";
                 return RedirectToAction("Index");
             }
 
-            return View(section);
+            List<TextView> textViews = new List<TextView>();
+
+            foreach (Text t in list)
+            {
+                textViews.Add(TextController.getTextView(t, false));
+            }
+
+            return View(textViews);
         }
     }
 }

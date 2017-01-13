@@ -12,9 +12,9 @@
         <th>
             Autor
         </th>
-        <th>
+        @*<th>
             Podlistak
-        </th>
+        </th>*@
         <th>
             Ažurirano
         </th>
@@ -38,9 +38,9 @@
             <td>
                 @Html.ActionLink(@text.Username + " ", "Details/" + @text.UserId, "User")
             </td>
-            <td>
+            @*<td>
                 @Html.ActionLink(@text.FinalSection + " ", "Index" + @text.FinalSection, "Section")
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => text.Time)
             </td>
@@ -51,20 +51,24 @@
                 </th>
             }
             <td>
-                @Html.ActionLink("Komentari", "ByText/" + @text.TextId, "Comment")
+                @Html.ActionLink("Komentari", "Details/" + @text.TextId, "Text")
             </td>
             <td>
                 @Html.ActionLink("Ocjene", "ByText/" + @text.TextId, "Ratings")
             </td>
-            <td>
-                @Html.ActionLink("Uređivanje", "Edit/" + @text.TextId, "Text")
-            </td>
-            <td>
-                @Html.ActionLink("Obriši", "Delete/" + @text.TextId, "Text")
-            </td>
+            @if (Session["UserID"] != null && text.UserId == Int32.Parse((String)Session["UserID"]))
+            {
+                <td>
+                    @Html.ActionLink("Uređivanje", "Edit/" + @text.TextId, "Text")
+                </td>
+                <td>
+                    @Html.ActionLink("Obriši", "Delete/" + @text.TextId, "Text")
+                </td>
+            }
+            
         </tr>
     }
 </table>
-<p>
+@*<p>
     <font size="3">@Html.ActionLink("Novi tekst", "Create")</font>
-</p>
+</p>*@

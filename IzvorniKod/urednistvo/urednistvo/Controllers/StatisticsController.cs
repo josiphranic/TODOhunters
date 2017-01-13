@@ -135,7 +135,7 @@ namespace urednistvo.Controllers
             List<TextView> tView = new List<TextView>();
             foreach (Text t in texts)
             {
-                tView.Add(TextController.getTextView(t));
+                tView.Add(TextController.getTextView(t, true));
             }
             return tView;
         }

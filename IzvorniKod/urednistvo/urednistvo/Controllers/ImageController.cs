@@ -22,7 +22,7 @@ namespace urednistvo.Controllers
         {
             if((String)Session["Role"] != RoleNames.EDITOR && (String)Session["Role"] != RoleNames.GRAPHIC_EDITOR)
             {
-                TempData["Message"] = "Nemate ovlati pristupiti ovoj stranici.";
+                TempData["Message"] = "Nemate ovlasti pristupiti ovoj stranici.";
                 return RedirectToAction("Index", "Text");
             }
 
@@ -34,7 +34,7 @@ namespace urednistvo.Controllers
         {
             if ((String)Session["Role"] != RoleNames.EDITOR && (String)Session["Role"] != RoleNames.GRAPHIC_EDITOR)
             {
-                TempData["Message"] = "Nemate ovlati pristupiti ovoj stranici.";
+                TempData["Message"] = "Nemate ovlasti pristupiti ovoj stranici.";
                 return RedirectToAction("Index", "Text");
             }
 
@@ -54,7 +54,7 @@ namespace urednistvo.Controllers
         {
             if ((String)Session["Role"] != RoleNames.EDITOR && (String)Session["Role"] != RoleNames.GRAPHIC_EDITOR)
             {
-                TempData["Message"] = "Nemate ovlati pristupiti ovoj stranici.";
+                TempData["Message"] = "Nemate ovlasti pristupiti ovoj stranici.";
                 return RedirectToAction("Index", "Text");
             }
 
@@ -72,7 +72,7 @@ namespace urednistvo.Controllers
             if(images.Count() == 0)
             {
                 TempData["Message"] = "Nema slika za ovaj tekst.";
-                return RedirectToAction("Index");
+                return RedirectToAction("ForGraphicEditing", "Text");
             }
 
             return View(images.ToList());
@@ -83,11 +83,11 @@ namespace urednistvo.Controllers
         {
             if ((String)Session["Role"] != RoleNames.EDITOR)
             {
-                TempData["Message"] = "Nemate ovlati pristupiti ovoj stranici.";
+                TempData["Message"] = "Nemate ovlasti pristupiti ovoj stranici.";
                 return RedirectToAction("Index", "Text");
             }
 
-            ViewBag.TextId = new SelectList(db.Texts.Where(t => t.TextStatus == (int)TextStatus.LECTORED), "TextId", "Title");
+            ViewBag.TextId = new SelectList(db.Texts.Where(t => t.TextStatus == (int)TextStatus.LECTORED && t.EditionPublishable == true), "TextId", "Title");
             return View();
         }
 
@@ -120,7 +120,7 @@ namespace urednistvo.Controllers
         {
             if ((String)Session["Role"] != RoleNames.EDITOR && (String)Session["Role"] != RoleNames.GRAPHIC_EDITOR)
             {
-                TempData["Message"] = "Nemate ovlati pristupiti ovoj stranici.";
+                TempData["Message"] = "Nemate ovlasti pristupiti ovoj stranici.";
                 return RedirectToAction("Index", "Text");
             }
 

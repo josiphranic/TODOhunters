@@ -3,83 +3,94 @@
     ViewBag.Title = "Detalji o tekstu";
 }
 <h2>
-    Detalji teksta "@Model.Title"
+    <strong>@Model.Title</strong> 
 </h2>
+<h3 style="padding-left:0.5em">
+    @Html.DisplayFor(model => model.Subtitle)
+</h3>
+
 <br />
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            Naslov
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt>
-            Podnaslov
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Subtitle)
-        </dd>
-        <dt>
-            Sadržaj
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Content)
-        </dd>
-        <dt>
-            Ažurirano
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Time)
-        </dd>
-    </dl>
+<div class="col-md-12" style="padding-top:1em; padding-bottom:1em; background-color:#eefce8; border-radius:75px">
+   <div class="col-md-10 col-md-offset-1" >
+       <hr />
+       <text style="font-size:medium">@Model.Content</text>
+       <hr/>
+       @*@Html.DisplayFor(model => model.Content)*@
+       <div class="row">
+           <p>
+               <span style="float:left">Autor: </span>
+               <a href='@Url.Action("Details/" + @Model.UserId, "User")' style="float:left">
+                   <span class="glyphicon glyphicon-user"></span> @Model.Username
+               </a>
+               @*<span style="float:left">Autor: @Model.Username</span>*@
+               <span style="float:right">Objava: @Html.DisplayFor(model => model.Time)</span>
+           </p>
+       </div>
+   </div>
+    
 </div>
+
 @if ((String)Session["UserID"] == Model.UserId.ToString())
 {
-    <div>
+    <div class="col-md-12">
         <hr />
         <dl class="dl-horizontal">
             <dt>
                 Status teksta
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.TextStatus)
+                <label>@Model.TextStatus</label>
             </dd>
-            <dt>
-                Objavljeno na webu
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.WebPublishable)
-            </dd>
-            <dt>
-                Poslano na uređivanje
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.EditionPublishable)
-            </dd>
+         
             <dt>
                 Prijedlozi
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Suggestions)
+                <label>@Model.Suggestions</label>
             </dd>
             <dt>
                 Željeni podlistak
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.WantedSectionByAuthor)
+                <label>@Model.WantedSectionByAuthor</label>
             </dd>
             <dt>
                 Konačni podlistak
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.FinalSection)
+                <label>@Model.FinalSection</label>
+            </dd>
+            <dt>
+                Za web
+            </dt>
+            <dd>
+                @if (Model.WebPublishable == "True")
+                {
+                    <span class="glyphicon glyphicon-check" title=""></span>
+                }
+                else
+                {
+                    <span class="glyphicon glyphicon-minus" title=""></span>
+                }
+            </dd>
+            <dt>
+                Za tiskovinu
+            </dt>
+            <dd>
+                @if (Model.EditionPublishable == "True")
+                {
+                    <span class="glyphicon glyphicon-check" title=""></span>
+                }
+                else
+                {
+                    <span class="glyphicon glyphicon-minus" title=""></span>
+                }
             </dd>
         </dl>
     </div>
 }
-<p> @if (Session["UserID"] != null)
+<p> 
+    @if (Session["UserID"] != null)
     {
         if (Int32.Parse((string)Session["UserID"]) == Model.UserId && Model.TextStatus == "Vraćen")
         {
@@ -98,9 +109,21 @@
             <label> |</label>
         }
     }
-    @Html.ActionLink("Povratak na listu tekstova ", "Index")<label>  | </label>
-    <a href='@Url.Action("ByText/" + @Model.TextId, "Comment")'>
-        <span class="glyphicon glyphicon-comment" title="Komentari"></span>
-    </a> <label> | </label>
-    @Html.ActionLink("Komentiraj", "Create/" + Model.TextId, "Comment")
+        
 </p>
+
+<div class="col-md-12">
+    @Html.Action("Details", "Text", Model.TextId)
+    <div class="row col-md-12" style="min-height:2em">
+        @if (Session["UserID"] != null)
+        {
+            <a href='@Url.Action("Create/" + @Model.TextId, "Comment")'>
+                <span class="glyphicon glyphicon-comment" title="Komentiraj"></span> Ostavi svoj komentar! 
+            </a>
+            <span>|</span> @Html.ActionLink("Povratak na listu tekstova ", "Index")
+        }
+    </div>
+    
+</div>
+
+

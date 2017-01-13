@@ -1,0 +1,115 @@
+﻿@model List<urednistvo.ModelsView.Textual.TextView>
+@{
+    ViewBag.Title = "Arhiva";
+}
+<h2>Svi tekstovi</h2>
+<br />
+<table class="table">
+    <tr>
+        <th>
+            Naslov
+        </th>
+        <th>
+            Autor
+        </th>
+        <th>
+            Podlistak
+        </th>
+        <th>
+            Ažurirano
+        </th>
+        @if ((String)Session["Role"] == "Glavni urednik")
+        {
+            <th>
+                Text status
+            </th>
+        }
+        <th>
+            Za web
+        </th>
+        <th>
+            Za tiskovinu
+        </th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    @foreach (var text in Model)
+    {
+        <tr>
+            <td>
+                <a href='@Url.Action("Details/" + @text.TextId, "Text")'>
+                    <span class="glyphicon glyphicon-list"></span> @text.Title (@text.Subtitle)
+                </a>
+            </td>
+
+            <td>
+                <a href='@Url.Action("Details/" + @text.UserId, "User")'>
+                    <span class="glyphicon glyphicon-user"></span> @text.Username
+                </a>
+
+            <td>
+                @if (text.FinalSectionId != -1)
+                {
+                    <a href='@Url.Action("Details/" + @text.FinalSectionId, "Sections")'>
+                        <span class="glyphicon glyphicon-file"></span> @text.FinalSection
+                    </a>
+                }
+                else
+                {
+                    <label><span class="glyphicon glyphicon-file"></span> @text.FinalSection </label>
+                }
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => text.Time)
+            </td>
+
+            @if ((String)Session["Role"] == "Glavni urednik")
+            {
+                <th>
+                    @Html.DisplayFor(modelItem => text.TextStatus)
+                </th>
+            }
+
+            <td>
+                @if (text.WebPublishable == "True")
+                {
+                    <span class="glyphicon glyphicon-check" title=""></span>
+                }
+            </td>
+
+            <td>
+                @if (text.EditionPublishable == "True")
+                {
+                    <a href='@Url.Action("DownloadRTF/" + @text.TextId, "Text")'>
+                        <span class="glyphicon glyphicon-download" title="Preuzmi"></span>
+                    </a>
+                }
+            </td>
+
+            <td>
+                <a href='@Url.Action("Details/" + @text.TextId, "Text")'>
+                    <span class="glyphicon glyphicon-comment" title="Komentari"></span>
+                </a>
+            </td>
+
+            <td>
+                <a href='@Url.Action("ByText/" + @text.TextId, "Ratings")'>
+                    <span class="glyphicon glyphicon-star" title="Ocjene"></span>
+                </a>
+            </td>
+            <td>
+                <a href='@Url.Action("Edit/" + @text.TextId, "Text")'>
+                    <span class="glyphicon glyphicon-pencil" title="Uređivanje"></span>
+                </a>
+            </td>
+            <td>
+                <a href='@Url.Action("Delete/" + @text.TextId, "Text")'>
+                    <span class="glyphicon glyphicon-trash" title="Obriši"></span>
+                </a>
+            </td>
+        </tr>
+    }
+</table>

@@ -26,6 +26,14 @@
                 Text status
             </th>
         }
+        <th>
+            Za web
+        </th>
+        <th>
+            Za tiskovinu
+        </th>
+        <th></th>
+        <th></th>
         <th></th>
         <th></th>
     </tr>
@@ -68,9 +76,10 @@
             }
 
             <td>
-                <a href='@Url.Action("ByText/" + @text.TextId, "Comment")'>
-                    <span class="glyphicon glyphicon-comment" title="Komentari"></span>
-                </a>
+                @if (text.WebPublishable == "True")
+                {
+                    <span class="glyphicon glyphicon-check" title=""></span>
+                }
             </td>
 
             <td>
@@ -80,7 +89,29 @@
                         <span class="glyphicon glyphicon-download" title="Preuzmi"></span>
                     </a>
                 }
-        </td>
+            </td>
+
+            <td>
+                <a href='@Url.Action("Details/" + @text.TextId, "Text")'>
+                    <span class="glyphicon glyphicon-comment" title="Komentari"></span>
+                </a>
+            </td>
+
+            <td>
+                <a href='@Url.Action("ByText/" + @text.TextId, "Ratings")'>
+                    <span class="glyphicon glyphicon-star" title="Ocjene"></span>
+                </a>
+            </td>
+            <td>
+                <a href='@Url.Action("Edit/" + @text.TextId, "Text")'>
+                    <span class="glyphicon glyphicon-pencil" title="Uređivanje"></span>
+                </a>
+            </td>
+            <td>
+                <a href='@Url.Action("Delete/" + @text.TextId, "Text")'>
+                    <span class="glyphicon glyphicon-trash" title="Obriši"></span>
+                </a>
+            </td>
         </tr>
     }
 </table>

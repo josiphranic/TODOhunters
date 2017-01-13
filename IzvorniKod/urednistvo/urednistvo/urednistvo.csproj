@@ -476,10 +476,8 @@
     <Content Include="Views\Text\Edit.cshtml" />
     <Content Include="Views\Text\ForLectoring.cshtml" />
     <Content Include="Views\Text\ForGraphicEditing.cshtml" />
-    <Content Include="Views\Sections\Create.cshtml" />
     <Content Include="Views\Sections\Details.cshtml" />
     <Content Include="Views\Sections\Index.cshtml" />
-    <Content Include="Views\Editions\Create.cshtml" />
     <Content Include="Views\Editions\Details.cshtml" />
     <Content Include="Views\Editions\Index.cshtml" />
     <Content Include="Views\Home\EditorialCouncil.cshtml" />
@@ -490,7 +488,6 @@
     <Content Include="Views\Image\Details.cshtml" />
     <Content Include="Views\Image\Index.cshtml" />
     <Content Include="Views\Image\ByText.cshtml" />
-    <Content Include="Views\Editions\Edit.cshtml" />
     <Content Include="Views\Statistics\Index.cshtml" />
     <Content Include="Views\Statistics\DataForRange.cshtml" />
     <Content Include="Views\Statistics\ByAuthors.cshtml" />
@@ -504,6 +501,7 @@
     <Content Include="Views\Text\ForAddingImages.cshtml" />
     <Content Include="Views\Text\ForRate.cshtml" />
     <Content Include="Views\Ratings\ByText.cshtml" />
+    <Content Include="Views\Sections\DetailsByEdition.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

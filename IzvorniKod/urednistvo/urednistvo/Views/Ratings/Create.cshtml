@@ -4,47 +4,63 @@
     ViewBag.Title = "Dodaj ocjenu";
 }
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Dodaj ocjenu</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            <label class="control-label col-md-2">Objaviti na web</label>
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.WebPublishable)
-                    @Html.ValidationMessageFor(model => model.WebPublishable, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
+   <div class="col-md-12">
+       <div class="col-md-8">
+           <br />
+           <h2>@Model.Text.Title</h2>
+           <h3>@Model.Text.Subtitle</h3>
+           <hr />
+           <div class="row"><text>@Model.Text.Content</text></div>
+           <hr />
+           <div class="row"> <strong>@Model.Text.Author.FirstName  @Model.Text.Author.LastName</strong></div>
 
-        <div class="form-group">
-            <label class="control-label col-md-2">Ocjena</label>
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Rate, (IEnumerable<SelectListItem>)ViewBag.DropDownListRates, "Rate")
-            </div>
-        </div>
+           <br/>
+           <br/>
+       </div>
+       <div class="form-horizontal col-md-4" style="padding-left:3em">
+           @using (Html.BeginForm())
+           {
+                @Html.AntiForgeryToken()
+               <br/>
+               <h2>Dodaj ocjenu</h2>
+               <hr />
+               @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+               <div class="form-group">
+                   <label class="control-label col-md-4">Objaviti na web</label>
+                   <div class="col-md-8">
+                       <div class="checkbox">
+                           @Html.DropDownListFor(model => model.WebPublishable, new List<SelectListItem>
+                            {new SelectListItem {Text = "Za", Value = "True", Selected = true},
+                            new SelectListItem {Text = "Protiv", Value = "False" }
+                       })
+                       </div>
+                   </div>
+               </div>
+               <div class="form-group">
+                   <label class="control-label col-md-4">Ocjena</label>
+                   <div class="col-md-8" style="margin-top:12px">
+                       @Html.DropDownListFor(model => model.Rate, (IEnumerable<SelectListItem>)ViewBag.DropDownListRates, new { @class = "dropdown" })
+                   </div>
+               </div>
+               <div class="form-group">
+                   <label class="control-label col-md-4">Podlistak</label>
+                   <div class="col-md-8" style="margin-top:11px">
+                       @Html.DropDownListFor(model => model.SectionId, (IEnumerable<SelectListItem>)ViewBag.DropDownListSections, new { @class = "dropdown" })
+                   </div>
+               </div>
+               <div class="form-group">
+                   <div class="col-md-offset-2 col-md-10">
+                       <input type="submit" value="Ocijeni" class="btn btn-default" />
+                   </div>
+               </div>
 
-        <div class="form-group">
-            <label class="control-label col-md-2">Podlistak</label>
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.SectionId, (IEnumerable<SelectListItem>)ViewBag.DropDownListSections, "Decide section")
-            </div>
-        </div>
+           }
+           <div style="padding-left:3em">
+               @Html.ActionLink("Povratak na listu tekstova", "Index")
+           </div>
+       </div>
+   </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Ocijeni" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
 
-<div>
-    @Html.ActionLink("Povratak na listu tekstova", "Index")
-</div>
+

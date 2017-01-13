@@ -42,19 +42,19 @@ namespace urednistvo.Controllers
         }
 
         // GET: Comments
-        public ActionResult ByText(int id)
+        public ActionResult ByText(int? id)
         {
+            if(id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var query = from ord in db.Comments
                         where ord.TextId == id
                         select ord;
 
-            if(query.Count() == 0)
-            {
-                TempData["Message"] = "Nema kometara za ovaj tekst.";
-                return RedirectToAction("Index", "Text");
-            }
-
             List<CommentView> commentViews = new List<CommentView>();
+            if (query.Count() == 0)
+            {
+                return View(commentViews);
+            }
+            
             foreach(Comment comment in query)
             {
                 commentViews.Add(createCommentView(comment));
@@ -62,8 +62,9 @@ namespace urednistvo.Controllers
             return View(commentViews);
         }
 
-        public ActionResult ByUser(int id)
+        public ActionResult ByUser(int? id)
         {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             if (db.Ratings.Count(r => r.UserId == id) == 0)
             {
                 TempData["Message"] = "Nema komentara ovog korisnika.";
@@ -98,8 +99,9 @@ namespace urednistvo.Controllers
         }
 
         // GET: Comments/Create/5
-        public ActionResult Create(int id)
+        public ActionResult Create(int? id)
         {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             if (Session["UserID"] == null)
             {
                 TempData["Message"] = "Registrirajte se ili logirajte da bi komentirali.";
@@ -136,7 +138,7 @@ namespace urednistvo.Controllers
                 ModelState.Clear();
                 TempData["Message"] = "Komentar je uspjesno stvoren.";
 
-                return RedirectToAction("ByText/" + comment.TextId);
+                return RedirectToAction("Details/" + comment.TextId, "Text");
             }
             return View();
         }

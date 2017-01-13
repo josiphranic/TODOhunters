@@ -16,12 +16,14 @@ namespace urednistvo.Controllers
     public class TextController : Controller
     {
         private UrednistvoDatabase db = new UrednistvoDatabase();
+        private static int EDITORIAL_COUNCIL_MEMBERS = 5;
 
-        public static TextView getTextView(Text text)
+        public static TextView getTextView(Text textInput, bool copyContent)
         {
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
                 TextView textView = new TextView();
+                var text = db.Texts.FirstOrDefault(t => t.TextId == textInput.TextId);
 
                 textView.TextId = text.TextId;
                 textView.Title = text.Title;
@@ -29,25 +31,20 @@ namespace urednistvo.Controllers
                 textView.Username = db.Users.Single(u => u.UserId == text.UserId).UserName;
                 textView.UserId = text.UserId;
                 textView.Time = text.Time;
-                textView.Content = text.Content;
+                if(copyContent) textView.Content = text.Content;
                 textView.TextStatus = TextStatusNameGetter.getName(text.TextStatus);
                 textView.WebPublishable = text.WebPublishable.ToString();
                 textView.EditionPublishable = text.EditionPublishable.ToString();
                 textView.FinalSectionId = text.FinalSectionId;
                 textView.WantedSectionByAuthorId = text.WantedSectionByAuthorId;
-                textView.RatingsCount = text.Ratings == null ? 0 : text.Ratings.Count();
+
+                textView.RatingsCount = db.Ratings.Where(r => r.TextId == text.TextId).Count();
 
                 Section section = db.Sections.Find(text.FinalSectionId);
                 textView.FinalSection = (section == null) ? "-" : section.Title;
 
-                if (text.WantedSectionByAuthorId != null)
-                {
-                    section = db.Sections.Find(text.WantedSectionByAuthorId);
-                    textView.WantedSectionByAuthor = (section == null) ? "-" : section.Title;
-                } else
-                {
-                    textView.WantedSectionByAuthor = "-";
-                }
+                section = db.Sections.Find(text.WantedSectionByAuthorId);
+                textView.WantedSectionByAuthor = (section == null) ? "-" : section.Title;
 
                 if (text.Suggestions == null)
                 {
@@ -81,13 +78,14 @@ namespace urednistvo.Controllers
 
             foreach (Text t in list.ToList())
             {
-                listView.Add(getTextView(t));
+                listView.Add(getTextView(t, false));
             }
             return View(listView);
         }
 
-        public ActionResult ByAuthor(int id)
+        public ActionResult ByAuthor(int? id)
         {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             List<Text> list;
             if (Session["UserID"] == null || (String)Session["Role"] == RoleNames.REGISTERED_USER)
             {
@@ -107,7 +105,7 @@ namespace urednistvo.Controllers
 
             foreach (Text t in list)
             {
-                listView.Add(getTextView(t));
+                listView.Add(getTextView(t, false));
             }
             return View(listView);
         }
@@ -130,7 +128,7 @@ namespace urednistvo.Controllers
 
             foreach (Text t in list)
             {
-                listView.Add(getTextView(t));
+                listView.Add(getTextView(t, false));
             }
             return View(listView);
         }
@@ -143,17 +141,17 @@ namespace urednistvo.Controllers
                 return RedirectToAction("Index", "Text");
             }
 
-            List<Text> list = db.Texts.Where(t => t.TextStatus == (int)TextStatus.LECTORED).ToList();
+            List<Text> list = db.Texts.Where(t => t.TextStatus == (int)TextStatus.LECTORED && t.EditionPublishable == true).ToList();
             if (list.Count == 0)
             {
-                TempData["Message"] = "Nema tekstova za lektoriranje.";
+                TempData["Message"] = "Nema tekstova za dodavanje slika.";
                 return RedirectToAction("Index", "User");
             }
             List<TextView> listView = new List<TextView>();
 
             foreach (Text t in list)
             {
-                listView.Add(getTextView(t));
+                listView.Add(getTextView(t, false));
             }
             return View(listView);
         }
@@ -177,11 +175,7 @@ namespace urednistvo.Controllers
 
             foreach (Text t in list)
             {
-                int ratesCount = db.Ratings.Where(r => r.TextId == t.TextId).Count();
-                if (ratesCount < 5)
-                {
-                    listView.Add(getTextView(t));
-                }
+                listView.Add(getTextView(t, false));
             }
             return View(listView);
         }
@@ -198,7 +192,7 @@ namespace urednistvo.Controllers
 
             foreach (Text t in list)
             {
-                listView.Add(getTextView(t));
+                listView.Add(getTextView(t, false));
             }
             return View(listView);
         }
@@ -215,20 +209,21 @@ namespace urednistvo.Controllers
 
             foreach (Text t in list)
             {
-                listView.Add(getTextView(t));
+                listView.Add(getTextView(t, false));
             }
             return View(listView);
         }
 
         // GET: Text/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             if (db.Texts.Find(id).WebPublishable) {
-                return View(getTextView(db.Texts.Single(u => u.TextId == id)));
+                return View(getTextView(db.Texts.Single(u => u.TextId == id), true));
             }
             if(Session["UserID"] != null && (String)Session["Role"] != RoleNames.REGISTERED_USER)
             {
-                return View(getTextView(db.Texts.Single(u => u.TextId == id)));
+                return View(getTextView(db.Texts.Single(u => u.TextId == id), true));
             }
             TempData["Message"] = "Ne možete vidjeti ovaj tekst.";
             return RedirectToAction("Index", "Text");
@@ -275,9 +270,10 @@ namespace urednistvo.Controllers
             return View();
         }
 
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            if(Session["UserID"] == null)
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (Session["UserID"] == null)
             {
                 TempData["Message"] = "Ne možete mijenjati ovaj tekst.";
                 return RedirectToAction("Details/" + id, "Text");
@@ -339,19 +335,31 @@ namespace urednistvo.Controllers
         }
 
         // GET: Text/EditEditor/5
-        public ActionResult EditEditor(int id)
+        public ActionResult EditEditor(int? id)
         {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             using (UrednistvoDatabase db = new UrednistvoDatabase())
-            {
-                if (db.Ratings.Count(r => r.TextId == id) < 1)
-                    //PROMIJENITI NA 5
+            {  
+
+                if (db.Ratings.Count(r => r.TextId == id) < EDITORIAL_COUNCIL_MEMBERS)
                 {
                     TempData["Message"] = "Svi članovi uredničkog vijeća moraju ocijeniti tekst.";
                     return RedirectToAction("Details/" + id, "Text");
                 }
-                var text = db.Texts.Single(d => d.TextId == id);
+                Text text = db.Texts.Find(id);
+                if (text == null)
+                {
+                    TempData["Message"] = "Ovaj tekst ne postoji.";
+                    return RedirectToAction("Index");
+                }
 
-                ViewBag.DropDownListSections = new SelectList(db.Sections, "SectionId", "Title");
+                if(text.TextStatus != (int)TextStatus.SENT)
+                {
+                    TempData["Message"] = "Ovaj tekst se ne moze ocijeniti.";
+                    return RedirectToAction("Index");
+                }
+
+                Section s = db.Sections.Find(text.WantedSectionByAuthorId);
                 return View(text);
             }
         }
@@ -400,14 +408,22 @@ namespace urednistvo.Controllers
         }
 
         // GET: Text/EditMember/5
-        public ActionResult EditMember(int id)
+        public ActionResult EditMember(int? id)
         {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             return RedirectToAction("Create/" + id, "Ratings");
         }
 
         // GET: Text/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if ((string)Session["Role"] != RoleNames.EDITOR)
+            {
+                TempData["Message"] = "Nemate prava za brisanje teksta.";
+                return RedirectToAction("Index", "Text");
+            }
+
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
                 db.Texts.Remove(db.Texts.Find(id));
@@ -418,9 +434,9 @@ namespace urednistvo.Controllers
         }
 
         //GET: Text/Download/<id>
-        public ActionResult Download(int id)
+        public ActionResult Download(int? id)
         {
-
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             if (db.Texts.Find(id).WebPublishable)
             {
                 return createRTF(db.Texts.Single(u => u.TextId == id));
@@ -490,6 +506,7 @@ namespace urednistvo.Controllers
                         t.TextStatus = (int)TextStatus.GRAPHIC;
                         db.SaveChanges();
 
+                        TempData["Message"] = "Tekst je uspješno grafički uređen.";
                         return RedirectToAction("ForGraphicEditing/" + id);
                     }
                     else if ((string)Session["Role"] == RoleNames.CORRECTOR)
@@ -498,6 +515,7 @@ namespace urednistvo.Controllers
                         t.TextStatus = (int)TextStatus.CORRECTED;
                         db.SaveChanges();
 
+                        TempData["Message"] = "Tekst je uspješno ispravljen.";
                         return RedirectToAction("ForCorrection/" + id);
                     }
                 }
@@ -513,12 +531,14 @@ namespace urednistvo.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Pdf pdf = db.Pdfs.Single(p => p.TextId == (int)id);
-            if (pdf == null)
+            List<Pdf> pdfs = db.Pdfs.Where(p => p.TextId == (int)id).ToList();
+            if (pdfs.Count == 0)
             {
-                return HttpNotFound();
+                TempData["Message"] = "Ovaj tekst nema RTF dokument.";
+                return RedirectToAction("Index", "Text");
             }
 
+            Pdf pdf = pdfs.First();
             string path = Server.MapPath("~/RTFs/" + pdf.PdfName);
             byte[] fileBytes = System.IO.File.ReadAllBytes(path);
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, pdf.PdfName);
@@ -544,7 +564,7 @@ namespace urednistvo.Controllers
 
                 foreach (Text text in texts)
                 {
-                    textViews.Add(getTextView(text));
+                    textViews.Add(getTextView(text, false));
                 }
 
                 return View(textViews);
@@ -573,7 +593,7 @@ namespace urednistvo.Controllers
 
                 foreach (Text text in texts)
                 {
-                    textViews.Add(getTextView(text));
+                    textViews.Add(getTextView(text, false));
                 }
 
                 return PartialView("_Announcements", textViews);
@@ -595,7 +615,7 @@ namespace urednistvo.Controllers
 
             text.TextStatus = (int)TextStatus.ADDED_PICS;
             db.SaveChanges();
-            return RedirectToAction("Index", "Image");
+            return RedirectToAction("ForAddingImages", "Text");
         }
     }
 }
