@@ -45,6 +45,11 @@ namespace urednistvo.Controllers
                     }
                 }
 
+                if(notificationViews.Count == 0)
+                {
+                    TempData["Message"] = "Nema obavijesti za prikazati";
+                    return RedirectToAction("Index", "Home");
+                }
                 return View(notificationViews);
             }
         }
