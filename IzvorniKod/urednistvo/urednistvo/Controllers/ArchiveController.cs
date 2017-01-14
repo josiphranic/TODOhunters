@@ -102,7 +102,6 @@ namespace urednistvo.Controllers
                 int mode = 1;
                 string line = string.Empty;
                 
-
                 while ((line = sr.ReadLine()) != null)
                 {
                     if (mode == 1)
@@ -116,37 +115,19 @@ namespace urednistvo.Controllers
                         DateTime date;
                         if (DateTime.TryParseExact(line.Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
                         {
-                            if(date.CompareTo(DateTime.Today) < 0)
-                            {
-                                newText.Time = date;
-                                mode = 3;
-                            } else
-                            {
-                                TempData["Message"] = "Datum je neispravan";
-                                return null;
-                            }
+                            newText.Time = date;
+                            mode = 3;
                         }
                         else
                         {
-                            TempData["Message"] = "Datum je neispravno zadan.";
+                            TempData["Message"] = "Datum je neispravan.";
                             return null;
                         }
                     }
                     else if (mode == 3)
                     {
-                        if(line.Trim() == String.Empty)
-                        {
-                            mode = 4;
-                        } else
-                        {
-                            TempData["Message"] = "Tekst je neispravnog oblika.";
-                            return null;
-                        }
-                    }
-                    else if (mode == 4)
-                    {
                         sb.Append(line).Append("\n");
-                    } 
+                    }
                 }
             }
             newText.Content = sb.ToString();
