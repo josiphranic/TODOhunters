@@ -403,8 +403,30 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\100 godina Oktobarske revolucije1.jpg" />
+    <Content Include="Images\100 godina Oktobarske revolucije2.jpg" />
+    <Content Include="Images\Brixa Bargeld i Teho Teardo dolaze u Močvaru1.jpg" />
+    <Content Include="Images\Moliereova satira1.jpg" />
+    <Content Include="Images\Novi ravnatelj umjetničke galerije1.jpg" />
+    <Content Include="Images\Oftamolozi upozoravaju1.jpg" />
+    <Content Include="Images\Snijeg za smak svijeta1.jpg" />
+    <Content Include="Images\Sudbina eura1.jpg" />
+    <Content Include="Images\Uđite u novu godinu s novim poslom1.jpg" />
+    <Content Include="Images\Zašto jedemo više nakon uživanja u alkoholnim pićima1.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="RTFs\100 godina Oktobarske revolucije ispravljeno.rtf" />
+    <Content Include="RTFs\Blixa Bargeld i Teho Teardo dolaze u Močvaru.rtf" />
+    <Content Include="RTFs\Često vas boli glava_.rtf" />
+    <Content Include="RTFs\Meč stoljeća sve bliže-ispravljeno.rtf" />
+    <Content Include="RTFs\Moliereova satira.rtf" />
+    <Content Include="RTFs\Novi ravnatelj umjetničke galerije Dubrovnik.rtf" />
+    <Content Include="RTFs\Oftamolozi upozoravaju.rtf" />
+    <Content Include="RTFs\Otkriven element iz središta Zemlje.rtf" />
+    <Content Include="RTFs\Snijeg za smak svijeta.rtf" />
+    <Content Include="RTFs\Sudbina eura.rtf" />
+    <Content Include="RTFs\Uđite u novu godinu s novim poslom.rtf" />
+    <Content Include="RTFs\Zašto jedemo više nakon uživanja u alkoholnim pićima_.rtf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -505,8 +527,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Images\" />
-    <Folder Include="RTFs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
