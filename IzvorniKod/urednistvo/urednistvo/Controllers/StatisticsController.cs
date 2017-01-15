@@ -73,7 +73,7 @@ namespace urednistvo.Controllers
                 {
                     aView.NumPublishedTexts = db.Texts.Where(x => x.Author.UserId == a.UserId && (x.TextStatus == (int)TextStatus.CORRECTED || x.TextStatus == (int)TextStatus.LECTORED && x.EditionPublishable == false) && x.Time.CompareTo(from) >= 0 && x.Time.CompareTo(to) <= 0).ToList().Count();
                     aView.NumDeclinedTexts = db.Texts.Where(x => x.Author.UserId == a.UserId && x.TextStatus == (int)TextStatus.DECLINED && x.Time.CompareTo(from) >= 0 && x.Time.CompareTo(to) <= 0).ToList().Count();
-                    aView.NumSentTexes = db.Texts.Where(x => x.Author.UserId == a.UserId && x.TextStatus == (int)TextStatus.SENT && x.Time.CompareTo(from) >= 0 && x.Time.CompareTo(to) <= 0).ToList().Count();
+                    aView.NumSentTexes = db.Texts.Where(x => x.Author.UserId == a.UserId && x.TextStatus != (int)TextStatus.CORRECTED  && x.TextStatus != (int)TextStatus.CORRECTED && x.Time.CompareTo(from) >= 0 && x.Time.CompareTo(to) <= 0).ToList().Count();
                 }
                 authors.Add(aView);
             }
@@ -96,9 +96,9 @@ namespace urednistvo.Controllers
                 using
                  (UrednistvoDatabase db = new UrednistvoDatabase())
                 {
-                    aView.NumPublishedTexts = db.Texts.Where(x => x.Author.UserId == a.UserId && (x.TextStatus == (int)TextStatus.CORRECTED || x.TextStatus == (int)TextStatus.LECTORED && x.EditionPublishable == false)).ToList().Count();
+                    aView.NumPublishedTexts = db.Texts.Where(x => x.Author.UserId == a.UserId && x.TextStatus == (int)TextStatus.CORRECTED).ToList().Count();
                     aView.NumDeclinedTexts = db.Texts.Where(x => x.Author.UserId == a.UserId && x.TextStatus == (int)TextStatus.DECLINED).ToList().Count();
-                    aView.NumSentTexes = db.Texts.Where(x => x.Author.UserId == a.UserId && x.TextStatus == (int)TextStatus.SENT).ToList().Count();
+                    aView.NumSentTexes = db.Texts.Where(x => x.Author.UserId == a.UserId && x.TextStatus != (int)TextStatus.CORRECTED && x.TextStatus != (int)TextStatus.DECLINED).ToList().Count();
                 }
                 authors.Add(aView);
             }
