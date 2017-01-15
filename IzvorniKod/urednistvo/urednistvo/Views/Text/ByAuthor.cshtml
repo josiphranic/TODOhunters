@@ -31,7 +31,7 @@
                         <span class="glyphicon glyphicon-comment" title="Komentari"></span>
                     </a>
                 </div>
-                @if (text.EditionPublishable == "True")
+                @if (text.EditionPublishable == "True" && text.TextStatus == "Ispravljen od korektora")
                 {
                     <div class="col-md-6" style="padding-top:2em">
                         <a href='@Url.Action("DownloadRTF/" + @text.TextId, "Text")'>

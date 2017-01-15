@@ -83,7 +83,7 @@
             </td>
 
             <td>
-                @if (text.EditionPublishable == "True")
+                @if (text.EditionPublishable == "True" && text.TextStatus == "Ispravljen od korektora")
                 {
                     <a href='@Url.Action("DownloadRTF/" + @text.TextId, "Text")'>
                         <span class="glyphicon glyphicon-download" title="Preuzmi"></span>
