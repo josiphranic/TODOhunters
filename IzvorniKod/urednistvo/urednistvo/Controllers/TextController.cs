@@ -338,6 +338,13 @@ namespace urednistvo.Controllers
         public ActionResult EditEditor(int? id)
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            if ((string)Session["Role"] != "Glavni urednik")
+            {
+                TempData["Message"] = "Samo glavni urednik moze donijeti konacnu odluku.";
+                return RedirectToAction("Details/" + id, "Text");
+            }
+
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {  
 
