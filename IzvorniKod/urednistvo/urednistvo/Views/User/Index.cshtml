@@ -47,9 +47,12 @@
             @Html.DisplayFor(modelItem => user.Role)
         </td>
         <td>
-            <a href='@Url.Action("ByAuthor/" + @user.UserId, "Text")'>
-                <span class="glyphicon glyphicon-list" title="Tekstovi autora @user.UserName"></span>
-            </a>
+            @if (user.Role == "Autor")
+            {
+                <a href='@Url.Action("ByAuthor/" + @user.UserId, "Text")'>
+                    <span class="glyphicon glyphicon-list" title="Tekstovi autora @user.UserName"></span>
+                </a>
+            }
         </td>
     </tr>
 }

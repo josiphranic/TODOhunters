@@ -33,16 +33,17 @@ namespace urednistvo.Controllers
         [HttpPost]
         public ActionResult DataForRange(DateTime from, DateTime to)
         {
-            if (from.CompareTo(to) >= 0 || to.CompareTo(DateTime.Today.AddDays(1)) > 0)
-            {
-                TempData["Message"] = "Odabrani su neispravni datumi";
-                return RedirectToAction("Index", "Statistics");
-            }
             if (from == null || to == null)
             {
                 TempData["Message"] = "Vremenski preriod za za prikaz statistika mora biti odabran.";
                 return RedirectToAction("Index", "Statistics");
             }
+            if (from >= to || to.CompareTo(DateTime.Today.AddDays(1)) > 0)
+            {
+                TempData["Message"] = "Odabrani su neispravni datumi";
+                return RedirectToAction("Index", "Statistics");
+            }
+            
 
             StatisticsView stat = new StatisticsView();
             stat.To = to.Date;
@@ -70,9 +71,9 @@ namespace urednistvo.Controllers
                 using
                  (UrednistvoDatabase db = new UrednistvoDatabase())
                 {
-                    aView.NumPublishedTexts = db.Texts.Where(x => x.Author.UserId == a.UserId && x.TextStatus == 0x2 && x.Time.CompareTo(from) >= 0 && x.Time.CompareTo(to) <= 0).ToList().Count();
-                    aView.NumDeclinedTexts = db.Texts.Where(x => x.Author.UserId == a.UserId && x.TextStatus == 0x16 && x.Time.CompareTo(from) >= 0 && x.Time.CompareTo(to) <= 0).ToList().Count();
-                    aView.NumSentTexes = db.Texts.Where(x => x.Author.UserId == a.UserId && x.TextStatus != 0x2 && x.TextStatus != 0x16 && x.Time.CompareTo(from) >= 0 && x.Time.CompareTo(to) <= 0).ToList().Count();
+                    aView.NumPublishedTexts = db.Texts.Where(x => x.Author.UserId == a.UserId && (x.TextStatus == (int)TextStatus.CORRECTED || x.TextStatus == (int)TextStatus.LECTORED && x.EditionPublishable == false) && x.Time.CompareTo(from) >= 0 && x.Time.CompareTo(to) <= 0).ToList().Count();
+                    aView.NumDeclinedTexts = db.Texts.Where(x => x.Author.UserId == a.UserId && x.TextStatus == (int)TextStatus.DECLINED && x.Time.CompareTo(from) >= 0 && x.Time.CompareTo(to) <= 0).ToList().Count();
+                    aView.NumSentTexes = db.Texts.Where(x => x.Author.UserId == a.UserId && x.TextStatus == (int)TextStatus.SENT && x.Time.CompareTo(from) >= 0 && x.Time.CompareTo(to) <= 0).ToList().Count();
                 }
                 authors.Add(aView);
             }
@@ -95,9 +96,9 @@ namespace urednistvo.Controllers
                 using
                  (UrednistvoDatabase db = new UrednistvoDatabase())
                 {
-                    aView.NumPublishedTexts = db.Texts.Where(x => x.Author.UserId == a.UserId && x.TextStatus == 0x2).ToList().Count();
-                    aView.NumDeclinedTexts = db.Texts.Where(x => x.Author.UserId == a.UserId && x.TextStatus == 0x16).ToList().Count();
-                    aView.NumSentTexes = db.Texts.Where(x => x.Author.UserId == a.UserId && x.TextStatus != 0x2 && x.TextStatus != 0x16).ToList().Count();
+                    aView.NumPublishedTexts = db.Texts.Where(x => x.Author.UserId == a.UserId && (x.TextStatus == (int)TextStatus.CORRECTED || x.TextStatus == (int)TextStatus.LECTORED && x.EditionPublishable == false)).ToList().Count();
+                    aView.NumDeclinedTexts = db.Texts.Where(x => x.Author.UserId == a.UserId && x.TextStatus == (int)TextStatus.DECLINED).ToList().Count();
+                    aView.NumSentTexes = db.Texts.Where(x => x.Author.UserId == a.UserId && x.TextStatus == (int)TextStatus.SENT).ToList().Count();
                 }
                 authors.Add(aView);
             }
@@ -145,7 +146,7 @@ namespace urednistvo.Controllers
             List<User> authors = new List<User>();
             using (UrednistvoDatabase db = new UrednistvoDatabase())
             {
-                authors = db.Users.Where(x => x.Role == 2 || x.Role == 4).ToList();
+                authors = db.Users.Where(x => x.Role == 4).ToList();
             }
             return authors;
         }
