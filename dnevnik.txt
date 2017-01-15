@@ -1,5 +1,17 @@
-12. listopad, 2016
-    	Matisse
-		Upoznavanje, odredivanje tehnologija.
+12. listopada, 2016, Matisse 
+Upoznavanje, odredivanje tehnologija. 17. listopada, 2016, A109 Podesavanje Visual Studija, spajanje na Git.
 
-17. listopad, 2016	A109		Podesavanje Visual Studija, spajanje na Git.
+24. listopada, 2016, BB
+Planiranje dijagrama razreda.
+
+2. studenog, 2016, Aleja laptopa 
+Izrada primjera obrasca uporabe i sekvencijskog dijagrama Instaliranje Astah-a 11. studenog, 2016, Knjižnica FER-a Izradivanje skice dijagrama razreda i skice baze podataka.
+
+18. prosinca, 2016, Knjižnica FER-a
+Izrada baze podataka
+
+5. siječnja, 2017, Knjižnica FER-a
+Podjela poslova oko dokumentacije i implementacije
+
+10. siječnja, 2017, A109
+Zajedničko implementiranje 
