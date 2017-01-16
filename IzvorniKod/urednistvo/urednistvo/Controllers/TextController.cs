@@ -595,7 +595,7 @@ namespace urednistvo.Controllers
                     }
                 }
 
-                List<Text> texts = db.Texts.Where(t => DateTime.Compare(t.Time, lastPublised) > 0).ToList();
+                List<Text> texts = db.Texts.Where(t => DateTime.Compare(t.Time, lastPublised) > 0 && t.TextStatus == (int)TextStatus.CORRECTED).ToList();
                 List<TextView> textViews = new List<TextView>();
 
                 foreach (Text text in texts)
